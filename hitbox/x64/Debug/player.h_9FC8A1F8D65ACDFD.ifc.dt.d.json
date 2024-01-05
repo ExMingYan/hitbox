@@ -1,0 +1,13 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\code\\cpp\\hitbox\\hitbox\\player.h",
+        "ProvidedModule": "",
+        "Includes": [
+            "e:\\code\\cpp\\hitbox\\hitbox\\action.h",
+            "e:\\code\\cpp\\hitbox\\hitbox\\attack.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
