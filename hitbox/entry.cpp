@@ -111,7 +111,7 @@ void entry(HMODULE hmodule) {
 	}
 
 	services* service = services::instance();
-	if (service->initliaze() == false) {
+	if (service->initliaze(mapper) == false) {
 		MessageBoxA(nullptr, "services initialize failed", "warning", MB_OK);
 		return;
 	}

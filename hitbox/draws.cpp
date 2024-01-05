@@ -87,8 +87,10 @@ bool draws::draw()
 	if (objects == nullptr) {
 		return false;
 	}
-
-	if (objects->complete != 0x2) {
+	if (objects->complete != 2) {
+		return false;
+	}
+	if (objects->ready <= 2) {
 		return false;
 	}
 
@@ -115,8 +117,12 @@ bool draws::draw()
 	}
 
 	Actions_Entry entry = p1->acts->entry[p1->number];
-	for (int i = 0; i < entry.capacity; i++) {
-		Action_Collections 	actcs = entry.actcs[i];
+	for (int i = 0; i < entry.capacity && entry.actcs != nullptr; i++) {
+		//Action_Collections 	actcs = entry.actcs[i];
+		Action_Collections 	actcs{};
+		if (!ReadProcessMemory(GetCurrentProcess(), &entry.actcs[i], &actcs, sizeof(Action_Collections), 0)) {
+			break;
+		}
 		switch (actcs.types) {
 		case Action_Types::AttackBoxs: {
 			attack_boxs(p1, actcs, attack_boxs_color, display_p1 && attack_boxs_display);
@@ -137,8 +143,11 @@ bool draws::draw()
 	}
 
 	entry = p2->acts->entry[p2->number];
-	for (int i = 0; i < entry.capacity; i++) {
-		Action_Collections 	actcs = entry.actcs[i];
+	for (int i = 0; i < entry.capacity && entry.actcs != nullptr; i++) {
+		Action_Collections 	actcs{};
+		if (!ReadProcessMemory(GetCurrentProcess(), &entry.actcs[i], &actcs, sizeof(Action_Collections), 0)) {
+			break;
+		}
 		switch (actcs.types) {
 		case Action_Types::AttackBoxs: {
 			attack_boxs(p2, actcs, attack_boxs_color, display_p2 && attack_boxs_display);

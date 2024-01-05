@@ -1,9 +1,8 @@
 #include "services.h"
-#include "mappers.h"
 #include "searcher.h"
 #include "signatures.hpp"
 
-bool services::initliaze()
+bool services::initliaze(mappers* mapping)
 {
 	searcher* instance = searcher::instance();
 	this->screen_ptr = instance->search<bool(*)(void* Player, const FVector & WorldPosition, FVector2D & ScreenPosition, bool bPlayerViewportRelative)>(".text", signatures::screen);
@@ -11,8 +10,8 @@ bool services::initliaze()
 		return false;
 	}
 
-	mappers* mapping = mappers::instance();
-	this->uworld = mapping->uworld;
+	this->mapping = mapping;
+	this->uworld = *mapping->uworld;
 	if (this->uworld == nullptr) {
 		return false;
 	}
@@ -22,16 +21,8 @@ bool services::initliaze()
 
 bool services::screen(const FVector& WorldPosition, FVector2D& ScreenPosition)
 {
-	if (uworld->OwningGameInstance == nullptr) {
-		return false;
-	}
-	if (uworld->OwningGameInstance->LocalPlayers.ArrayNum == 0) {
-		return false;
-	}
-	if (uworld->OwningGameInstance->LocalPlayers.AllocatorInstance == nullptr) {
-		return false;
-	}
-	if (uworld->OwningGameInstance->LocalPlayers.AllocatorInstance[0]->PlayerController == nullptr) {
+	this->uworld = *mapping->uworld;
+	if (this->uworld == nullptr) {
 		return false;
 	}
 	return screen_ptr(uworld->OwningGameInstance->LocalPlayers.AllocatorInstance[0]->PlayerController, WorldPosition, ScreenPosition, false);

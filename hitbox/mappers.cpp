@@ -6,7 +6,7 @@ bool mappers::initliaze()
 {
 	searcher* instance = searcher::instance();
 
-	this->uworld = *reinterpret_cast<UWorld**>(instance->transform(instance->search(".text", signatures::uworld)));
+	this->uworld = reinterpret_cast<UWorld**>(instance->transform(instance->search(".text", signatures::uworld)));
 	if (this->uworld == nullptr) {
 		return false;
 	}

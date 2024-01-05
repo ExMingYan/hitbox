@@ -12,4 +12,6 @@ struct Objects
 	int complete;						//0x38
 	char unknown4[0x66610];
 	Flight_Props_Header* props_list;	//0x66650
+	char unknown5[0x4fe8];
+	unsigned int ready;
 };

@@ -7,7 +7,7 @@
 class mappers : public singleton<mappers>
 {
 public:
-	UWorld* uworld;
+	UWorld** uworld;
 	Objects** objects;
 
 public:
