@@ -2,7 +2,7 @@
 
 拳皇15判定框显示
 
-![](./image/image.png)
+![](.//image//image.png)
 
 
 
@@ -33,7 +33,7 @@
 
 **坂崎良2D受击框**
 
-![bug](.\image\bug.png)
+![bug](.//image//bug.png)
 
 ## 使用
 
