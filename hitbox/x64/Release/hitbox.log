@@ -16,6 +16,6 @@
     正在创建库 E:\code\cpp\hitbox\x64\Release\hitbox.lib 和对象 E:\code\cpp\hitbox\x64\Release\hitbox.exp
   正在生成代码
   Previous IPDB not found, fall back to full compilation.
-  All 1556 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  All 1555 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
   已完成代码的生成
   hitbox.vcxproj -> E:\code\cpp\hitbox\x64\Release\hitbox.dll

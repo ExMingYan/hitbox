@@ -14,12 +14,12 @@ e:\code\cpp\hitbox\hitbox\x64\release\entry.obj
 e:\code\cpp\hitbox\hitbox\x64\release\draws.obj
 e:\code\cpp\hitbox\hitbox\x64\release\dllmain.obj
 e:\code\cpp\hitbox\hitbox\x64\release\control.obj
-e:\code\cpp\hitbox\x64\release\hitbox.lib
-e:\code\cpp\hitbox\x64\release\hitbox.exp
 e:\code\cpp\hitbox\x64\release\hitbox.dll
 e:\code\cpp\hitbox\hitbox\x64\release\hitbox.ipdb
 e:\code\cpp\hitbox\x64\release\hitbox.pdb
 e:\code\cpp\hitbox\hitbox\x64\release\hitbox.iobj
+e:\code\cpp\hitbox\x64\release\hitbox.lib
+e:\code\cpp\hitbox\x64\release\hitbox.exp
 e:\code\cpp\hitbox\hitbox\x64\release\hitbox.tlog\cl.command.1.tlog
 e:\code\cpp\hitbox\hitbox\x64\release\hitbox.tlog\cl.items.tlog
 e:\code\cpp\hitbox\hitbox\x64\release\hitbox.tlog\cl.read.1.tlog

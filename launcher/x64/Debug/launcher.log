@@ -1,2 +1,4 @@
-﻿  main.cpp
+﻿  loader.cpp
+  main.cpp
+  正在生成代码...
   launcher.vcxproj -> E:\code\cpp\hitbox\x64\Debug\launcher.exe

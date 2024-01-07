@@ -1,15 +1,33 @@
 #pragma once
 #include "action.h"
 
+struct Attack_Type_Collections
+{
+	Attack_Types types;
+	char unknown[0x1C0];
+};
+static_assert(sizeof(Attack_Type_Collections) == 0x1C4, "Size check");
+
+struct Attacks
+{
+	char unknown[0x20];
+	Attack_Type_Collections* atkcs;
+};
+
 _declspec(align(8))
 struct Player
 {
 	char unknown1[0x38];		//0x0
 	Actions* acts;				//0x38
-	char unknown2[0x60];		//0x40
+	char unknown2[0x28];		//0x40
+	Attacks* atks;				//0x68
+	char fill[0x30];			//0x70
 	float x;					//0xa0
 	float y;					//0xa4
-	char unknown3[0xac];		//0xa8
+	char unknown3[0x34];		//0xa8
+	float xoff;					//0xDC
+	float yoff;					//0xE0
+	char fill2[0x70];			//0xE4
 	int toward;					//0x154£ºÃæÏò
 	int unknown4;				//0x158
 	int unknown5;				//0x15c

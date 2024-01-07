@@ -5,6 +5,7 @@
 
 enum class  Action_Types : int
 {
+	Patch = 0x0,
 	BodyBoxs = 0x3,								//ÉíÎ»¿ò£»0x3
 	AffectedBoxs = 0x4,							//ÊÜ»÷¿ò£»0x4
 	AttackBoxs = 0x5,							//¹¥»÷¿ò£»0x5

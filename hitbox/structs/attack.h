@@ -1,6 +1,6 @@
 #pragma once
 
-enum class Attack_Typs : int			//攻击框类型
+enum class Attack_Types : int			//攻击框类型
 {
 	NormalAttack,						//普通攻击；0x0
 	FlyingObject,						//飞行道具；0x1

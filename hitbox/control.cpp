@@ -4,16 +4,19 @@ control::control()
 {
 }
 
-bool control::color_selector(const char* label, ImColor* color, bool* show)
+bool control::box_color(const char* checkbox, bool* box, const char* selector, bool* open, ImColor* color)
 {
-	if (ImGui::Button(label)) {
-		*show = !(*show);
+	ImGui::Checkbox(checkbox, box);
+	ImGui::SameLine();
+
+	if (ImGui::Button(selector)) {
+		*open = !(*open);
 	}
 
-	if (*show) {
-		ImGui::Begin("color", show);
+	if (*open) {
+		ImGui::Begin("color", open);
 		ImGui::ColorPicker3("color selector", (float*)color);
 		ImGui::End();
 	}
-	return false;
+	return true;
 }

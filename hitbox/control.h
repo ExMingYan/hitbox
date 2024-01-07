@@ -7,5 +7,5 @@ private:
 
 public:
 	control();
-	bool color_selector(const char* label, ImColor* color, bool* show);
+	bool box_color(const char* checkbox, bool* box, const char* selector, bool* open, ImColor* color);
 };

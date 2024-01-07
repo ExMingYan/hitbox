@@ -3,7 +3,7 @@
 #include "hitbox.hpp"
 
 int main() {
-	HWND hwnd = FindWindowA("UnrealWindow", nullptr);
+	HWND hwnd = FindWindowA("UnrealWindow", "KOFXV  ");
 	unsigned long pid = 0;
 	GetWindowThreadProcessId(hwnd, &pid);
 	if (pid == 0) {
