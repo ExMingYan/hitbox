@@ -1,2 +1,5 @@
 /.vs
 /x64
+/builder/x64
+/hitbox/x64
+/launcher/x64
