@@ -44,6 +44,7 @@ private:
 	services* serivce;
 	mappers* mapper;
 	control* ctrl;
+	float alpha;
 
 private:
 	bool left(float x, float y, float w, float h, ImColor color);

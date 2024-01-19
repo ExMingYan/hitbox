@@ -5,6 +5,7 @@
 draws::draws()
 {
 	this->ctrl = control::instance();
+	this->alpha = 0.5f;
 }
 
 bool draws::initialize(services* service, mappers* mapper)
@@ -23,6 +24,10 @@ bool draws::draw()
 	ImGui::Checkbox("p1", &display_p1);
 	ImGui::SameLine();
 	ImGui::Checkbox("p2", &display_p2);
+	ImGui::SameLine();
+	static float temp = 0.2f;
+	ImGui::SetNextItemWidth(50);
+	ImGui::InputFloat(u8"Í¸Ã÷¶È", &temp, 0.0f, 0.0f, "%.2f");	this->alpha = temp;
 
 	static bool thratk_boxs_display = false;
 	static bool thratk_selector = false;
@@ -53,7 +58,7 @@ bool draws::draw()
 	static bool gurad_boxs_display = false;
 	static bool gurad_selector = false;
 	static ImColor gurad_boxs_color{ 0, 255, 0 };
-	ctrl->box_color(u8"·ÀÓù¿ò", &cast_boxs_display, u8"·ÀÓù¿òÑÕÉ«", &cast_selector, &cast_boxs_color);
+	ctrl->box_color(u8"·ÀÓù¿ò", &gurad_boxs_display, u8"·ÀÓù¿òÑÕÉ«", &cast_selector, &cast_boxs_color);
 	affected_colors.gurad = gurad_boxs_color;
 	affected_colors.gurad_display = gurad_boxs_display;
 
@@ -109,11 +114,11 @@ bool draws::draw()
 	static bool rfo_boxs_display = false;
 	static bool rfo_selector = false;
 	static ImColor rfo_boxs_color{ 127, 255, 255 };
-	ctrl->box_color(u8"µÖÏû·ÉÐÐµÀ¾ß¿ò", &rfo_boxs_display, u8"µÖÏû·ÉÐÐµÀ¾ß¿òÑÕÉ«", &rfo_selector, &rfo_boxs_color);
+	ctrl->box_color(u8"·´µ¯·ÉÐÐµÀ¾ß¿ò", &rfo_boxs_display, u8"·´µ¯·ÉÐÐµÀ¾ß¿òÑÕÉ«", &rfo_selector, &rfo_boxs_color);
 	affected_colors.rfo = rfo_boxs_color;
 	affected_colors.rfo_display = rfo_boxs_display;
 
-	auto objects = *mapper->objects;
+	auto objects = *mapper->objs;
 
 	if (objects == nullptr) {
 		return false;
@@ -228,11 +233,11 @@ bool draws::left(float x, float y, float w, float h, ImColor color)
 	serivce->screen(w1, s1);
 
 	//ÓÒÉÏ½Ç
-	FVector w2{};
-	w2.X = x + w;
-	w2.Z = y;
-	FVector2D s2{};
-	serivce->screen(w2, s2);
+	//FVector w2{};
+	//w2.X = x + w;
+	//w2.Z = y;
+	//FVector2D s2{};
+	//serivce->screen(w2, s2);
 
 	//ÓÒÏÂ½Ç
 	FVector w3{};
@@ -242,20 +247,25 @@ bool draws::left(float x, float y, float w, float h, ImColor color)
 	serivce->screen(w3, s3);
 
 	//×óÏÂ½Ç
-	FVector w4{};
-	w4.X = x;
-	w4.Z = y - h;
-	FVector2D s4{};
-	serivce->screen(w4, s4);
+	//FVector w4{};
+	//w4.X = x;
+	//w4.Z = y - h;
+	//FVector2D s4{};
+	//serivce->screen(w4, s4);
 
-	// ×óÉÏ½Ç -> ÓÒÉÏ½Ç
-	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s1.X, s1.Y }, ImVec2{ s2.X, s2.Y }, color);
-	// ÓÒÉÏ½Ç -> ÓÒÏÂ½Ç
-	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s2.X, s2.Y }, ImVec2{ s3.X, s3.Y }, color);
-	// ÓÒÏÂ½Ç -> ×óÏÂ½Ç
-	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s3.X, s3.Y }, ImVec2{ s4.X, s4.Y }, color);
-	// ×óÏÂ½Ç -> ×óÉÏ½Ç
-	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s4.X, s4.Y }, ImVec2{ s1.X, s1.Y }, color);
+	ImVec2 rect_min(s1.X, s1.Y);
+	ImVec2 rect_max(s3.X, s3.Y);
+	color.Value.w = this->alpha;
+	ImGui::GetForegroundDrawList()->AddRectFilled(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
+
+	//// ×óÉÏ½Ç -> ÓÒÉÏ½Ç
+	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s1.X, s1.Y }, ImVec2{ s2.X, s2.Y }, color);
+	//// ÓÒÉÏ½Ç -> ÓÒÏÂ½Ç
+	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s2.X, s2.Y }, ImVec2{ s3.X, s3.Y }, color);
+	//// ÓÒÏÂ½Ç -> ×óÏÂ½Ç
+	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s3.X, s3.Y }, ImVec2{ s4.X, s4.Y }, color);
+	//// ×óÏÂ½Ç -> ×óÉÏ½Ç
+	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s4.X, s4.Y }, ImVec2{ s1.X, s1.Y }, color);
 
 	return true;
 }
@@ -270,11 +280,11 @@ bool draws::right(float x, float y, float w, float h, ImColor color)
 	serivce->screen(w1, s1);
 
 	//ÓÒÉÏ½Ç
-	FVector w2{};
-	w2.X = x - w;
-	w2.Z = y;
-	FVector2D s2{};
-	serivce->screen(w2, s2);
+	//FVector w2{};
+	//w2.X = x - w;
+	//w2.Z = y;
+	//FVector2D s2{};
+	//serivce->screen(w2, s2);
 
 	//ÓÒÏÂ½Ç
 	FVector w3{ };
@@ -284,20 +294,25 @@ bool draws::right(float x, float y, float w, float h, ImColor color)
 	serivce->screen(w3, s3);
 
 	//×óÏÂ½Ç
-	FVector w4{ };
-	w4.X = x;
-	w4.Z = y - h;
-	FVector2D s4{};
-	serivce->screen(w4, s4);
+	//FVector w4{ };
+	//w4.X = x;
+	//w4.Z = y - h;
+	//FVector2D s4{};
+	//serivce->screen(w4, s4);
 
-	// ×óÉÏ½Ç -> ÓÒÉÏ½Ç
-	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s1.X, s1.Y }, ImVec2{ s2.X, s2.Y }, color);
-	// ÓÒÉÏ½Ç -> ÓÒÏÂ½Ç
-	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s2.X, s2.Y }, ImVec2{ s3.X, s3.Y }, color);
-	// ÓÒÏÂ½Ç -> ×óÏÂ½Ç
-	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s3.X, s3.Y }, ImVec2{ s4.X, s4.Y }, color);
-	// ×óÏÂ½Ç -> ×óÉÏ½Ç
-	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s4.X, s4.Y }, ImVec2{ s1.X, s1.Y }, color);
+	ImVec2 rect_min(s1.X, s1.Y);
+	ImVec2 rect_max(s3.X, s3.Y);
+	color.Value.w = this->alpha;
+	ImGui::GetForegroundDrawList()->AddRectFilled(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
+
+	//// ×óÉÏ½Ç -> ÓÒÉÏ½Ç
+	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s1.X, s1.Y }, ImVec2{ s2.X, s2.Y }, color);
+	//// ÓÒÉÏ½Ç -> ÓÒÏÂ½Ç
+	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s2.X, s2.Y }, ImVec2{ s3.X, s3.Y }, color);
+	//// ÓÒÏÂ½Ç -> ×óÏÂ½Ç
+	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s3.X, s3.Y }, ImVec2{ s4.X, s4.Y }, color);
+	//// ×óÏÂ½Ç -> ×óÉÏ½Ç
+	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s4.X, s4.Y }, ImVec2{ s1.X, s1.Y }, color);
 	return true;
 }
 

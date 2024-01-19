@@ -31,20 +31,17 @@ bool graphics::initialize(HWND hwnd)
 bool graphics::hook(void* handler, void* original, options op)
 {
 	int index = static_cast<int>(op);
-	__try {
-		if (virtual_table != nullptr && handler != nullptr) {
-			if (original != nullptr) {
-				*reinterpret_cast<void**>(original) = virtual_table[index];
-			}
+	if (virtual_table != nullptr && handler != nullptr) {
+		if (original != nullptr) {
+			*reinterpret_cast<void**>(original) = virtual_table[index];
+		}
 
-			unsigned long protect = 0;
-			VirtualProtect(virtual_table, 1, PAGE_EXECUTE_READWRITE, &protect);
+		unsigned long protect = 0;
+		if (VirtualProtect(virtual_table, 1, PAGE_EXECUTE_READWRITE, &protect)) {
 			virtual_table[index] = handler;
 			VirtualProtect(virtual_table, 1, protect, &protect);
+			return true;
 		}
 	}
-	__except (1) {
-		return false;
-	}
-	return true;
+	return false;
 }

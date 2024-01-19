@@ -17,7 +17,8 @@ struct Attacks
 _declspec(align(8))
 struct Player
 {
-	char unknown1[0x38];		//0x0
+	void** vtbl;				//0x0
+	char unknown1[0x30];		//0x8
 	Actions* acts;				//0x38
 	char unknown2[0x28];		//0x40
 	Attacks* atks;				//0x68

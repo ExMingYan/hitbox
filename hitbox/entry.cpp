@@ -1,5 +1,6 @@
 #include "entry.h"
 #include "draws.h"
+#include "memory.h"
 #include "mappers.h"
 #include "services.h"
 #include "graphics.h"
@@ -100,10 +101,6 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 }
 
 void entry(HMODULE hmodule) {
-	//AllocConsole();
-	//freopen("CONOUT$", "w+t", stdout);
-	//freopen("CONIN$", "r+t", stdin);
-
 	mappers* mapper = mappers::instance();
 	if (mapper->initliaze() == false) {
 		MessageBoxA(nullptr, "mappers initialize failed", "warning", MB_OK);
@@ -122,8 +119,8 @@ void entry(HMODULE hmodule) {
 		return;
 	}
 
-	graphics* graphic = graphics::instance();
 	g_hUnrealWindow = FindWindowA("UnrealWindow", nullptr);
+	graphics* graphic = graphics::instance();
 	if (graphic->initialize(g_hUnrealWindow) == false) {
 		MessageBoxA(nullptr, "graphics initialize failed", "warning", MB_OK);
 		return;

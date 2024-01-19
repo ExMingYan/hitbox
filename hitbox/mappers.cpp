@@ -11,8 +11,8 @@ bool mappers::initliaze()
 		return false;
 	}
 
-	this->objects = reinterpret_cast<Objects**>(instance->transform(instance->search(".text", signatures::objects)));
-	if (this->objects == nullptr) {
+	this->objs = reinterpret_cast<Objects**>(instance->transform(instance->search(".text", signatures::objects)));
+	if (this->objs == nullptr) {
 		return false;
 	}
 

@@ -15,4 +15,6 @@ public:
 		}
 		return result;
 	}
+
+	static bool hook(void** vtbl, void* handler, void* original, int index);
 };

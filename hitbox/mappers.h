@@ -8,7 +8,7 @@ class mappers : public singleton<mappers>
 {
 public:
 	UWorld** uworld;
-	Objects** objects;
+	Objects** objs;
 
 public:
 	bool initliaze();
