@@ -253,17 +253,19 @@ bool draws::left(float x, float y, float w, float h, ImColor color)
 	FVector2D s4{};
 	serivce->screen(w4, s4);
 
-	// ×óÉÏ½Ç -> ÓÒÉÏ½Ç
-	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s1.X, s1.Y }, ImVec2{ s2.X, s2.Y }, color);
-	// ÓÒÉÏ½Ç -> ÓÒÏÂ½Ç
-	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s2.X, s2.Y }, ImVec2{ s3.X, s3.Y }, color);
-	// ÓÒÏÂ½Ç -> ×óÏÂ½Ç
-	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s3.X, s3.Y }, ImVec2{ s4.X, s4.Y }, color);
-	// ×óÏÂ½Ç -> ×óÉÏ½Ç
-	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s4.X, s4.Y }, ImVec2{ s1.X, s1.Y }, color);
+	//// ×óÉÏ½Ç -> ÓÒÉÏ½Ç
+	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s1.X, s1.Y }, ImVec2{ s2.X, s2.Y }, color);
+	//// ÓÒÉÏ½Ç -> ÓÒÏÂ½Ç
+	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s2.X, s2.Y }, ImVec2{ s3.X, s3.Y }, color);
+	//// ÓÒÏÂ½Ç -> ×óÏÂ½Ç
+	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s3.X, s3.Y }, ImVec2{ s4.X, s4.Y }, color);
+	//// ×óÏÂ½Ç -> ×óÉÏ½Ç
+	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s4.X, s4.Y }, ImVec2{ s1.X, s1.Y }, color);
 
 	ImVec2 rect_min(s1.X, s1.Y);
 	ImVec2 rect_max(s3.X, s3.Y);
+	ImGui::GetForegroundDrawList()->AddRect(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
+
 	color.Value.w = this->alpha;
 	ImGui::GetForegroundDrawList()->AddRectFilled(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
 	return true;
@@ -299,17 +301,19 @@ bool draws::right(float x, float y, float w, float h, ImColor color)
 	FVector2D s4{};
 	serivce->screen(w4, s4);
 
-	// ×óÉÏ½Ç -> ÓÒÉÏ½Ç
-	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s1.X, s1.Y }, ImVec2{ s2.X, s2.Y }, color);
-	// ÓÒÉÏ½Ç -> ÓÒÏÂ½Ç
-	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s2.X, s2.Y }, ImVec2{ s3.X, s3.Y }, color);
-	// ÓÒÏÂ½Ç -> ×óÏÂ½Ç
-	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s3.X, s3.Y }, ImVec2{ s4.X, s4.Y }, color);
-	// ×óÏÂ½Ç -> ×óÉÏ½Ç
-	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s4.X, s4.Y }, ImVec2{ s1.X, s1.Y }, color);
+	//// ×óÉÏ½Ç -> ÓÒÉÏ½Ç
+	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s1.X, s1.Y }, ImVec2{ s2.X, s2.Y }, color);
+	//// ÓÒÉÏ½Ç -> ÓÒÏÂ½Ç
+	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s2.X, s2.Y }, ImVec2{ s3.X, s3.Y }, color);
+	//// ÓÒÏÂ½Ç -> ×óÏÂ½Ç
+	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s3.X, s3.Y }, ImVec2{ s4.X, s4.Y }, color);
+	//// ×óÏÂ½Ç -> ×óÉÏ½Ç
+	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s4.X, s4.Y }, ImVec2{ s1.X, s1.Y }, color);
 
 	ImVec2 rect_min(s1.X, s1.Y);
 	ImVec2 rect_max(s3.X, s3.Y);
+	ImGui::GetForegroundDrawList()->AddRect(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
+
 	color.Value.w = this->alpha;
 	ImGui::GetForegroundDrawList()->AddRectFilled(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
 	return true;
