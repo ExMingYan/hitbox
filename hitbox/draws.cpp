@@ -232,12 +232,12 @@ bool draws::left(float x, float y, float w, float h, ImColor color)
 	FVector2D s1{};
 	serivce->screen(w1, s1);
 
-	//срио╫г
-	FVector w2{};
-	w2.X = x + w;
-	w2.Z = y;
-	FVector2D s2{};
-	serivce->screen(w2, s2);
+	////срио╫г
+	//FVector w2{};
+	//w2.X = x + w;
+	//w2.Z = y;
+	//FVector2D s2{};
+	//serivce->screen(w2, s2);
 
 	//сроб╫г
 	FVector w3{};
@@ -246,12 +246,12 @@ bool draws::left(float x, float y, float w, float h, ImColor color)
 	FVector2D s3{};
 	serivce->screen(w3, s3);
 
-	//вСоб╫г
-	FVector w4{};
-	w4.X = x;
-	w4.Z = y - h;
-	FVector2D s4{};
-	serivce->screen(w4, s4);
+	////вСоб╫г
+	//FVector w4{};
+	//w4.X = x;
+	//w4.Z = y - h;
+	//FVector2D s4{};
+	//serivce->screen(w4, s4);
 
 	//// вСио╫г -> срио╫г
 	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s1.X, s1.Y }, ImVec2{ s2.X, s2.Y }, color);
@@ -280,12 +280,12 @@ bool draws::right(float x, float y, float w, float h, ImColor color)
 	FVector2D s1{};
 	serivce->screen(w1, s1);
 
-	//срио╫г
-	FVector w2{};
-	w2.X = x - w;
-	w2.Z = y;
-	FVector2D s2{};
-	serivce->screen(w2, s2);
+	////срио╫г
+	//FVector w2{};
+	//w2.X = x - w;
+	//w2.Z = y;
+	//FVector2D s2{};
+	//serivce->screen(w2, s2);
 
 	//сроб╫г
 	FVector w3{ };
@@ -294,12 +294,12 @@ bool draws::right(float x, float y, float w, float h, ImColor color)
 	FVector2D s3{};
 	serivce->screen(w3, s3);
 
-	//вСоб╫г
-	FVector w4{ };
-	w4.X = x;
-	w4.Z = y - h;
-	FVector2D s4{};
-	serivce->screen(w4, s4);
+	////вСоб╫г
+	//FVector w4{ };
+	//w4.X = x;
+	//w4.Z = y - h;
+	//FVector2D s4{};
+	//serivce->screen(w4, s4);
 
 	//// вСио╫г -> срио╫г
 	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s1.X, s1.Y }, ImVec2{ s2.X, s2.Y }, color);
