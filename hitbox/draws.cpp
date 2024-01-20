@@ -233,11 +233,11 @@ bool draws::left(float x, float y, float w, float h, ImColor color)
 	serivce->screen(w1, s1);
 
 	//срио╫г
-	//FVector w2{};
-	//w2.X = x + w;
-	//w2.Z = y;
-	//FVector2D s2{};
-	//serivce->screen(w2, s2);
+	FVector w2{};
+	w2.X = x + w;
+	w2.Z = y;
+	FVector2D s2{};
+	serivce->screen(w2, s2);
 
 	//сроб╫г
 	FVector w3{};
@@ -247,26 +247,25 @@ bool draws::left(float x, float y, float w, float h, ImColor color)
 	serivce->screen(w3, s3);
 
 	//вСоб╫г
-	//FVector w4{};
-	//w4.X = x;
-	//w4.Z = y - h;
-	//FVector2D s4{};
-	//serivce->screen(w4, s4);
+	FVector w4{};
+	w4.X = x;
+	w4.Z = y - h;
+	FVector2D s4{};
+	serivce->screen(w4, s4);
+
+	// вСио╫г -> срио╫г
+	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s1.X, s1.Y }, ImVec2{ s2.X, s2.Y }, color);
+	// срио╫г -> сроб╫г
+	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s2.X, s2.Y }, ImVec2{ s3.X, s3.Y }, color);
+	// сроб╫г -> вСоб╫г
+	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s3.X, s3.Y }, ImVec2{ s4.X, s4.Y }, color);
+	// вСоб╫г -> вСио╫г
+	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s4.X, s4.Y }, ImVec2{ s1.X, s1.Y }, color);
 
 	ImVec2 rect_min(s1.X, s1.Y);
 	ImVec2 rect_max(s3.X, s3.Y);
 	color.Value.w = this->alpha;
 	ImGui::GetForegroundDrawList()->AddRectFilled(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
-
-	//// вСио╫г -> срио╫г
-	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s1.X, s1.Y }, ImVec2{ s2.X, s2.Y }, color);
-	//// срио╫г -> сроб╫г
-	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s2.X, s2.Y }, ImVec2{ s3.X, s3.Y }, color);
-	//// сроб╫г -> вСоб╫г
-	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s3.X, s3.Y }, ImVec2{ s4.X, s4.Y }, color);
-	//// вСоб╫г -> вСио╫г
-	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s4.X, s4.Y }, ImVec2{ s1.X, s1.Y }, color);
-
 	return true;
 }
 
@@ -280,11 +279,11 @@ bool draws::right(float x, float y, float w, float h, ImColor color)
 	serivce->screen(w1, s1);
 
 	//срио╫г
-	//FVector w2{};
-	//w2.X = x - w;
-	//w2.Z = y;
-	//FVector2D s2{};
-	//serivce->screen(w2, s2);
+	FVector w2{};
+	w2.X = x - w;
+	w2.Z = y;
+	FVector2D s2{};
+	serivce->screen(w2, s2);
 
 	//сроб╫г
 	FVector w3{ };
@@ -294,25 +293,25 @@ bool draws::right(float x, float y, float w, float h, ImColor color)
 	serivce->screen(w3, s3);
 
 	//вСоб╫г
-	//FVector w4{ };
-	//w4.X = x;
-	//w4.Z = y - h;
-	//FVector2D s4{};
-	//serivce->screen(w4, s4);
+	FVector w4{ };
+	w4.X = x;
+	w4.Z = y - h;
+	FVector2D s4{};
+	serivce->screen(w4, s4);
+
+	// вСио╫г -> срио╫г
+	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s1.X, s1.Y }, ImVec2{ s2.X, s2.Y }, color);
+	// срио╫г -> сроб╫г
+	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s2.X, s2.Y }, ImVec2{ s3.X, s3.Y }, color);
+	// сроб╫г -> вСоб╫г
+	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s3.X, s3.Y }, ImVec2{ s4.X, s4.Y }, color);
+	// вСоб╫г -> вСио╫г
+	ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s4.X, s4.Y }, ImVec2{ s1.X, s1.Y }, color);
 
 	ImVec2 rect_min(s1.X, s1.Y);
 	ImVec2 rect_max(s3.X, s3.Y);
 	color.Value.w = this->alpha;
 	ImGui::GetForegroundDrawList()->AddRectFilled(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
-
-	//// вСио╫г -> срио╫г
-	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s1.X, s1.Y }, ImVec2{ s2.X, s2.Y }, color);
-	//// срио╫г -> сроб╫г
-	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s2.X, s2.Y }, ImVec2{ s3.X, s3.Y }, color);
-	//// сроб╫г -> вСоб╫г
-	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s3.X, s3.Y }, ImVec2{ s4.X, s4.Y }, color);
-	//// вСоб╫г -> вСио╫г
-	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s4.X, s4.Y }, ImVec2{ s1.X, s1.Y }, color);
 	return true;
 }
 
