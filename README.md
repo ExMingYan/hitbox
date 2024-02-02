@@ -59,6 +59,4 @@ Virtual Studio 2022
 
 ## 感谢
 
-感谢[小废林的个人空间-小废林个人主页-哔哩哔哩视频 (bilibili.com)](https://space.bilibili.com/2203159)的赞助
-
-感谢[江璃落子鹓的个人空间-江璃落子鹓个人主页-哔哩哔哩视频 (bilibili.com)](https://space.bilibili.com/346699931)提供判定框数据
+感谢[Redundantcy(bilibili.com)](https://space.bilibili.com/107436250)提供源代码和修改教程
