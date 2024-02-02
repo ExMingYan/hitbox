@@ -1,6 +1,8 @@
 #include "draws.h"
 #include "memory.h"
 #include <windows.h>
+#include <string>
+#include <iostream>
 
 draws::draws()
 {
@@ -27,96 +29,111 @@ bool draws::draw()
 	ImGui::SameLine();
 	static float temp = 0.2f;
 	ImGui::SetNextItemWidth(50);
-	ImGui::InputFloat(u8"Í¸Ã÷¶È", &temp, 0.0f, 0.0f, "%.2f");	this->alpha = temp;
+	ImGui::InputFloat(u8"é€æ˜Žåº¦", &temp, 0.0f, 0.0f, "%.2f");
+	this->alpha = temp;
+
+	static bool noratk_boxs_display = false;
+	static bool noratk_selector = false;
+	static ImColor attack_boxs_color{ 255, 0, 0 };
+	ctrl->box_color(u8"æ™®é€šæ”»å‡»æ¡†", &noratk_boxs_display, u8"æ™®é€šæ”»å‡»æ¡†é¢œè‰²", &noratk_selector, &attack_boxs_color);
+	attack_colors.noratk = attack_boxs_color;
+	attack_colors.noratk_display = noratk_boxs_display;
+
+	static bool floatk_boxs_display = false;
+	static ImColor floatk_boxs_color{ 200,100,100 };
+	static bool floatk_selector = false;
+	ctrl->box_color(u8"é£žè¡Œé“å…·æ”»å‡»æ¡†", &floatk_boxs_display, u8"é£žè¡Œé“å…·æ”»å‡»æ¡†é¢œè‰²", &floatk_selector, &floatk_boxs_color);
+	attack_colors.floatk = floatk_boxs_color;
+	attack_colors.floatk_display = floatk_boxs_display;
 
 	static bool thratk_boxs_display = false;
 	static bool thratk_selector = false;
 	static ImColor thratk_boxs_color{ 127,255,127 };
-	ctrl->box_color(u8"Í¶¼¼¿ò", &thratk_boxs_display, u8"Í¶¼¼¿òÑÕÉ«", &thratk_selector, &thratk_boxs_color);
+	ctrl->box_color(u8"æŠ•æŠ€æ¡†", &thratk_boxs_display, u8"æŠ•æŠ€æ¡†é¢œè‰²", &thratk_selector, &thratk_boxs_color);
 	attack_colors.thratk = thratk_boxs_color;
 	attack_colors.thratk_display = thratk_boxs_display;
+
+	static bool cgatk_boxs_display = false;
+	static bool cgatk_selector = false;
+	static ImColor cgatk_boxs_color{ 127,191,191 };
+	ctrl->box_color(u8"å¼•å‘é˜²å¾¡æ¡†", &cgatk_boxs_display, u8"å¼•å‘é˜²å¾¡æ¡†é¢œè‰²", &cgatk_selector, &cgatk_boxs_color);
+	attack_colors.cgatk = cgatk_boxs_color;
+	attack_colors.cgatk_display = cgatk_boxs_display;
 
 	static bool body_boxs_display = false;
 	static bool body_selector = false;
 	static ImColor body_boxs_color{ 255, 165, 0 };
-	ctrl->box_color(u8"ÉíÎ»¿ò", &body_boxs_display, u8"ÉíÎ»¿òÑÕÉ«", &body_selector, &body_boxs_color);
+	ctrl->box_color(u8"èº«ä½æ¡†", &body_boxs_display, u8"èº«ä½æ¡†é¢œè‰²", &body_selector, &body_boxs_color);
 
 	static bool normal_boxs_display = false;
 	static bool normal_selector = false;
 	static ImColor normal_boxs_color{ 255, 255, 0 };
-	ctrl->box_color(u8"ÊÜ»÷¿ò", &normal_boxs_display, u8"ÊÜ»÷¿òÑÕÉ«", &normal_selector, &normal_boxs_color);
+	ctrl->box_color(u8"å—å‡»æ¡†", &normal_boxs_display, u8"å—å‡»æ¡†é¢œè‰²", &normal_selector, &normal_boxs_color);
 	affected_colors.normal = normal_boxs_color;
 	affected_colors.normal_display = normal_boxs_display;
 
 	static bool cast_boxs_display = false;
 	static bool cast_selector = false;
 	static ImColor cast_boxs_color{ 127, 255, 255 };
-	ctrl->box_color(u8"±»Í¶¿ò", &cast_boxs_display, u8"±»Í¶¿òÑÕÉ«", &cast_selector, &cast_boxs_color);
+	ctrl->box_color(u8"è¢«æŠ•æ¡†", &cast_boxs_display, u8"è¢«æŠ•æ¡†é¢œè‰²", &cast_selector, &cast_boxs_color);
 	affected_colors.cast = cast_boxs_color;
 	affected_colors.cast_display = cast_boxs_display;
 
 	static bool gurad_boxs_display = false;
 	static bool gurad_selector = false;
 	static ImColor gurad_boxs_color{ 0, 255, 0 };
-	ctrl->box_color(u8"·ÀÓù¿ò", &gurad_boxs_display, u8"·ÀÓù¿òÑÕÉ«", &cast_selector, &cast_boxs_color);
+	ctrl->box_color(u8"é˜²å¾¡æ¡†", &gurad_boxs_display, u8"é˜²å¾¡æ¡†é¢œè‰²", &cast_selector, &cast_boxs_color);
 	affected_colors.gurad = gurad_boxs_color;
 	affected_colors.gurad_display = gurad_boxs_display;
 
 	static bool down_boxs_display = false;
 	static bool down_selector = false;
-	static ImColor down_boxs_color{ 0, 255, 255 };
-	ctrl->box_color(u8"×·¼Ó¿ò", &down_boxs_display, u8"×·¼Ó¿òÑÕÉ«", &down_selector, &down_boxs_color);
+	static ImColor down_boxs_color{ 128, 128, 255 };
+	ctrl->box_color(u8"å€’åœ°å—å‡»æ¡†", &down_boxs_display, u8"å€’åœ°å—å‡»æ¡†é¢œè‰²", &down_selector, &down_boxs_color);
 	affected_colors.down = down_boxs_color;
 	affected_colors.down_display = down_boxs_display;
+
+	static bool ofo_boxs_display = false;
+	static bool ofo_seleoctor = false;
+	static ImColor ofo_boxs_color{ 255, 127, 255 };
+	ctrl->box_color(u8"æŠµæ¶ˆé£žè¡Œé“å…·æ¡†", &ofo_boxs_display, u8"æŠµæ¶ˆé£žè¡Œé“å…·æ¡†é¢œè‰²", &ofo_seleoctor, &ofo_boxs_color);
+	affected_colors.ofo = ofo_boxs_color;
+	affected_colors.ofo_display = ofo_boxs_display;
+
+	static bool rfo_boxs_display = false;
+	static bool rfo_selector = false;
+	static ImColor rfo_boxs_color{ 64, 127, 127 };
+	ctrl->box_color(u8"åå¼¹é£žè¡Œé“å…·æ¡†", &rfo_boxs_display, u8"åå¼¹é£žè¡Œé“å…·æ¡†é¢œè‰²", &rfo_selector, &rfo_boxs_color);
+	affected_colors.rfo = rfo_boxs_color;
+	affected_colors.rfo_display = rfo_boxs_display;
 
 	static bool tyrant_boxs_display = false;
 	static bool tyrant_selector = false;
 	static ImColor tyrant_boxs_color{ 0, 0, 255 };
-	ctrl->box_color(u8"°ÔÌå¿ò", &tyrant_boxs_display, u8"°ÔÌå¿òÑÕÉ«", &tyrant_selector, &tyrant_boxs_color);
+	ctrl->box_color(u8"éœ¸ä½“æ¡†", &tyrant_boxs_display, u8"éœ¸ä½“æ¡†é¢œè‰²", &tyrant_selector, &tyrant_boxs_color);
 	affected_colors.tyants = tyrant_boxs_color;
 	affected_colors.tyants_display = tyrant_boxs_display;
 
 	static bool gp_boxs_display = false;
 	static bool gp_selector = false;
 	static ImColor gp_boxs_color{ 139, 0, 255 };
-	ctrl->box_color(u8"µ±Éí¿ò", &gp_boxs_display, u8"µ±Éí¿òÑÕÉ«", &gp_selector, &gp_boxs_color);
+	ctrl->box_color(u8"å½“èº«æ¡†", &gp_boxs_display, u8"å½“èº«æ¡†é¢œè‰²", &gp_selector, &gp_boxs_color);
 	affected_colors.guradex = gp_boxs_color;
 	affected_colors.guradex_display = gp_boxs_display;
 
-	static bool noratk_boxs_display = false;
-	static bool noratk_selector = false;
-	static ImColor attack_boxs_color{ 255, 0, 0 };
-	ctrl->box_color(u8"ÆÕÍ¨¹¥»÷¿ò", &noratk_boxs_display, u8"ÆÕÍ¨¹¥»÷¿òÑÕÉ«", &noratk_selector, &attack_boxs_color);
-	attack_colors.noratk = attack_boxs_color;
-	attack_colors.noratk_display = noratk_boxs_display;
+	static bool fp_boxs_display = false;
+	static ImColor fp_boxs_color{ 193,0,193 };
+	static bool fp_color = false;
+	ctrl->box_color(u8"å¯¹é£žè¡Œé“å…·å½“èº«æ¡†", &fp_boxs_display, u8"å¯¹é£žè¡Œé“å…·å½“èº«æ¡†é¢œè‰²", &fp_color, &fp_boxs_color);
+	affected_colors.flyobex = fp_boxs_color;
+	affected_colors.flyobex_display = fp_boxs_display;
 
-	static bool cgatk_boxs_display = false;
-	static bool cgatk_selector = false;
-	static ImColor cgatk_boxs_color{ 127,255,127 };
-	ctrl->box_color(u8"Òý·¢·ÀÓù¿ò", &cgatk_boxs_display, u8"Òý·¢·ÀÓù¿òÑÕÉ«", &cgatk_selector, &cgatk_boxs_color);
-	attack_colors.cgatk = cgatk_boxs_color;
-	attack_colors.cgatk_display = cgatk_boxs_display;
-
-	static bool floatk_boxs_display = false;
-	static ImColor floatk_boxs_color{ 127,127,255 };
-	static bool floatk_selector = false;
-	ctrl->box_color(u8"·ÉÐÐµÀ¾ß¹¥»÷¿ò", &floatk_boxs_display, u8"·ÉÐÐµÀ¾ß¹¥»÷¿òÑÕÉ«", &floatk_selector, &floatk_boxs_color);
-	attack_colors.floatk = floatk_boxs_color;
-	attack_colors.floatk_display = floatk_boxs_display;
-
-	static bool ofo_boxs_display = false;
-	static bool ofo_seleoctor = false;
-	static ImColor ofo_boxs_color{ 255, 127, 255 };
-	ctrl->box_color(u8"µÖÏû·ÉÐÐµÀ¾ß¿ò", &ofo_boxs_display, u8"µÖÏû·ÉÐÐµÀ¾ß¿òÑÕÉ«", &ofo_seleoctor, &ofo_boxs_color);
-	affected_colors.ofo = ofo_boxs_color;
-	affected_colors.ofo_display = ofo_boxs_display;
-
-	static bool rfo_boxs_display = false;
-	static bool rfo_selector = false;
-	static ImColor rfo_boxs_color{ 127, 255, 255 };
-	ctrl->box_color(u8"·´µ¯·ÉÐÐµÀ¾ß¿ò", &rfo_boxs_display, u8"·´µ¯·ÉÐÐµÀ¾ß¿òÑÕÉ«", &rfo_selector, &rfo_boxs_color);
-	affected_colors.rfo = rfo_boxs_color;
-	affected_colors.rfo_display = rfo_boxs_display;
+	static bool tp_boxs_display = false;
+	static ImColor tp_boxs_color{ 193,255,193 };
+	static bool tp_color = false;
+	ctrl->box_color(u8"å¯¹æŠ•å½“èº«æ¡†", &tp_boxs_display, u8"å¯¹æŠ•å½“èº«æ¡†é¢œè‰²", &tp_color, &tp_boxs_color);
+	affected_colors.throwex = tp_boxs_color;
+	affected_colors.throwex_display = tp_boxs_display;
 
 	auto objects = *mapper->objs;
 
@@ -205,13 +222,13 @@ bool draws::draw()
 			Action_Collections 	actcs = props_entry.actcs[i];
 			switch (actcs.types) {
 			case Action_Types::AttackBoxs: {
-				attack_boxs((Player*)props, actcs, attack_colors, display_p1);
-				attack_boxs((Player*)props, actcs, attack_colors, display_p2);
+				attack_boxs(props, actcs, attack_colors, display_p1);
+				attack_boxs(props, actcs, attack_colors, display_p2);
 				break;
 			}
 			case Action_Types::AffectedBoxs: {
-				affected_boxs((Player*)props, actcs, affected_colors, display_p1);
-				affected_boxs((Player*)props, actcs, affected_colors, display_p2);
+				affected_boxs(props, actcs, affected_colors, display_p1);
+				affected_boxs(props, actcs, affected_colors, display_p2);
 				break;
 			}
 			default: {
@@ -220,95 +237,132 @@ bool draws::draw()
 			}
 		}
 	}
+
+	auto b1 = objects->b1;
+	while (b1 != nullptr) {
+		if (b1->acts == nullptr) {
+			break;
+		}
+		if (b1->acts->entry == nullptr) {
+			break;
+		}
+		entry = b1->acts->entry[b1->number];
+		for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
+			Action_Collections actcs = entry.actcs[i];
+			switch (actcs.types)
+			{
+			case Action_Types::AttackBoxs: {
+				attack_boxs(b1, actcs, attack_colors, display_p1);
+				break;
+				}
+			case Action_Types::AffectedBoxs: {
+				affected_boxs(b1, actcs, affected_colors, display_p1);
+				break;
+			}
+			default:
+				break;
+			}
+		}
+		break;
+	}
+
+	auto b2 = objects->b2;
+	while (b2 != nullptr) {
+		if (b2->acts == nullptr) {
+			break;
+		}
+		if (b2->acts->entry == nullptr) {
+			break;
+		}
+		entry = b2->acts->entry[b2->number];
+		for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
+			Action_Collections actcs = entry.actcs[i];
+			switch (actcs.types)
+			{
+			case Action_Types::AttackBoxs: {
+				attack_boxs(b2, actcs, attack_colors, display_p1);
+				break;
+			}
+			case Action_Types::AffectedBoxs: {
+				affected_boxs(b2, actcs, affected_colors, display_p2);
+				break;
+			}
+			default:
+				break;
+			}
+		}
+		break;
+	}
 	return true;
 }
 
-bool draws::left(float x, float y, float w, float h, ImColor color)
+bool draws::left(float x, float y, float w, float h, ImColor color, Action_Collections actcs, Player* player)
 {
-	//×óÉÏ½Ç
+	//å·¦ä¸Šè§’
 	FVector w1{};
 	w1.X = x;
 	w1.Z = y;
 	FVector2D s1{};
 	serivce->screen(w1, s1);
 
-	////ÓÒÉÏ½Ç
-	//FVector w2{};
-	//w2.X = x + w;
-	//w2.Z = y;
-	//FVector2D s2{};
-	//serivce->screen(w2, s2);
-
-	//ÓÒÏÂ½Ç
+	//å³ä¸‹è§’
 	FVector w3{};
 	w3.X = x + w;
 	w3.Z = y - h;
 	FVector2D s3{};
 	serivce->screen(w3, s3);
 
-	////×óÏÂ½Ç
-	//FVector w4{};
-	//w4.X = x;
-	//w4.Z = y - h;
-	//FVector2D s4{};
-	//serivce->screen(w4, s4);
-
-	//// ×óÉÏ½Ç -> ÓÒÉÏ½Ç
-	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s1.X, s1.Y }, ImVec2{ s2.X, s2.Y }, color);
-	//// ÓÒÉÏ½Ç -> ÓÒÏÂ½Ç
-	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s2.X, s2.Y }, ImVec2{ s3.X, s3.Y }, color);
-	//// ÓÒÏÂ½Ç -> ×óÏÂ½Ç
-	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s3.X, s3.Y }, ImVec2{ s4.X, s4.Y }, color);
-	//// ×óÏÂ½Ç -> ×óÉÏ½Ç
-	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s4.X, s4.Y }, ImVec2{ s1.X, s1.Y }, color);
-
 	ImVec2 rect_min(s1.X, s1.Y);
 	ImVec2 rect_max(s3.X, s3.Y);
 	ImGui::GetForegroundDrawList()->AddRect(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
 
 	color.Value.w = this->alpha;
 	ImGui::GetForegroundDrawList()->AddRectFilled(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
+
+	ImVec2 str_pos((s1.X + s3.X) / 2, (s1.Y + s3.Y) / 2);
+	for (int i = 0; i < actcs.capacity; i++) {
+		if (actcs.affected[i].frame != player->now) {
+			continue;
+		}
+		switch (actcs.affected[i].types)
+		{
+		case Affected_Types::OFOB: {
+			int level = actcs.affected[i].flag >> 9 & 7;
+			std::string levels = std::to_string(level);
+			const char* levelstr = levels.c_str();
+			ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, levelstr, (const char*)0);
+			break;
+		}
+		case Affected_Types::RFOB: {
+			int level = actcs.affected[i].flag >> 9 & 7;
+			std::string levels = std::to_string(level);
+			const char* levelstr = levels.c_str();
+			ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, levelstr, (const char*)0);
+			break;
+		}
+		default: {
+			break;
+		}
+		}
+	}
 	return true;
 }
 
-bool draws::right(float x, float y, float w, float h, ImColor color)
+bool draws::right(float x, float y, float w, float h, ImColor color, Action_Collections actcs, Player* player)
 {
-	//×óÉÏ½Ç
+	//å·¦ä¸Šè§’
 	FVector w1{};
 	w1.X = x;
 	w1.Z = y;
 	FVector2D s1{};
 	serivce->screen(w1, s1);
 
-	////ÓÒÉÏ½Ç
-	//FVector w2{};
-	//w2.X = x - w;
-	//w2.Z = y;
-	//FVector2D s2{};
-	//serivce->screen(w2, s2);
-
-	//ÓÒÏÂ½Ç
+	//å³ä¸‹è§’
 	FVector w3{ };
 	w3.X = x - w;
 	w3.Z = y - h;
 	FVector2D s3{};
 	serivce->screen(w3, s3);
-
-	////×óÏÂ½Ç
-	//FVector w4{ };
-	//w4.X = x;
-	//w4.Z = y - h;
-	//FVector2D s4{};
-	//serivce->screen(w4, s4);
-
-	//// ×óÉÏ½Ç -> ÓÒÉÏ½Ç
-	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s1.X, s1.Y }, ImVec2{ s2.X, s2.Y }, color);
-	//// ÓÒÉÏ½Ç -> ÓÒÏÂ½Ç
-	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s2.X, s2.Y }, ImVec2{ s3.X, s3.Y }, color);
-	//// ÓÒÏÂ½Ç -> ×óÏÂ½Ç
-	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s3.X, s3.Y }, ImVec2{ s4.X, s4.Y }, color);
-	//// ×óÏÂ½Ç -> ×óÉÏ½Ç
-	//ImGui::GetForegroundDrawList()->AddLine(ImVec2{ s4.X, s4.Y }, ImVec2{ s1.X, s1.Y }, color);
 
 	ImVec2 rect_min(s1.X, s1.Y);
 	ImVec2 rect_max(s3.X, s3.Y);
@@ -316,6 +370,33 @@ bool draws::right(float x, float y, float w, float h, ImColor color)
 
 	color.Value.w = this->alpha;
 	ImGui::GetForegroundDrawList()->AddRectFilled(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
+
+	ImVec2 str_pos((s1.X + s3.X) / 2, (s1.Y + s3.Y) / 2);
+	for (int i = 0; i < actcs.capacity; i++) {
+		if (actcs.affected[i].frame != player->now) {
+			continue;
+		}
+		switch (actcs.affected[i].types)
+		{
+		case Affected_Types::OFOB: {
+			int level = actcs.affected[i].flag >> 9 & 7;
+			std::string levels = std::to_string(level);
+			const char* levelstr = levels.c_str();
+			ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, levelstr, (const char*)0);
+			break;
+		}
+		case Affected_Types::RFOB: {
+			int level = actcs.affected[i].flag >> 9 & 7;
+			std::string levels = std::to_string(level);
+			const char* levelstr = levels.c_str();
+			ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, levelstr, (const char*)0);
+			break;
+		}
+		default: {
+			break;
+		}
+		}
+	}
 	return true;
 }
 
@@ -337,7 +418,7 @@ bool draws::attack_boxs(Player* player, Action_Collections actcs, attackcolors& 
 		auto y = box.y * 10;
 		auto w = box.w * 10;
 		auto h = box.h * 10;
-		Attack_Type_Collections atkcs = player->atks->atkcs[box.atk];
+		ATK_Collections atkcs = player->atks->atkcs[box.atk];
 
 		ImColor color{ 255,255,0 };
 
@@ -372,10 +453,10 @@ bool draws::attack_boxs(Player* player, Action_Collections actcs, attackcolors& 
 		}
 		if (display) {
 			if (player->toward == 0) {
-				left(px + x + player->xoff * 10, y + py + player->yoff * 10, w, h, color);
+				left(px + x + player->xoff * 10, y + py + player->yoff * 10, w, h, color, actcs, player);
 			}
 			else {
-				right(px - x + player->xoff * 10, y + py + player->yoff * 10, w, h, color);
+				right(px - x + player->xoff * 10, y + py + player->yoff * 10, w, h, color, actcs, player);
 			}
 		}
 	}
@@ -406,10 +487,10 @@ bool draws::body_boxs(Player* player, Action_Collections actcs, ImColor color, b
 		}
 
 		if (player->toward == 0) {
-			left(px + x + player->xoff * 10, y + py + player->yoff * 10, w, h, color);
+			left(px + x + player->xoff * 10, y + py + player->yoff * 10, w, h, color, actcs, player);
 		}
 		else {
-			right(px - x + player->xoff * 10, y + py + player->yoff * 10, w, h, color);
+			right(px - x + player->xoff * 10, y + py + player->yoff * 10, w, h, color, actcs, player);
 		}
 	}
 
@@ -436,18 +517,28 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 		auto y = box.y * 10;
 		auto w = box.w * 10;
 		auto h = box.h * 10;
-
 		if (box.frame != player->now) {
 			continue;
 		}
 
+		if (box.isaddoffset <= 0) {
+			px += player->xoff * 10;
+			py += player->yoff * 10;
+		}
+
 		switch (box.types) {
 		case Affected_Types::NormalHitBox: {
+			if (player->avoidhit) {
+				display = false;
+			};
 			color = cs.normal;
 			display = display && cs.normal_display;
 			break;
 		}
 		case Affected_Types::CastBox: {
+			if (player->avoidthrow) {
+				display = false;
+			};
 			color = cs.cast;
 			display = display && cs.cast_display;
 			break;
@@ -458,16 +549,19 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 			break;
 		}
 		case Affected_Types::DownHitBox: {
+			if (player->avoidhit) {
+				display = false;
+			};
 			color = cs.down;
 			display = display && cs.down_display;
 			break;
 		}
-		case Affected_Types::OffsetFlyingObjectBox: {
+		case Affected_Types::OFOB: {
 			color = cs.ofo;
 			display = display && cs.ofo_display;
 			break;
 		}
-		case Affected_Types::ReboundFlyingObjectBox: {
+		case Affected_Types::RFOB: {
 			color = cs.rfo;
 			display = cs.rfo_display;
 			break;
@@ -482,6 +576,16 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 			display = display && cs.guradex_display;
 			break;
 		}
+		case Affected_Types::FlyObPointBox: {
+			color = cs.flyobex;
+			display = display && cs.flyobex_display;
+			break;
+		}
+		case Affected_Types::ThrowPointBox: {
+			color = cs.throwex;
+			display = display && cs.throwex_display;
+			break;
+		}
 		default: {
 			display = false;
 			break;
@@ -490,13 +594,12 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 
 		if (display) {
 			if (player->toward == 0) {
-				left(px + x + player->xoff * 10, y + py + player->yoff * 10, w, h, color);
+				left(px + x, y + py, w, h, color, actcs, player);
 			}
 			else {
-				right(px - x + player->xoff * 10, y + py + player->yoff * 10, w, h, color);
+				right(px - x, y + py, w, h, color, actcs, player);
 			}
 		}
 	}
-
 	return true;
 }
