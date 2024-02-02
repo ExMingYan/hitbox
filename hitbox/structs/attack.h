@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 enum class Attack_Types : int			//攻击框类型
 {

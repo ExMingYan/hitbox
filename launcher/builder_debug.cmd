@@ -1,1 +1,1 @@
-builder.exe ..\x64\Debug\hitbox.dll E:\code\cpp\hitbox\launcher
+builder.exe ..\x64\Debug\hitbox.dll E:\VisualStudio\Code\hitbox\launcher

@@ -1,4 +1,4 @@
-#include "draws.h"
+﻿#include "draws.h"
 #include "memory.h"
 #include <windows.h>
 #include <string>
@@ -323,7 +323,7 @@ bool draws::left(float x, float y, float w, float h, ImColor color, Action_Colle
 	ImGui::GetForegroundDrawList()->AddRectFilled(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
 
 	ImVec2 str_pos((s1.X + s3.X) / 2, (s1.Y + s3.Y) / 2);
-	for (int i = 0; i < actcs.capacity; i++) {
+	for (unsigned int i = 0; i < actcs.capacity; i++) {
 		if (actcs.affected[i].frame != player->now) {
 			continue;
 		}
@@ -375,7 +375,7 @@ bool draws::right(float x, float y, float w, float h, ImColor color, Action_Coll
 	ImGui::GetForegroundDrawList()->AddRectFilled(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
 
 	ImVec2 str_pos((s1.X + s3.X) / 2, (s1.Y + s3.Y) / 2);
-	for (int i = 0; i < actcs.capacity; i++) {
+	for (unsigned int i = 0; i < actcs.capacity; i++) {
 		if (actcs.affected[i].frame != player->now) {
 			continue;
 		}

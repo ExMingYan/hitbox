@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "action.h"
 
 _declspec(align(8))

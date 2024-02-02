@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "body.h"
 #include "attack.h"
 #include "affected.h"
