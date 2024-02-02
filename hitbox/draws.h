@@ -1,7 +1,6 @@
 #pragma once
 
 #include "imgui/imgui.h"
-
 #include "control.h"
 #include "mappers.h"
 #include "services.h"
@@ -28,6 +27,8 @@ struct affectcolors {
 	ImColor rfo;
 	ImColor tyants;
 	ImColor guradex;
+	ImColor flyobex;
+	ImColor throwex;
 	bool normal_display;
 	bool cast_display;
 	bool gurad_display;
@@ -36,6 +37,8 @@ struct affectcolors {
 	bool rfo_display;
 	bool tyants_display;
 	bool guradex_display;
+	bool flyobex_display;
+	bool throwex_display;
 };
 
 class draws : public singleton<draws>
@@ -47,8 +50,8 @@ private:
 	float alpha;
 
 private:
-	bool left(float x, float y, float w, float h, ImColor color);
-	bool right(float x, float y, float w, float h, ImColor color);
+	bool left(float x, float y, float w, float h, ImColor color, Action_Collections actcs, Player* player);
+	bool right(float x, float y, float w, float h, ImColor color, Action_Collections actcs, Player* player);
 	bool attack_boxs(Player* player, Action_Collections actcs, attackcolors& cs, bool display);
 	bool body_boxs(Player* player, Action_Collections actcs, ImColor color, bool display);
 	bool affected_boxs(Player* player, Action_Collections actcs, affectcolors& cs, bool display);
