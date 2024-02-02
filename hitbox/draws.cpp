@@ -219,6 +219,9 @@ bool draws::draw()
 		auto props = list->props;
 		auto props_entry = props->acts->entry[props->number];
 		for (int i = 0; i < props_entry.capacity; i++) {
+			if (props->propsflag >> 8 & 1) {
+				continue;
+			}
 			Action_Collections 	actcs = props_entry.actcs[i];
 			switch (actcs.types) {
 			case Action_Types::AttackBoxs: {
