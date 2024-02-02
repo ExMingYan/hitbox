@@ -5,16 +5,15 @@
 
 enum class  Action_Types : int
 {
-	Patch = 0x0,
-	BodyBoxs = 0x3,								//ÉíÎ»¿ò£»0x3
-	AffectedBoxs = 0x4,							//ÊÜ»÷¿ò£»0x4
-	AttackBoxs = 0x5,							//¹¥»÷¿ò£»0x5
+	BodyBoxs = 0x3,								//èº«ä½æ¡†ï¼›0x3
+	AffectedBoxs = 0x4,							//å—å‡»æ¡†ï¼›0x4
+	AttackBoxs = 0x5,							//æ”»å‡»æ¡†ï¼›0x5
 };
 
-struct Action_Collections						//ACTÖ¸Õë¼¯
+struct Action_Collections						//ACTæŒ‡é’ˆé›†
 {
-	unsigned int capacity;						//0x0 ×ÜÖ¡Êı£»Ö¸ÕëÖ¸ÏòÄÚÈİ×Ü´óĞ¡ = TotalFrame * 0x2C
-	Action_Types types;							//0x4 ACTÀàĞÍ£»¾ö¶¨Ö¸ÕëÖ¸ÏòµÄÄÚÈİ
+	unsigned int capacity;						//0x0 æ€»å¸§æ•°ï¼›æŒ‡é’ˆæŒ‡å‘å†…å®¹æ€»å¤§å° = TotalFrame * 0x2C
+	Action_Types types;							//0x4 ACTç±»å‹ï¼›å†³å®šæŒ‡é’ˆæŒ‡å‘çš„å†…å®¹
 	union
 	{
 		Attack_Boxs* attack;
@@ -24,20 +23,41 @@ struct Action_Collections						//ACTÖ¸Õë¼¯
 };
 static_assert(sizeof(Action_Collections) == 0x10, "Size check");
 
-struct Actions_Entry							//¶¯×÷ÊµÌåÀà
+struct ATK_Collections
+{
+	Attack_Types types;							//0x0ï¼›æ‹›å¼ç±»å‹
+	int level;									//0x4ï¼›æ‹›å¼ç­‰çº§
+	int damage;									//0x8ï¼›æ‹›å¼ä¼¤å®³
+	int damagelimit;							//0xCï¼›æ‹›å¼ä¿åº•ä¼¤å®³
+	int guarddamagelimit;						//0x10ï¼›æ‹›å¼å‘½ä¸­é˜²å¾¡ä¿åº•ä¼¤å®³
+	int stun;									//0x14ï¼›é€ æˆæ™•å€¼
+	int guard;									//0x18ï¼›é€ æˆç ´é˜²å€¼
+	int selfaddpower;							//0x1Cï¼›è‡ªèº«æŒ‡å®šåŠ æ°”é‡
+	int oppoaddpower;							//0x20ï¼›å¯¹æ–¹æŒ‡å®šåŠ æ°”é‡
+	char fill[0x1A4];
+};
+static_assert(sizeof(ATK_Collections) == 0x1C8, "Size check");
+
+struct Actions_Entry							//åŠ¨ä½œå®ä½“ç±»
 {
 	void* unknown1;								//0x0
-	int mar;									//0x08£»¶¯×÷×î´óÖ¡Êı
-	int reset;									//0x0C£»¶¯×÷ÖØÖÃÖ¡Êı
+	int mar;									//0x08ï¼›åŠ¨ä½œæœ€å¤§å¸§æ•°
+	int reset;									//0x0Cï¼›åŠ¨ä½œé‡ç½®å¸§æ•°
 	void* unknown2;								//0x10
 	void* unknown3;								//0x18
 	int unknown4;								//0x20
-	int capacity;								//0x24£»ACTÖ¸Õë¼¯ÄÚÖ¸ÕëÊı
-	Action_Collections* actcs;					//0x28£»ACTÖ¸Õë¼¯
+	int capacity;								//0x24ï¼›ACTæŒ‡é’ˆé›†å†…æŒ‡é’ˆæ•°
+	Action_Collections* actcs;					//0x28ï¼›ACTæŒ‡é’ˆé›†
 };
 static_assert(sizeof(Actions_Entry) == 0x30, "Size check");
 
-struct Actions									//¶¯×÷¼¯
+struct Attacks
+{
+	char unknown[0x20];
+	ATK_Collections* atkcs;
+};
+
+struct Actions									//åŠ¨ä½œé›†
 {
 	char unknown[0x20];							//0x0
 	Actions_Entry* entry;						//0x20
