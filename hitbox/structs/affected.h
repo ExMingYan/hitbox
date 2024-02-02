@@ -2,28 +2,30 @@
 
 enum class  Affected_Types :int
 {
-	NormalHitBox = 0x1,						//0x01£»ÊÜ»÷¿ò
-	CastBox = 0x2,							//0x02£»±»Í¶¿ò
-	GuardBox = 0x3,							//0x03£»·ÀÓù¿ò
-	DownHitBox = 0x4,						//0x04£»µ¹µØÊÜ»÷¿ò
-	OffsetFlyingObjectBox = 0x5,			//0x05£»µÖÏû·ÉĞĞµÀ¾ß¿ò
-	ReboundFlyingObjectBox = 0x6,			//0x06£»·´µ¯·ÉĞĞµÀ¾ß¿ò
-	TyrantsBox = 0x7,						//0x07£»°ÔÌå¿ò
-	GuardPointBox = 0x8,					//0x08£»µ±Éí¿ò
+	NormalHitBox = 0x1,						//0x01ï¼›å—å‡»æ¡†
+	CastBox = 0x2,							//0x02ï¼›è¢«æŠ•æ¡†
+	GuardBox = 0x3,							//0x03ï¼›é˜²å¾¡æ¡†
+	DownHitBox = 0x4,						//0x04ï¼›å€’åœ°å—å‡»æ¡†
+	OFOB = 0x5,								//0x05ï¼›æŠµæ¶ˆé£è¡Œé“å…·æ¡†
+	RFOB = 0x6,								//0x06ï¼›åå¼¹é£è¡Œé“å…·æ¡†
+	TyrantsBox = 0x7,						//0x07ï¼›éœ¸ä½“æ¡†
+	GuardPointBox = 0x8,					//0x08ï¼›å½“èº«æ¡†
+	FlyObPointBox = 0x9,					//0x09ï¼šå¯¹é£è¡Œé“å…·å½“èº«æ¡†
+	ThrowPointBox = 0xA						//0x0Aï¼›å¯¹æŠ•å½“èº«æ¡†
 };
 
-struct Affected_Boxs						//ÊÜ»÷¿ò½á¹¹£»Ã¿Ö¡Õ¼ÓÃ0x2C×Ö½Ú
+struct Affected_Boxs						//å—å‡»æ¡†ç»“æ„ï¼›æ¯å¸§å ç”¨0x2Cå­—èŠ‚
 {
-	unsigned int frame;						//Æ«ÒÆ0x00£»Ö¡Êı
-	unsigned int fill1;						//Æ«ÒÆ0x04
-	Affected_Types types;					//Æ«ÒÆ0x08£»ÊÜ»÷¿òÀàĞÍ
-	unsigned int flag;						//Æ«ÒÆ0x0C£»FlagÔÚ²»Í¬ÀàĞÍµÄÊÜ»÷¿òÖĞ¶ÔÓ¦µÄ¹¦ÄÜ²»Ò»Ñù
-	unsigned int fill2;						//Æ«ÒÆ0x10
-	unsigned int fill3;						//Æ«ÒÆ0x14
-	unsigned int fill4;						//Æ«ÒÆ0x18
-	float x;								//Æ«ÒÆ0x1C
-	float y;								//Æ«ÒÆ0x20
-	float w;								//Æ«ÒÆ0x24
-	float h;								//Æ«ÒÆ0x28
+	unsigned int frame;						//åç§»0x00ï¼›å¸§æ•°
+	unsigned int fill1;						//åç§»0x04
+	Affected_Types types;					//åç§»0x08ï¼›å—å‡»æ¡†ç±»å‹
+	unsigned int flag;						//åç§»0x0Cï¼›Flagåœ¨ä¸åŒç±»å‹çš„å—å‡»æ¡†ä¸­å¯¹åº”çš„åŠŸèƒ½ä¸ä¸€æ ·
+	unsigned int fill2;						//åç§»0x10
+	int isaddoffset;						//åç§»0x14
+	unsigned int fill3;						//åç§»0x18
+	float x;								//åç§»0x1C
+	float y;								//åç§»0x20
+	float w;								//åç§»0x24
+	float h;								//åç§»0x28
 };
 static_assert(sizeof(Affected_Boxs) == 0x2C, "Size check");
