@@ -1,25 +1,23 @@
 #pragma once
 
-enum class Attack_Types : int			//¹¥»÷¿òÀàĞÍ
+enum class Attack_Types : int			//æ”»å‡»æ¡†ç±»å‹
 {
-	NormalAttack,						//ÆÕÍ¨¹¥»÷£»0x0
-	FlyingObject,						//·ÉĞĞµÀ¾ß£»0x1
-	ThrowSkill,							//Í¶¼¼£»0x2
-	ForcedHit,							//Ç¿ÖÆÃüÖĞ£»0x3
-	Unkown,								//0x4
-	CauseGuard							//Òı·¢·ÀÓù£»0x5
+	NormalAttack = 0x0,					//æ™®é€šæ”»å‡»ï¼›0x0
+	FlyingObject = 0x1,					//é£è¡Œé“å…·ï¼›0x1
+	ThrowSkill = 0x2,					//æŠ•æŠ€ï¼›0x2
+	CauseGuard = 0x5					//å¼•å‘é˜²å¾¡ï¼›0x5
 };
 
-struct Attack_Boxs							//¹¥»÷¿ò£»Ã¿Ö¡Õ¼ÓÃ0x2C×Ö½Ú
+struct Attack_Boxs						//æ”»å‡»æ¡†ï¼›æ¯å¸§å ç”¨0x2Cå­—èŠ‚
 {
-	unsigned int frame;					//Æ«ÒÆ0x00
-	unsigned int atk;					//Æ«ÒÆ0x04£»¶ÔÓ¦ATK±àºÅ
-	unsigned int hit;					//Æ«ÒÆ0x08£»ËùÊôHitÊı
-	float x;							//Æ«ÒÆ0x0C
-	float y;							//Æ«ÒÆ0x10
-	float w;							//Æ«ÒÆ0x14
-	float h;							//Æ«ÒÆ0x18
-	unsigned int flag;					//Æ«ÒÆ0x1C£»bit 8ÔÚÖØÈ­/ÖØ½ÅµÄ¹¥»÷¿òÖĞ±íÊ¾ÕâÒ»Ö¡ÎªCÍ¶/DÍ¶µÄÅĞ¶¨¿ò
+	unsigned int frame;					//åç§»0x00
+	unsigned int atk;					//åç§»0x04ï¼›å¯¹åº”ATKç¼–å·
+	unsigned int hit;					//åç§»0x08ï¼›æ‰€å±Hitæ•°
+	float x;							//åç§»0x0C
+	float y;							//åç§»0x10
+	float w;							//åç§»0x14
+	float h;							//åç§»0x18
+	unsigned int flag;					//åç§»0x1Cï¼›
 	char unknown[0xc];
 };
 static_assert(sizeof(Attack_Boxs) == 0x2C, "Size check");
