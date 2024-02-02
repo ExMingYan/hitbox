@@ -47,7 +47,7 @@
 
 ## 使用
 
-在[发布页](https://github.com/473671866/hitbox/releases)中下载`launcher.exe`
+在[发布页](https://github.com/Moon-night-Fragment/hitbox/releases)中下载`launcher.exe`
 
 启动游戏
 
