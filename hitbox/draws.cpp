@@ -324,15 +324,15 @@ bool draws::left(float x, float y, float w, float h, ImColor color, Action_Colle
 
 	ImVec2 str_pos((s1.X + s3.X) / 2, (s1.Y + s3.Y) / 2);
 	for (unsigned int i = 0; i < actcs.capacity; i++) {
-		if (actcs.affected[i].frame != player->now) {
-			continue;
-		}
 		switch (actcs.types)
 		{
 		case Action_Types::AffectedBoxs: {
 			switch (actcs.affected[i].types)
 			{
 			case Affected_Types::OFOB: {
+				if (actcs.affected[i].frame != player->now) {
+					break;
+				}
 				int level = actcs.affected[i].flag >> 9 & 7;
 				std::string levels = std::to_string(level);
 				const char* levelstr = levels.c_str();
@@ -340,6 +340,9 @@ bool draws::left(float x, float y, float w, float h, ImColor color, Action_Colle
 				break;
 			}
 			case Affected_Types::RFOB: {
+				if (actcs.affected[i].frame != player->now) {
+					break;
+				}
 				int level = actcs.affected[i].flag >> 9 & 7;
 				std::string levels = std::to_string(level);
 				const char* levelstr = levels.c_str();
@@ -384,15 +387,15 @@ bool draws::right(float x, float y, float w, float h, ImColor color, Action_Coll
 
 	ImVec2 str_pos((s1.X + s3.X) / 2, (s1.Y + s3.Y) / 2);
 	for (unsigned int i = 0; i < actcs.capacity; i++) {
-		if (actcs.affected[i].frame != player->now) {
-			continue;
-		}
 		switch (actcs.types)
 		{
 		case Action_Types::AffectedBoxs: {
 			switch (actcs.affected[i].types)
 			{
 			case Affected_Types::OFOB: {
+				if (actcs.affected[i].frame != player->now) {
+					break;
+				}
 				int level = actcs.affected[i].flag >> 9 & 7;
 				std::string levels = std::to_string(level);
 				const char* levelstr = levels.c_str();
@@ -400,6 +403,9 @@ bool draws::right(float x, float y, float w, float h, ImColor color, Action_Coll
 				break;
 			}
 			case Affected_Types::RFOB: {
+				if (actcs.affected[i].frame != player->now) {
+					break;
+				}
 				int level = actcs.affected[i].flag >> 9 & 7;
 				std::string levels = std::to_string(level);
 				const char* levelstr = levels.c_str();
