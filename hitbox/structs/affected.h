@@ -21,7 +21,7 @@ struct Affected_Boxs						//受击框结构；每帧占用0x2C字节
 	Affected_Types types;					//偏移0x08；受击框类型
 	unsigned int flag;						//偏移0x0C；Flag在不同类型的受击框中对应的功能不一样
 	unsigned int fill2;						//偏移0x10
-	int isaddoffset;						//偏移0x14
+	int isaddoffset;						//偏移0x14；小于等于0时受击框才加Player->xoff和Player->yoff
 	unsigned int fill3;						//偏移0x18
 	float x;								//偏移0x1C
 	float y;								//偏移0x20

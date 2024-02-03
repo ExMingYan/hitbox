@@ -379,25 +379,33 @@ bool draws::right(float x, float y, float w, float h, ImColor color, Action_Coll
 		if (actcs.affected[i].frame != player->now) {
 			continue;
 		}
-		switch (actcs.affected[i].types)
+		switch (actcs.types)
 		{
-		case Affected_Types::OFOB: {
-			int level = actcs.affected[i].flag >> 9 & 7;
-			std::string levels = std::to_string(level);
-			const char* levelstr = levels.c_str();
-			ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, levelstr, (const char*)0);
+		case Action_Types::AffectedBoxs: {
+			switch (actcs.affected[i].types)
+			{
+			case Affected_Types::OFOB: {
+				int level = actcs.affected[i].flag >> 9 & 7;
+				std::string levels = std::to_string(level);
+				const char* levelstr = levels.c_str();
+				ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, levelstr, (const char*)0);
+				break;
+			}
+			case Affected_Types::RFOB: {
+				int level = actcs.affected[i].flag >> 9 & 7;
+				std::string levels = std::to_string(level);
+				const char* levelstr = levels.c_str();
+				ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, levelstr, (const char*)0);
+				break;
+			}
+			default: {
+				break;
+			}
+			}
 			break;
 		}
-		case Affected_Types::RFOB: {
-			int level = actcs.affected[i].flag >> 9 & 7;
-			std::string levels = std::to_string(level);
-			const char* levelstr = levels.c_str();
-			ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, levelstr, (const char*)0);
+		default:
 			break;
-		}
-		default: {
-			break;
-		}
 		}
 	}
 	return true;
