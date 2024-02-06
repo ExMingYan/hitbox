@@ -50,8 +50,7 @@ private:
 	float alpha;
 
 private:
-	bool left(float x, float y, float w, float h, ImColor color, Action_Collections actcs, Player* player);
-	bool right(float x, float y, float w, float h, ImColor color, Action_Collections actcs, Player* player);
+	bool drawbox(float x, float y, float w, float h, ImColor color, Action_Collections actcs, Player* player);
 	bool attack_boxs(Player* player, Action_Collections actcs, attackcolors& cs, bool display);
 	bool body_boxs(Player* player, Action_Collections actcs, ImColor color, bool display);
 	bool affected_boxs(Player* player, Action_Collections actcs, affectcolors& cs, bool display);

@@ -188,5 +188,14 @@
     <ClInclude Include="structs\objects.h">
       <Filter>structs</Filter>
     </ClInclude>
+    <ClInclude Include="structs\setflag.h">
+      <Filter>structs</Filter>
+    </ClInclude>
+    <ClInclude Include="structs\summonobj.h">
+      <Filter>structs</Filter>
+    </ClInclude>
+    <ClInclude Include="structs\timepause.h">
+      <Filter>structs</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

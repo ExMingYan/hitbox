@@ -169,7 +169,7 @@ bool draws::draw()
 		return false;
 	}
 
-	Actions_Entry entry = p1->acts->entry[p1->number];
+	Actions_Entry entry = p1->acts->entry[p1->action];
 	for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
 		Action_Collections 	actcs = entry.actcs[i];
 
@@ -192,7 +192,7 @@ bool draws::draw()
 		}
 	}
 
-	entry = p2->acts->entry[p2->number];
+	entry = p2->acts->entry[p2->action];
 	for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
 		Action_Collections 	actcs = entry.actcs[i];
 		switch (actcs.types) {
@@ -217,7 +217,7 @@ bool draws::draw()
 	auto list = objects->props_list->list;
 	for (; list != nullptr; list = list->next) {
 		auto props = list->props;
-		auto props_entry = props->acts->entry[props->number];
+		auto props_entry = props->acts->entry[props->action];
 		for (int i = 0; i < props_entry.capacity; i++) {
 			if (props->propsflag >> 8 & 1) {
 				continue;
@@ -249,7 +249,7 @@ bool draws::draw()
 		if (b1->acts->entry == nullptr) {
 			break;
 		}
-		entry = b1->acts->entry[b1->number];
+		entry = b1->acts->entry[b1->action];
 		for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
 			Action_Collections actcs = entry.actcs[i];
 			switch (actcs.types)
@@ -277,7 +277,7 @@ bool draws::draw()
 		if (b2->acts->entry == nullptr) {
 			break;
 		}
-		entry = b2->acts->entry[b2->number];
+		entry = b2->acts->entry[b2->action];
 		for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
 			Action_Collections actcs = entry.actcs[i];
 			switch (actcs.types)
@@ -299,7 +299,7 @@ bool draws::draw()
 	return true;
 }
 
-bool draws::left(float x, float y, float w, float h, ImColor color, Action_Collections actcs, Player* player)
+bool draws::drawbox(float x, float y, float w, float h, ImColor color, Action_Collections actcs, Player* player)
 {
 	//左上角
 	FVector w1{};
@@ -310,70 +310,12 @@ bool draws::left(float x, float y, float w, float h, ImColor color, Action_Colle
 
 	//右下角
 	FVector w3{};
-	w3.X = x + w;
-	w3.Z = y - h;
-	FVector2D s3{};
-	serivce->screen(w3, s3);
-
-	ImVec2 rect_min(s1.X, s1.Y);
-	ImVec2 rect_max(s3.X, s3.Y);
-	ImGui::GetForegroundDrawList()->AddRect(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
-
-	color.Value.w = this->alpha;
-	ImGui::GetForegroundDrawList()->AddRectFilled(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
-
-	ImVec2 str_pos((s1.X + s3.X) / 2, (s1.Y + s3.Y) / 2);
-	for (unsigned int i = 0; i < actcs.capacity; i++) {
-		switch (actcs.types)
-		{
-		case Action_Types::AffectedBoxs: {
-			switch (actcs.affected[i].types)
-			{
-			case Affected_Types::OFOB: {
-				if (actcs.affected[i].frame != player->now) {
-					break;
-				}
-				int level = actcs.affected[i].flag >> 9 & 7;
-				std::string levels = std::to_string(level);
-				const char* levelstr = levels.c_str();
-				ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, levelstr, (const char*)0);
-				break;
-			}
-			case Affected_Types::RFOB: {
-				if (actcs.affected[i].frame != player->now) {
-					break;
-				}
-				int level = actcs.affected[i].flag >> 9 & 7;
-				std::string levels = std::to_string(level);
-				const char* levelstr = levels.c_str();
-				ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, levelstr, (const char*)0);
-				break;
-			}
-			default: {
-				break;
-			}
-			}
-			break;
-		}
-		default:
-			break;
-		}
+	if (player->toward) {
+		w3.X = x - w;
 	}
-	return true;
-}
-
-bool draws::right(float x, float y, float w, float h, ImColor color, Action_Collections actcs, Player* player)
-{
-	//左上角
-	FVector w1{};
-	w1.X = x;
-	w1.Z = y;
-	FVector2D s1{};
-	serivce->screen(w1, s1);
-
-	//右下角
-	FVector w3{ };
-	w3.X = x - w;
+	else{
+		w3.X = x + w;
+	}
 	w3.Z = y - h;
 	FVector2D s3{};
 	serivce->screen(w3, s3);
@@ -386,30 +328,65 @@ bool draws::right(float x, float y, float w, float h, ImColor color, Action_Coll
 	ImGui::GetForegroundDrawList()->AddRectFilled(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
 
 	ImVec2 str_pos((s1.X + s3.X) / 2, (s1.Y + s3.Y) / 2);
+	unsigned int value = 0xFFFFFFFF;
 	for (unsigned int i = 0; i < actcs.capacity; i++) {
 		switch (actcs.types)
 		{
+		case Action_Types::AttackBoxs: {
+			switch (player->atks->atkcs[actcs.attack[0].atk].types)
+			{
+			case Attack_Types::NormalAttack: {
+				value = actcs.attack[0].frame + 1;
+				break;
+			}
+			case Attack_Types::ThrowSkill: {
+				if (player->atks->atkcs[actcs.attack[0].atk].types != player->atks->atkcs[actcs.attack[1].atk].types && actcs.capacity >= 2) {
+					if (actcs.attack[0].frame == player->nowframe) {
+						value = actcs.attack[0].frame + 1;
+					}
+					else {
+						value = actcs.attack[1].frame + 1;
+					}
+				}
+				else {
+					value = actcs.attack[0].frame + 1;
+				}
+				break;
+			}
+			default:
+				break;
+			}
+			break;
+		}
 		case Action_Types::AffectedBoxs: {
 			switch (actcs.affected[i].types)
 			{
 			case Affected_Types::OFOB: {
-				if (actcs.affected[i].frame != player->now) {
-					break;
+				if (actcs.affected[i].frame == player->nowframe) {
+					value = actcs.affected[i].flag >> 9 & 7;
 				}
-				int level = actcs.affected[i].flag >> 9 & 7;
-				std::string levels = std::to_string(level);
-				const char* levelstr = levels.c_str();
-				ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, levelstr, (const char*)0);
 				break;
 			}
 			case Affected_Types::RFOB: {
-				if (actcs.affected[i].frame != player->now) {
-					break;
+				if (actcs.affected[i].frame == player->nowframe) {
+					value = actcs.affected[i].flag >> 9 & 7;
 				}
-				int level = actcs.affected[i].flag >> 9 & 7;
-				std::string levels = std::to_string(level);
-				const char* levelstr = levels.c_str();
-				ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, levelstr, (const char*)0);
+				break;
+			}
+			case Affected_Types::TyrantsBox: {
+				value = actcs.affected[0].frame + 1;
+				break;
+			}
+			case Affected_Types::GuardPointBox:{
+				value = actcs.affected[0].frame + 1;
+				break;
+			}
+			case Affected_Types::FlyObPointBox:{
+				value = actcs.affected[0].frame + 1;
+				break;
+			}
+			case Affected_Types::ThrowPointBox:{
+				value = actcs.affected[0].frame + 1;
 				break;
 			}
 			default: {
@@ -420,6 +397,11 @@ bool draws::right(float x, float y, float w, float h, ImColor color, Action_Coll
 		}
 		default:
 			break;
+		}
+		if (value != 0xFFFFFFFF) {
+			std::string values = std::to_string(value);
+			const char* str = values.c_str();
+			ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, str, (const char*)0);
 		}
 	}
 	return true;
@@ -447,10 +429,18 @@ bool draws::attack_boxs(Player* player, Action_Collections actcs, attackcolors& 
 
 		ImColor color{ 255,255,0 };
 
-		if (box.frame != player->now) {
+		if (box.frame != player->nowframe) {
 			continue;
 		}
-
+		if ((box.flag & 1 && (player->flag2 & 6) == 0) || (box.flag & 2 && (player->flag2 & 4) == 0) || (box.flag & 4 && (player->flag2 & 2) == 0)) {
+			continue;
+		}
+		if ((box.flag & 8) && (player->flag2 & 6) != 0 || (box.flag & 0x10 && (player->flag & 2) == 0) || (box.flag & 0x20 && (player->flag & 4) == 0)) {
+			continue;
+		}
+		if ((box.flag & 0x40 && (player->flag & 8) == 0) || (box.flag & 0x80 && (player->flag & 0x10) == 0) || (box.flag & 0x100 && (player->flag3 >> 0x3E & 1) == 0)) {
+			continue;
+		}
 		switch (atkcs.types) {
 		case Attack_Types::NormalAttack: {
 			color = cs.noratk;
@@ -477,13 +467,13 @@ bool draws::attack_boxs(Player* player, Action_Collections actcs, attackcolors& 
 			break;
 		}
 		if (display) {
-			if (player->toward == 0) {
-				left(px + x + player->xoff * 10, y + py + player->yoff * 10, w, h, color, actcs, player);
+			if (player->toward) {
+				drawbox(px - x + player->xoff * 10, py + y + player->yoff * 10, w, h, color, actcs, player);
 			}
-			else {
-				right(px - x + player->xoff * 10, y + py + player->yoff * 10, w, h, color, actcs, player);
+			else{
+				drawbox(px + x + player->xoff * 10, py + y + player->yoff * 10, w, h, color, actcs, player);
 			}
-		}
+			}
 	}
 	return true;
 }
@@ -507,18 +497,16 @@ bool draws::body_boxs(Player* player, Action_Collections actcs, ImColor color, b
 		auto w = box.w * 10;
 		auto h = box.h * 10;
 
-		if (box.frame != player->now) {
+		if (box.frame != player->nowframe) {
 			continue;
 		}
-
-		if (player->toward == 0) {
-			left(px + x + player->xoff * 10, y + py + player->yoff * 10, w, h, color, actcs, player);
+		if (player->toward) {
+			drawbox(px - x + player->xoff * 10, py + y + player->yoff * 10, w, h, color, actcs, player);
 		}
 		else {
-			right(px - x + player->xoff * 10, y + py + player->yoff * 10, w, h, color, actcs, player);
+			drawbox(px + x + player->xoff * 10, py + y + player->yoff * 10, w, h, color, actcs, player);
 		}
 	}
-
 	return true;
 }
 
@@ -542,7 +530,7 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 		auto y = box.y * 10;
 		auto w = box.w * 10;
 		auto h = box.h * 10;
-		if (box.frame != player->now) {
+		if (box.frame != player->nowframe) {
 			continue;
 		}
 
@@ -618,11 +606,11 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 		}
 
 		if (display) {
-			if (player->toward == 0) {
-				left(px + x, y + py, w, h, color, actcs, player);
+			if (player->toward) {
+				drawbox(px - x, py + y, w, h, color, actcs, player);
 			}
-			else {
-				right(px - x, y + py, w, h, color, actcs, player);
+			else{
+				drawbox(px + x, y + py, w, h, color, actcs, player);
 			}
 		}
 	}

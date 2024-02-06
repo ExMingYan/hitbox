@@ -1,13 +1,22 @@
 ﻿#pragma once
-#include "body.h"
-#include "attack.h"
 #include "affected.h"
+#include "attack.h"
+#include "body.h"
+#pragma pack(push,4)
+#include "setflag.h"
+#include "summonobj.h"
+#include "timepause.h"
+#pragma pack(pop)
 
 enum class  Action_Types : int
 {
 	BodyBoxs = 0x3,								//身位框；0x3
 	AffectedBoxs = 0x4,							//受击框；0x4
 	AttackBoxs = 0x5,							//攻击框；0x5
+	BSetFlag = 0xB,								//向Player+0x328写入Flag；0xB
+	CSetFlag = 0xC,								//向Player+0x330写入Flag；0xC
+	TimePause = 0x13,							//时停与解除时停；0x13
+	SummonObject = 0x15							//生成飞行道具；0x15
 };
 
 struct Action_Collections						//ACT指针集
@@ -19,6 +28,10 @@ struct Action_Collections						//ACT指针集
 		Attack_Boxs* attack;
 		Body_Boxs* body;
 		Affected_Boxs* affected;
+		BSet_Flag* bsetflag;
+		CSet_Flag* csetflag;
+		Time_Pause* timepause;
+		Summon_Object* sumobj;
 	};
 };
 static_assert(sizeof(Action_Collections) == 0x10, "Size check");

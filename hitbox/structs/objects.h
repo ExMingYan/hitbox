@@ -15,6 +15,6 @@ struct Objects
 	Player* b2;							//0x58
 	char unknown5[0x665F0];				//0x60
 	Flight_Props_Header* props_list;	//0x66650
-	char unknown6[0x4fe8];
-	unsigned int ready;
+	char unknown6[0x4fe8];				//0x66658
+	unsigned int ready;					//0x6B640
 };

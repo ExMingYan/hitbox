@@ -136,6 +136,8 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <LanguageStandard>stdcpp17</LanguageStandard>
+      <StructMemberAlignment>8Bytes</StructMemberAlignment>
+      <StringPooling>true</StringPooling>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -191,6 +193,9 @@
     <ClInclude Include="structs\objects.h" />
     <ClInclude Include="structs\player.h" />
     <ClInclude Include="structs\props.h" />
+    <ClInclude Include="structs\setflag.h" />
+    <ClInclude Include="structs\summonobj.h" />
+    <ClInclude Include="structs\timepause.h" />
     <ClInclude Include="unreal_engine\AActor.h" />
     <ClInclude Include="unreal_engine\Array.h" />
     <ClInclude Include="unreal_engine\GameInstance.h" />
