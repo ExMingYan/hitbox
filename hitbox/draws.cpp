@@ -1,4 +1,4 @@
-﻿#include "draws.h"
+#include "draws.h"
 #include "memory.h"
 #include <windows.h>
 #include <string>
@@ -374,22 +374,31 @@ bool draws::drawbox(float x, float y, float w, float h, ImColor color, Action_Co
 				break;
 			}
 			case Affected_Types::TyrantsBox: {
-				value = actcs.affected[0].frame + 1;
+				if(actcs.affected[i].frame == player->nowframe){
+					value = actcs.affected[0].frame + 1;
+				}
 				break;
 			}
 			case Affected_Types::GuardPointBox:{
-				value = actcs.affected[0].frame + 1;
+				if (actcs.affected[i].frame == player->nowframe) {
+					value = actcs.affected[0].frame + 1;
+				}
 				break;
 			}
 			case Affected_Types::FlyObPointBox:{
-				value = actcs.affected[0].frame + 1;
+				if (actcs.affected[i].frame == player->nowframe) {
+					value = actcs.affected[0].frame + 1;
+				}
 				break;
 			}
 			case Affected_Types::ThrowPointBox:{
-				value = actcs.affected[0].frame + 1;
+				if (actcs.affected[i].frame == player->nowframe) {
+					value = actcs.affected[0].frame + 1;
+				}
 				break;
 			}
 			default: {
+				value = 0xFFFFFFFF;
 				break;
 			}
 			}
