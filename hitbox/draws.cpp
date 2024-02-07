@@ -1,4 +1,4 @@
-#include "draws.h"
+﻿#include "draws.h"
 #include "memory.h"
 #include <windows.h>
 #include <string>
@@ -554,51 +554,62 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 	if (display) {
 		for (unsigned int i = 0; i < actcs.capacity; i++) {
 			auto box = actcs.attack[i];
-			if (box.frame != player->nowframe) {
-				continue;
-			}
-
 			auto px = (player->x + player->xoff) * 10;
 			auto py = (player->y + player->yoff) * 10;
 			auto x = box.x * 10;
 			auto y = box.y * 10;
 			auto w = box.w * 10;
 			auto h = box.h * 10;
-			int value;
-			ATK_Collections atkcs0 = player->atks->atkcs[actcs.attack[0].atk];
-			ATK_Collections atkcs1 = player->atks->atkcs[actcs.attack[1].atk];
+			unsigned int hit = box.hit, index = 0, value;
 
-			switch (atkcs0.types)
-			{
-			case Attack_Types::NormalAttack: {
-				value = actcs.attack[0].frame + 1;
-				display &= cs.noratk_display;
-				break;
+			if (box.frame != player->nowframe) {
+				continue;
 			}
-			case Attack_Types::ThrowSkill: {
-				if (atkcs0.types != atkcs1.types && actcs.capacity >= 2) {
-					if (actcs.attack[0].frame == player->nowframe) {
-						value = actcs.attack[0].frame + 1;
-					}
-					else {
-						value = actcs.attack[1].frame + 1;
-					}
-				}
-				else {
-					value = actcs.attack[0].frame + 1;
-				}
-				display &= cs.thratk_display;
-				break;
+			if ((box.flag & 1 && (player->flag2 & 6) == 0) || (box.flag & 2 && (player->flag2 & 4) == 0) || (box.flag & 4 && (player->flag2 & 2) == 0)) {
+				continue;
 			}
-			default:
-				return false;
+			if ((box.flag & 8) && (player->flag2 & 6) != 0 || (box.flag & 0x10 && (player->flag & 2) == 0) || (box.flag & 0x20 && (player->flag & 4) == 0)) {
+				continue;
+			}
+			if ((box.flag & 0x40 && (player->flag & 8) == 0) || (box.flag & 0x80 && (player->flag & 0x10) == 0) || (box.flag & 0x100 && (player->flag3 >> 0x3E & 1) == 0)) {
+				continue;
+			}
+
+			ATK_Collections* atkcs = player->atks->atkcs;
+			switch (atkcs[box.atk].types) {
+				case Attack_Types::NormalAttack: {
+					while (index <= i) {
+						if (actcs.attack[index].hit == box.hit && atkcs[actcs.attack[index].atk].types == Attack_Types::NormalAttack) {
+							break;
+						}
+						index++;
+					}
+					auto indexbox = actcs.attack[index];
+					value = indexbox.frame + 1;
+					display &= cs.noratk_display;
+					break;
+				}
+				case Attack_Types::ThrowSkill: {
+					while (index <= i){
+						if (actcs.attack[index].hit == box.hit && atkcs[actcs.attack[index].atk].types == Attack_Types::ThrowSkill) {
+							break;
+						}
+						index++;
+					}
+					auto indexbox = actcs.attack[index];
+					value = indexbox.frame + 1;
+					display &= cs.thratk_display;
+					break;
+				}
+				default:
+					return false;
 			}
 			if (display) {
 				if (player->toward) {
-					draws::displayvalue(player, px - x, py + y, w, h, value);
+					displayvalue(player, px - x, py + y, w, h, value);
 				}
 				else {
-					draws::displayvalue(player, px + x, py + y, w, h, value);
+					displayvalue(player, px + x, py + y, w, h, value);
 				}
 				return true;
 			}
@@ -610,6 +621,9 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 bool draws::affected_value(Player* player, Action_Collections actcs, affectcolors& cs, bool display) {
 	if(display){
 		for (unsigned int i = 0; i < actcs.capacity; i++) {
+			if (IsBadReadPtr(&actcs.affected[i], sizeof(Affected_Boxs))) {
+				return false;
+			}
 			auto box = actcs.affected[i];
 			if (box.frame != player->nowframe) {
 				continue;
@@ -621,7 +635,7 @@ bool draws::affected_value(Player* player, Action_Collections actcs, affectcolor
 			auto y = box.y * 10;
 			auto w = box.w * 10;
 			auto h = box.h * 10;
-			int value;
+			unsigned int value;
 
 			if (box.isaddoffset <= 0) {
 				px += player->xoff * 10;

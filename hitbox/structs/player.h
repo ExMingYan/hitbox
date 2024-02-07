@@ -20,7 +20,7 @@ struct Player
 	char unknown4[0x10];		//0x158
 	int action;					//0x168
 	int unknown5;				//0x16c
-	int nowframe;				//0x170: 正在执行帧数
+	unsigned int nowframe;		//0x170: 正在执行帧数
 	char unknown6[0x23C];		//0x174
 	unsigned int hitflag;		//0x3B0
 	char fill3[0xC];			//0x3B4
