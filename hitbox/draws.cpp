@@ -176,6 +176,7 @@ bool draws::draw()
 		switch (actcs.types) {
 		case Action_Types::AttackBoxs: {
 			attack_boxs(p1, actcs, attack_colors, display_p1);
+			attack_value(p1, actcs, attack_colors, display_p1);
 			break;
 		}
 		case Action_Types::BodyBoxs: {
@@ -184,6 +185,7 @@ bool draws::draw()
 		}
 		case Action_Types::AffectedBoxs: {
 			affected_boxs(p1, actcs, affected_colors, display_p1);
+			affected_value(p1, actcs, affected_colors, display_p1);
 			break;
 		}
 		default: {
@@ -198,6 +200,7 @@ bool draws::draw()
 		switch (actcs.types) {
 		case Action_Types::AttackBoxs: {
 			attack_boxs(p2, actcs, attack_colors, display_p2);
+			attack_value(p2, actcs, attack_colors, display_p2);
 			break;
 		}
 		case Action_Types::BodyBoxs: {
@@ -206,6 +209,7 @@ bool draws::draw()
 		}
 		case Action_Types::AffectedBoxs: {
 			affected_boxs(p2, actcs, affected_colors, display_p2);
+			affected_value(p2, actcs, affected_colors, display_p2);
 			break;
 		}
 		default: {
@@ -232,6 +236,8 @@ bool draws::draw()
 			case Action_Types::AffectedBoxs: {
 				affected_boxs(props, actcs, affected_colors, display_p1);
 				affected_boxs(props, actcs, affected_colors, display_p2);
+				affected_value(props, actcs, affected_colors, display_p1);
+				affected_value(props, actcs, affected_colors, display_p2);
 				break;
 			}
 			default: {
@@ -256,10 +262,12 @@ bool draws::draw()
 			{
 			case Action_Types::AttackBoxs: {
 				attack_boxs(b1, actcs, attack_colors, display_p1);
+				attack_value(b1, actcs, attack_colors, display_p1);
 				break;
 				}
 			case Action_Types::AffectedBoxs: {
 				affected_boxs(b1, actcs, affected_colors, display_p1);
+				affected_value(b1, actcs, affected_colors, display_p1);
 				break;
 			}
 			default:
@@ -284,10 +292,12 @@ bool draws::draw()
 			{
 			case Action_Types::AttackBoxs: {
 				attack_boxs(b2, actcs, attack_colors, display_p1);
+				attack_value(b2, actcs, attack_colors, display_p1);
 				break;
 			}
 			case Action_Types::AffectedBoxs: {
 				affected_boxs(b2, actcs, affected_colors, display_p2);
+				affected_value(b2, actcs, affected_colors, display_p1);
 				break;
 			}
 			default:
@@ -327,83 +337,6 @@ bool draws::drawbox(float x, float y, float w, float h, ImColor color, Action_Co
 	color.Value.w = this->alpha;
 	ImGui::GetForegroundDrawList()->AddRectFilled(rect_min, rect_max, ImGui::ColorConvertFloat4ToU32(color.Value));
 
-	ImVec2 str_pos((s1.X + s3.X) / 2, (s1.Y + s3.Y) / 2);
-	unsigned int value = 0xFFFFFFFF;
-	for (unsigned int i = 0; i < actcs.capacity; i++) {
-		switch (actcs.types)
-		{
-		case Action_Types::AttackBoxs: {
-			switch (player->atks->atkcs[actcs.attack[0].atk].types)
-			{
-			case Attack_Types::NormalAttack: {
-				value = actcs.attack[0].frame + 1;
-				break;
-			}
-			case Attack_Types::ThrowSkill: {
-				if (player->atks->atkcs[actcs.attack[0].atk].types != player->atks->atkcs[actcs.attack[1].atk].types && actcs.capacity >= 2) {
-					if (actcs.attack[0].frame == player->nowframe) {
-						value = actcs.attack[0].frame + 1;
-					}
-					else {
-						value = actcs.attack[1].frame + 1;
-					}
-				}
-				else {
-					value = actcs.attack[0].frame + 1;
-				}
-				break;
-			}
-			default:
-				break;
-			}
-			break;
-		}
-		case Action_Types::AffectedBoxs: {
-			switch (actcs.affected[i].types)
-			{
-			case Affected_Types::OFOB: {
-				if (actcs.affected[i].frame == player->nowframe) {
-					value = actcs.affected[i].flag >> 9 & 7;
-				}
-				break;
-			}
-			case Affected_Types::RFOB: {
-				if (actcs.affected[i].frame == player->nowframe) {
-					value = actcs.affected[i].flag >> 9 & 7;
-				}
-				break;
-			}
-			case Affected_Types::TyrantsBox: {
-				value = actcs.affected[0].frame + 1;
-				break;
-			}
-			case Affected_Types::GuardPointBox:{
-				value = actcs.affected[0].frame + 1;
-				break;
-			}
-			case Affected_Types::FlyObPointBox:{
-				value = actcs.affected[0].frame + 1;
-				break;
-			}
-			case Affected_Types::ThrowPointBox:{
-				value = actcs.affected[0].frame + 1;
-				break;
-			}
-			default: {
-				break;
-			}
-			}
-			break;
-		}
-		default:
-			break;
-		}
-		if (value != 0xFFFFFFFF) {
-			std::string values = std::to_string(value);
-			const char* str = values.c_str();
-			ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, str, (const char*)0);
-		}
-	}
 	return true;
 }
 
@@ -614,5 +547,156 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 			}
 		}
 	}
+	return true;
+}
+
+bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors& cs, bool display) {
+	if (display) {
+		for (unsigned int i = 0; i < actcs.capacity; i++) {
+			auto box = actcs.attack[i];
+			if (box.frame != player->nowframe) {
+				continue;
+			}
+
+			auto px = (player->x + player->xoff) * 10;
+			auto py = (player->y + player->yoff) * 10;
+			auto x = box.x * 10;
+			auto y = box.y * 10;
+			auto w = box.w * 10;
+			auto h = box.h * 10;
+			int value;
+			ATK_Collections atkcs0 = player->atks->atkcs[actcs.attack[0].atk];
+			ATK_Collections atkcs1 = player->atks->atkcs[actcs.attack[1].atk];
+
+			switch (atkcs0.types)
+			{
+			case Attack_Types::NormalAttack: {
+				value = actcs.attack[0].frame + 1;
+				display &= cs.noratk_display;
+				break;
+			}
+			case Attack_Types::ThrowSkill: {
+				if (atkcs0.types != atkcs1.types && actcs.capacity >= 2) {
+					if (actcs.attack[0].frame == player->nowframe) {
+						value = actcs.attack[0].frame + 1;
+					}
+					else {
+						value = actcs.attack[1].frame + 1;
+					}
+				}
+				else {
+					value = actcs.attack[0].frame + 1;
+				}
+				display &= cs.thratk_display;
+				break;
+			}
+			default:
+				return false;
+			}
+			if (display) {
+				if (player->toward) {
+					draws::displayvalue(player, px - x, py + y, w, h, value);
+				}
+				else {
+					draws::displayvalue(player, px + x, py + y, w, h, value);
+				}
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool draws::affected_value(Player* player, Action_Collections actcs, affectcolors& cs, bool display) {
+	if(display){
+		for (unsigned int i = 0; i < actcs.capacity; i++) {
+			auto box = actcs.affected[i];
+			if (box.frame != player->nowframe) {
+				continue;
+			}
+
+			auto px = player->x * 10;
+			auto py = player->y * 10;
+			auto x = box.x * 10;
+			auto y = box.y * 10;
+			auto w = box.w * 10;
+			auto h = box.h * 10;
+			int value;
+
+			if (box.isaddoffset <= 0) {
+				px += player->xoff * 10;
+				py += player->yoff * 10;
+			}
+			switch (box.types)
+			{
+			case Affected_Types::OFOB: {
+				value = actcs.affected[i].flag >> 9 & 7;
+				display &= cs.ofo_display;
+				break;
+			}
+			case Affected_Types::RFOB: {
+				value = actcs.affected[i].flag >> 9 & 7;
+				display &= cs.rfo_display;
+				break;
+			}
+			case Affected_Types::TyrantsBox: {
+				value = actcs.affected[0].frame + 1;
+				display &= cs.tyants_display;
+				break;
+			}
+			case Affected_Types::GuardPointBox: {
+				value = actcs.affected[0].frame + 1;
+				display &= cs.guradex_display;
+				break;
+			}
+			case Affected_Types::FlyObPointBox: {
+				value = actcs.affected[0].frame + 1;
+				display &= cs.flyobex_display;
+				break;
+			}
+			case Affected_Types::ThrowPointBox: {
+				value = actcs.affected[0].frame + 1;
+				display &= cs.throwex_display;
+				break;
+			}
+			default: {
+				return false;
+			}
+			}
+			if (display) {
+				if(player->toward) {
+					draws::displayvalue(player, px - x, py + y, w, h, value);
+				}
+				else {
+					draws::displayvalue(player, px + x, py + y, w, h, value);
+				}
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+bool draws::displayvalue(Player* player, float x, float y, float w, float h, int value) {
+	FVector w1{};
+	w1.X = x;
+	w1.Z = y;
+	FVector2D s1{};
+	serivce->screen(w1, s1);
+	FVector w3{};
+	if (player->toward) {
+		w3.X = x - w;
+	}
+	else {
+		w3.X = x + w;
+	}
+	w3.Z = y - h;
+	FVector2D s3{};
+	serivce->screen(w3, s3);
+
+	ImVec2 str_pos((s1.X + s3.X) / 2, (s1.Y + s3.Y) / 2);
+	std::string values = std::to_string(value);
+	const char* str = values.c_str();
+	ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, str, (const char*)0);
 	return true;
 }
