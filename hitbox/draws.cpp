@@ -1,4 +1,4 @@
-﻿#include "draws.h"
+#include "draws.h"
 #include "memory.h"
 #include <windows.h>
 #include <string>
