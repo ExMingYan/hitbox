@@ -5,7 +5,8 @@ enum class Attack_Types : int			//攻击框类型
 	NormalAttack = 0x0,					//普通攻击；0x0
 	FlyingObject = 0x1,					//飞行道具；0x1
 	ThrowSkill = 0x2,					//投技；0x2
-	CauseGuard = 0x5					//引发防御；0x5
+	CauseGuard = 0x5,					//引发防御；0x5
+	Crawl = 0x6,						//抓取攻击框
 };
 
 struct Attack_Boxs						//攻击框；每帧占用0x2C字节

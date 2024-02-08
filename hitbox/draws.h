@@ -12,10 +12,12 @@ struct attackcolors {
 	ImColor floatk;
 	ImColor thratk;
 	ImColor cgatk;
+	ImColor cratk;
 	bool noratk_display;
 	bool floatk_display;
 	bool thratk_display;
 	bool cgatk_display;
+	bool cratk_display;
 };
 
 struct affectcolors {

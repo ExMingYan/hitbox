@@ -66,13 +66,15 @@ static_assert(sizeof(Actions_Entry) == 0x30, "Size check");
 
 struct Attacks
 {
-	char unknown[0x20];
+	char unknown[0x1C];
+	int capacity;								//0x1C；ATK总数
 	ATK_Collections* atkcs;
 };
 
 struct Actions									//动作集
 {
-	char unknown[0x20];							//0x0
+	char unknown[0x1C];							//0x0
+	int capacity;								//0x1C；动作代码总数
 	Actions_Entry* entry;						//0x20
 	void* hold;									//0x28
 };

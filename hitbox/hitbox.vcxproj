@@ -189,7 +189,9 @@
     <ClInclude Include="structs\action.h" />
     <ClInclude Include="structs\affected.h" />
     <ClInclude Include="structs\attack.h" />
+    <ClInclude Include="structs\base.h" />
     <ClInclude Include="structs\body.h" />
+    <ClInclude Include="structs\command.h" />
     <ClInclude Include="structs\objects.h" />
     <ClInclude Include="structs\player.h" />
     <ClInclude Include="structs\props.h" />

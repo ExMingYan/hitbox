@@ -60,6 +60,13 @@ bool draws::draw()
 	attack_colors.cgatk = cgatk_boxs_color;
 	attack_colors.cgatk_display = cgatk_boxs_display;
 
+	static bool cratk_boxs_display = false;
+	static bool cratk_selector = false;
+	static ImColor cratk_boxs_color = { 0,127,255 };
+	ctrl->box_color(u8"触发攻击框", &cratk_boxs_display, u8"触发攻击框颜色", &cratk_selector, &cratk_boxs_color);
+	attack_colors.cratk = cratk_boxs_color;
+	attack_colors.cratk_display = cratk_boxs_display;
+
 	static bool body_boxs_display = false;
 	static bool body_selector = false;
 	static ImColor body_boxs_color{ 255, 165, 0 };
@@ -395,6 +402,11 @@ bool draws::attack_boxs(Player* player, Action_Collections actcs, attackcolors& 
 			display = cs.cgatk_display;
 			break;
 		}
+		case Attack_Types::Crawl: {
+			color = cs.cratk;
+			display = cs.cratk_display;
+			break;
+		}
 		default:
 			display = false;
 			break;
@@ -584,9 +596,19 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 						}
 						index++;
 					}
-					auto indexbox = actcs.attack[index];
-					value = indexbox.frame + 1;
+					value = actcs.attack[index].frame + 1;
 					display &= cs.noratk_display;
+					break;
+				}
+				case Attack_Types::FlyingObject: {
+					while (index <= i) {
+						if (actcs.attack[index].hit == box.hit && atkcs[actcs.attack[index].atk].types == Attack_Types::FlyingObject) {
+							break;
+						}
+						index++;
+					}
+					value = actcs.attack[index].frame + 1;
+					display &= cs.floatk_display;
 					break;
 				}
 				case Attack_Types::ThrowSkill: {
@@ -596,9 +618,19 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 						}
 						index++;
 					}
-					auto indexbox = actcs.attack[index];
-					value = indexbox.frame + 1;
+					value = actcs.attack[index].frame + 1;
 					display &= cs.thratk_display;
+					break;
+				}
+				case Attack_Types::Crawl: {
+					while (index <= i){
+						if (actcs.attack[index].hit == box.hit && atkcs[actcs.attack[index].atk].types == Attack_Types::Crawl) {
+							break;
+						}
+						index++;
+					}
+					value = actcs.attack[index].frame + 1;
+					display &= cs.cratk_display;
 					break;
 				}
 				default:
