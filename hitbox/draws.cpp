@@ -445,11 +445,15 @@ bool draws::body_boxs(Player* player, Action_Collections actcs, ImColor color, b
 		if (box.frame != player->nowframe) {
 			continue;
 		}
+		if (box.isaddoffset <= 0) {
+			px += player->xoff * 10;
+			py += player->yoff * 10;
+		}
 		if (player->toward) {
-			drawbox(px - x + player->xoff * 10, py + y + player->yoff * 10, w, h, color, actcs, player);
+			drawbox(px - x, py + y, w, h, color, actcs, player);
 		}
 		else {
-			drawbox(px + x + player->xoff * 10, py + y + player->yoff * 10, w, h, color, actcs, player);
+			drawbox(px + x, py + y, w, h, color, actcs, player);
 		}
 	}
 	return true;
@@ -460,7 +464,6 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 	if (display == false) {
 		return true;
 	}
-
 	if (actcs.affected == nullptr) {
 		return false;
 	}
@@ -475,10 +478,10 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 		auto y = box.y * 10;
 		auto w = box.w * 10;
 		auto h = box.h * 10;
+
 		if (box.frame != player->nowframe) {
 			continue;
 		}
-
 		if (box.isaddoffset <= 0) {
 			px += player->xoff * 10;
 			py += player->yoff * 10;
@@ -564,6 +567,7 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 
 bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors& cs, bool display) {
 	if (display) {
+		unsigned int pauseframe = draws::calcbalckout(player);
 		for (unsigned int i = 0; i < actcs.capacity; i++) {
 			auto box = actcs.attack[i];
 			auto px = (player->x + player->xoff) * 10;
@@ -572,7 +576,7 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 			auto y = box.y * 10;
 			auto w = box.w * 10;
 			auto h = box.h * 10;
-			unsigned int hit = box.hit, index = 0, value;
+			unsigned int index = 0, value;
 
 			if (box.frame != player->nowframe) {
 				continue;
@@ -588,48 +592,27 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 			}
 
 			ATK_Collections* atkcs = player->atks->atkcs;
+			while (index <= i) {
+				if (actcs.attack[index].hit == box.hit && atkcs[actcs.attack[index].atk].types == atkcs[box.atk].types) {
+					break;
+				}
+				index++;
+			}
+			value = actcs.attack[index].frame + 1 - pauseframe;
 			switch (atkcs[box.atk].types) {
 				case Attack_Types::NormalAttack: {
-					while (index <= i) {
-						if (actcs.attack[index].hit == box.hit && atkcs[actcs.attack[index].atk].types == Attack_Types::NormalAttack) {
-							break;
-						}
-						index++;
-					}
-					value = actcs.attack[index].frame + 1;
 					display &= cs.noratk_display;
 					break;
 				}
 				case Attack_Types::FlyingObject: {
-					while (index <= i) {
-						if (actcs.attack[index].hit == box.hit && atkcs[actcs.attack[index].atk].types == Attack_Types::FlyingObject) {
-							break;
-						}
-						index++;
-					}
-					value = actcs.attack[index].frame + 1;
 					display &= cs.floatk_display;
 					break;
 				}
 				case Attack_Types::ThrowSkill: {
-					while (index <= i){
-						if (actcs.attack[index].hit == box.hit && atkcs[actcs.attack[index].atk].types == Attack_Types::ThrowSkill) {
-							break;
-						}
-						index++;
-					}
-					value = actcs.attack[index].frame + 1;
 					display &= cs.thratk_display;
 					break;
 				}
 				case Attack_Types::Crawl: {
-					while (index <= i){
-						if (actcs.attack[index].hit == box.hit && atkcs[actcs.attack[index].atk].types == Attack_Types::Crawl) {
-							break;
-						}
-						index++;
-					}
-					value = actcs.attack[index].frame + 1;
 					display &= cs.cratk_display;
 					break;
 				}
@@ -652,10 +635,8 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 
 bool draws::affected_value(Player* player, Action_Collections actcs, affectcolors& cs, bool display) {
 	if(display){
+		unsigned int pauseframe = draws::calcbalckout(player);
 		for (unsigned int i = 0; i < actcs.capacity; i++) {
-			if (IsBadReadPtr(&actcs.affected[i], sizeof(Affected_Boxs))) {
-				return false;
-			}
 			auto box = actcs.affected[i];
 			if (box.frame != player->nowframe) {
 				continue;
@@ -667,12 +648,21 @@ bool draws::affected_value(Player* player, Action_Collections actcs, affectcolor
 			auto y = box.y * 10;
 			auto w = box.w * 10;
 			auto h = box.h * 10;
-			unsigned int value;
+			unsigned int value, index = 0;
 
 			if (box.isaddoffset <= 0) {
 				px += player->xoff * 10;
 				py += player->yoff * 10;
 			}
+
+			while (index <= i) {
+				if (box.types == actcs.affected[index].types) {
+					break;
+				}
+				index++;
+			}
+			value = actcs.affected[index].frame + 1 - pauseframe;
+
 			switch (box.types)
 			{
 			case Affected_Types::OFOB: {
@@ -686,22 +676,18 @@ bool draws::affected_value(Player* player, Action_Collections actcs, affectcolor
 				break;
 			}
 			case Affected_Types::TyrantsBox: {
-				value = actcs.affected[0].frame + 1;
 				display &= cs.tyants_display;
 				break;
 			}
 			case Affected_Types::GuardPointBox: {
-				value = actcs.affected[0].frame + 1;
 				display &= cs.guradex_display;
 				break;
 			}
 			case Affected_Types::FlyObPointBox: {
-				value = actcs.affected[0].frame + 1;
 				display &= cs.flyobex_display;
 				break;
 			}
 			case Affected_Types::ThrowPointBox: {
-				value = actcs.affected[0].frame + 1;
 				display &= cs.throwex_display;
 				break;
 			}
@@ -745,4 +731,36 @@ bool draws::displayvalue(Player* player, float x, float y, float w, float h, int
 	const char* str = values.c_str();
 	ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, str, (const char*)0);
 	return true;
+}
+
+unsigned int draws::calcbalckout(Player* player) {
+	Actions_Entry entry = player->acts->entry[player->action];
+	for (int i = 0; i < entry.capacity; i++) {
+		Action_Collections actcs = entry.actcs[i];
+		switch (actcs.types)
+		{
+		case Action_Types::TimePause: {
+			unsigned int j = 0, start, end;
+			while (j < actcs.capacity) {
+				if (actcs.timepause[j].pauset == Pause_Set::Pause1 || actcs.timepause[j].pauset == Pause_Set::Pause2) {
+					break;
+				}
+				j++;
+			}
+			start = actcs.timepause[j].frame;
+			j = 0;
+			while (j < actcs.capacity) {
+				if (actcs.timepause[j].pauset == Pause_Set::Unpause) {
+					break;
+				}
+				j++;
+			}
+			end = actcs.timepause[j].frame;
+			return end - start;
+		}
+		default:
+			break;
+		}
+	}
+	return 0;
 }
