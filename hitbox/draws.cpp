@@ -598,7 +598,7 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 				}
 				index++;
 			}
-			value = actcs.attack[index].frame + 1 - pauseframe;
+			value = actcs.attack[index].frame - pauseframe + 1;
 			switch (atkcs[box.atk].types) {
 				case Attack_Types::NormalAttack: {
 					display &= cs.noratk_display;
@@ -661,7 +661,7 @@ bool draws::affected_value(Player* player, Action_Collections actcs, affectcolor
 				}
 				index++;
 			}
-			value = actcs.affected[index].frame + 1 - pauseframe;
+			value = actcs.affected[index].frame - pauseframe + 1;
 
 			switch (box.types)
 			{
@@ -742,21 +742,27 @@ unsigned int draws::calcbalckout(Player* player) {
 		case Action_Types::TimePause: {
 			unsigned int j = 0, start, end;
 			while (j < actcs.capacity) {
-				if (actcs.timepause[j].pauset == Pause_Set::Pause1 || actcs.timepause[j].pauset == Pause_Set::Pause2) {
+				if (actcs.timepause[j].pauset != Pause_Set::Unpause) {
 					break;
 				}
 				j++;
 			}
-			start = actcs.timepause[j].frame;
-			j = 0;
-			while (j < actcs.capacity) {
-				if (actcs.timepause[j].pauset == Pause_Set::Unpause) {
-					break;
-				}
-				j++;
+			start = actcs.timepause[j].pauseframe;
+			if (start) {
+				return start - 1;
 			}
-			end = actcs.timepause[j].frame;
-			return end - start;
+			else {
+				start = actcs.timepause[j].frame;
+				j = 0;
+				while (j < actcs.capacity) {
+					if (actcs.timepause[j].pauset == Pause_Set::Unpause) {
+						break;
+					}
+					j++;
+				}
+				end = actcs.timepause[j].frame;
+				return end - start;
+			}
 		}
 		default:
 			break;
