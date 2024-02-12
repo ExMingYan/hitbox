@@ -8,7 +8,7 @@
 #include "timepause.h"
 #pragma pack(pop)
 
-enum class  Action_Types : int
+enum class  ACT_Types : int
 {
 	BodyBoxs = 0x3,								//身位框；0x3
 	AffectedBoxs = 0x4,							//受击框；0x4
@@ -19,10 +19,18 @@ enum class  Action_Types : int
 	SummonObject = 0x15							//生成飞行道具；0x15
 };
 
+enum class Action_Types : int
+{
+	Normal = 0x0,
+	Attack = 0x1,
+	Affect = 0x2,
+	Guard = 0x3
+};
+
 struct Action_Collections						//ACT指针集
 {
 	unsigned int capacity;						//0x0 总帧数；指针指向内容总大小 = TotalFrame * 0x2C
-	Action_Types types;							//0x4 ACT类型；决定指针指向的内容
+	ACT_Types types;							//0x4 ACT类型；决定指针指向的内容
 	union
 	{
 		Attack_Boxs* attack;
@@ -53,7 +61,8 @@ static_assert(sizeof(ATK_Collections) == 0x1C8, "Size check");
 
 struct Actions_Entry							//动作实体类
 {
-	void* unknown1;								//0x0
+	int unknown1;								//0x0
+	Action_Types types;							//0x4
 	int mar;									//0x08；动作最大帧数
 	int reset;									//0x0C；动作重置帧数
 	void* unknown2;								//0x10

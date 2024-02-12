@@ -21,6 +21,7 @@ bool draws::draw()
 {
 	static attackcolors attack_colors{};
 	static affectcolors affected_colors{};
+	static displaychoose display_choose{};
 	static bool display_p1 = false;
 	static bool display_p2 = false;
 	ImGui::Checkbox("p1", &display_p1);
@@ -34,24 +35,36 @@ bool draws::draw()
 
 	static bool noratk_boxs_display = false;
 	static bool noratk_selector = false;
+	static bool noratkf_selector = false;
 	static ImColor attack_boxs_color{ 255, 0, 0 };
 	ctrl->box_color(u8"普通攻击框", &noratk_boxs_display, u8"普通攻击框颜色", &noratk_selector, &attack_boxs_color);
+	ImGui::SameLine();
+	ImGui::Checkbox(u8"显示每Hit发动帧数", &noratkf_selector);
 	attack_colors.noratk = attack_boxs_color;
 	attack_colors.noratk_display = noratk_boxs_display;
+	display_choose.noratkf_display = noratkf_selector;
 
 	static bool floatk_boxs_display = false;
-	static ImColor floatk_boxs_color{ 200,100,100 };
 	static bool floatk_selector = false;
+	static bool floatkf_seletor = false;
+	static ImColor floatk_boxs_color{ 200,100,100 };
 	ctrl->box_color(u8"飞行道具攻击框", &floatk_boxs_display, u8"飞行道具攻击框颜色", &floatk_selector, &floatk_boxs_color);
+	ImGui::SameLine();
+	ImGui::Checkbox(u8"显示每Hit发动帧数 ", &floatkf_seletor);
 	attack_colors.floatk = floatk_boxs_color;
 	attack_colors.floatk_display = floatk_boxs_display;
+	display_choose.floatkf_display = floatkf_seletor;
 
 	static bool thratk_boxs_display = false;
 	static bool thratk_selector = false;
+	static bool thratkf_selector = false;
 	static ImColor thratk_boxs_color{ 127,255,127 };
 	ctrl->box_color(u8"投技框", &thratk_boxs_display, u8"投技框颜色", &thratk_selector, &thratk_boxs_color);
+	ImGui::SameLine();
+	ImGui::Checkbox(u8"显示每Hit发动帧数  ", &thratkf_selector);
 	attack_colors.thratk = thratk_boxs_color;
 	attack_colors.thratk_display = thratk_boxs_display;
+	display_choose.thratkf_display = thratkf_selector;
 
 	static bool cgatk_boxs_display = false;
 	static bool cgatk_selector = false;
@@ -62,10 +75,14 @@ bool draws::draw()
 
 	static bool cratk_boxs_display = false;
 	static bool cratk_selector = false;
+	static bool cratkf_selector = false;
 	static ImColor cratk_boxs_color = { 0,127,255 };
 	ctrl->box_color(u8"触发攻击框", &cratk_boxs_display, u8"触发攻击框颜色", &cratk_selector, &cratk_boxs_color);
+	ImGui::SameLine();
+	ImGui::Checkbox(u8"显示每Hit发动帧数   ", &cratkf_selector);
 	attack_colors.cratk = cratk_boxs_color;
 	attack_colors.cratk_display = cratk_boxs_display;
+	display_choose.cratkf_display = cratkf_selector;
 
 	static bool body_boxs_display = false;
 	static bool body_selector = false;
@@ -181,16 +198,16 @@ bool draws::draw()
 		Action_Collections 	actcs = entry.actcs[i];
 
 		switch (actcs.types) {
-		case Action_Types::AttackBoxs: {
+		case ACT_Types::AttackBoxs: {
 			attack_boxs(p1, actcs, attack_colors, display_p1);
-			attack_value(p1, actcs, attack_colors, display_p1);
+			attack_value(p1, actcs, attack_colors, display_choose, display_p1);
 			break;
 		}
-		case Action_Types::BodyBoxs: {
+		case ACT_Types::BodyBoxs: {
 			body_boxs(p1, actcs, body_boxs_color, display_p1 && body_boxs_display);
 			break;
 		}
-		case Action_Types::AffectedBoxs: {
+		case ACT_Types::AffectedBoxs: {
 			affected_boxs(p1, actcs, affected_colors, display_p1);
 			affected_value(p1, actcs, affected_colors, display_p1);
 			break;
@@ -205,16 +222,16 @@ bool draws::draw()
 	for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
 		Action_Collections 	actcs = entry.actcs[i];
 		switch (actcs.types) {
-		case Action_Types::AttackBoxs: {
+		case ACT_Types::AttackBoxs: {
 			attack_boxs(p2, actcs, attack_colors, display_p2);
-			attack_value(p2, actcs, attack_colors, display_p2);
+			attack_value(p2, actcs, attack_colors, display_choose, display_p2);
 			break;
 		}
-		case Action_Types::BodyBoxs: {
+		case ACT_Types::BodyBoxs: {
 			body_boxs(p2, actcs, body_boxs_color, display_p2 && body_boxs_display);
 			break;
 		}
-		case Action_Types::AffectedBoxs: {
+		case ACT_Types::AffectedBoxs: {
 			affected_boxs(p2, actcs, affected_colors, display_p2);
 			affected_value(p2, actcs, affected_colors, display_p2);
 			break;
@@ -235,12 +252,12 @@ bool draws::draw()
 			}
 			Action_Collections 	actcs = props_entry.actcs[i];
 			switch (actcs.types) {
-			case Action_Types::AttackBoxs: {
+			case ACT_Types::AttackBoxs: {
 				attack_boxs(props, actcs, attack_colors, display_p1);
 				attack_boxs(props, actcs, attack_colors, display_p2);
 				break;
 			}
-			case Action_Types::AffectedBoxs: {
+			case ACT_Types::AffectedBoxs: {
 				affected_boxs(props, actcs, affected_colors, display_p1);
 				affected_boxs(props, actcs, affected_colors, display_p2);
 				affected_value(props, actcs, affected_colors, display_p1);
@@ -267,12 +284,12 @@ bool draws::draw()
 			Action_Collections actcs = entry.actcs[i];
 			switch (actcs.types)
 			{
-			case Action_Types::AttackBoxs: {
+			case ACT_Types::AttackBoxs: {
 				attack_boxs(b1, actcs, attack_colors, display_p1);
-				attack_value(b1, actcs, attack_colors, display_p1);
+				attack_value(b1, actcs, attack_colors, display_choose, display_p1);
 				break;
 				}
-			case Action_Types::AffectedBoxs: {
+			case ACT_Types::AffectedBoxs: {
 				affected_boxs(b1, actcs, affected_colors, display_p1);
 				affected_value(b1, actcs, affected_colors, display_p1);
 				break;
@@ -297,12 +314,12 @@ bool draws::draw()
 			Action_Collections actcs = entry.actcs[i];
 			switch (actcs.types)
 			{
-			case Action_Types::AttackBoxs: {
+			case ACT_Types::AttackBoxs: {
 				attack_boxs(b2, actcs, attack_colors, display_p1);
-				attack_value(b2, actcs, attack_colors, display_p1);
+				attack_value(b2, actcs, attack_colors, display_choose, display_p1);
 				break;
 			}
-			case Action_Types::AffectedBoxs: {
+			case ACT_Types::AffectedBoxs: {
 				affected_boxs(b2, actcs, affected_colors, display_p2);
 				affected_value(b2, actcs, affected_colors, display_p1);
 				break;
@@ -565,10 +582,13 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 	return true;
 }
 
-bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors& cs, bool display) {
+bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors& cs, displaychoose& dc, bool display) {
 	if (display) {
 		unsigned int pauseframe = draws::calcbalckout(player);
 		for (unsigned int i = 0; i < actcs.capacity; i++) {
+			if (IsBadReadPtr(&actcs.attack[i], sizeof(Action_Collections))) {
+				break;
+			}
 			auto box = actcs.attack[i];
 			auto px = (player->x + player->xoff) * 10;
 			auto py = (player->y + player->yoff) * 10;
@@ -577,6 +597,7 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 			auto w = box.w * 10;
 			auto h = box.h * 10;
 			unsigned int index = 0, value;
+			static bool choice;
 
 			if (box.frame != player->nowframe) {
 				continue;
@@ -592,33 +613,44 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 			}
 
 			ATK_Collections* atkcs = player->atks->atkcs;
-			while (index <= i) {
-				if (actcs.attack[index].hit == box.hit && atkcs[actcs.attack[index].atk].types == atkcs[box.atk].types) {
-					break;
-				}
-				index++;
-			}
-			value = actcs.attack[index].frame - pauseframe + 1;
 			switch (atkcs[box.atk].types) {
 				case Attack_Types::NormalAttack: {
+					choice = dc.noratkf_display;
 					display &= cs.noratk_display;
 					break;
 				}
 				case Attack_Types::FlyingObject: {
+					choice = dc.floatkf_display;
 					display &= cs.floatk_display;
 					break;
 				}
 				case Attack_Types::ThrowSkill: {
+					choice = dc.thratkf_display;
 					display &= cs.thratk_display;
 					break;
 				}
 				case Attack_Types::Crawl: {
+					choice = dc.cratkf_display;
 					display &= cs.cratk_display;
 					break;
 				}
 				default:
 					return false;
 			}
+			while (index <= i) {
+				if (atkcs[actcs.attack[index].atk].types == atkcs[box.atk].types) {
+					if (choice) {
+						if(actcs.attack[index].hit == box.hit){
+							break;
+						}
+					}
+					else{
+						break;
+					}
+				}
+				index++;
+			}
+			value = actcs.attack[index].frame - pauseframe + 1;
 			if (display) {
 				if (player->toward) {
 					displayvalue(player, px - x, py + y, w, h, value);
@@ -637,6 +669,9 @@ bool draws::affected_value(Player* player, Action_Collections actcs, affectcolor
 	if(display){
 		unsigned int pauseframe = draws::calcbalckout(player);
 		for (unsigned int i = 0; i < actcs.capacity; i++) {
+			if (IsBadReadPtr(&actcs.affected[i], sizeof(Action_Collections))) {
+				break;
+			}
 			auto box = actcs.affected[i];
 			if (box.frame != player->nowframe) {
 				continue;
@@ -735,34 +770,29 @@ bool draws::displayvalue(Player* player, float x, float y, float w, float h, int
 
 unsigned int draws::calcbalckout(Player* player) {
 	Actions_Entry entry = player->acts->entry[player->action];
-	for (int i = 0; i < entry.capacity; i++) {
+	for (int i = 0; i < entry.capacity && IsBadReadPtr(&player->acts->entry[player->action].actcs[i], sizeof(Actions_Entry)) == 0; i++) {
+		if (IsBadReadPtr(&entry.actcs[i], sizeof(Action_Collections))) {
+			break;
+		}
 		Action_Collections actcs = entry.actcs[i];
 		switch (actcs.types)
 		{
-		case Action_Types::TimePause: {
-			unsigned int j = 0, start, end;
-			while (j < actcs.capacity) {
-				if (actcs.timepause[j].pauset != Pause_Set::Unpause) {
-					break;
+		case ACT_Types::TimePause: {
+			unsigned int start, end;
+			if (actcs.capacity == 1 && actcs.timepause[0].pauset == Pause_Set::PauseOppo) {
+				return actcs.timepause[0].pauseframe - 1;
+			}
+			else if (actcs.capacity == 2 && (actcs.timepause[0].pauset == Pause_Set::PauseOppo || actcs.timepause[0].pauset == Pause_Set::Pauself2)) {
+				if (actcs.timepause[0].pauseframe) {
+					return actcs.timepause[0].pauseframe - 1;
 				}
-				j++;
-			}
-			start = actcs.timepause[j].pauseframe;
-			if (start) {
-				return start - 1;
-			}
-			else {
-				start = actcs.timepause[j].frame;
-				j = 0;
-				while (j < actcs.capacity) {
-					if (actcs.timepause[j].pauset == Pause_Set::Unpause) {
-						break;
-					}
-					j++;
+				else{
+					start = actcs.timepause[0].frame;
+					end = actcs.timepause[1].frame;
+					return end - start;
 				}
-				end = actcs.timepause[j].frame;
-				return end - start;
 			}
+			break;
 		}
 		default:
 			break;

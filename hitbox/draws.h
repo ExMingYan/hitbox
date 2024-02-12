@@ -7,6 +7,14 @@
 #include "singleton.hpp"
 #include "structs/objects.h"
 
+struct displaychoose
+{
+	bool noratkf_display;
+	bool floatkf_display;
+	bool thratkf_display;
+	bool cratkf_display;
+};
+
 struct attackcolors {
 	ImColor noratk;
 	ImColor floatk;
@@ -56,7 +64,7 @@ private:
 	bool attack_boxs(Player* player, Action_Collections actcs, attackcolors& cs, bool display);
 	bool body_boxs(Player* player, Action_Collections actcs, ImColor color, bool display);
 	bool affected_boxs(Player* player, Action_Collections actcs, affectcolors& cs, bool display);
-	bool attack_value(Player* player, Action_Collections actcs, attackcolors& cs, bool display);
+	bool attack_value(Player* player, Action_Collections actcs, attackcolors& cs, displaychoose& dc, bool display);
 	bool affected_value(Player* player, Action_Collections actcs, affectcolors& cs, bool display);
 	bool displayvalue(Player* player, float x, float y, float w, float h, int value);
 	unsigned int calcbalckout(Player* player);

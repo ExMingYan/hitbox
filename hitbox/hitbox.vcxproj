@@ -138,6 +138,7 @@
       <LanguageStandard>stdcpp17</LanguageStandard>
       <StructMemberAlignment>8Bytes</StructMemberAlignment>
       <StringPooling>true</StringPooling>
+      <EnableEnhancedInstructionSet>NotSet</EnableEnhancedInstructionSet>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
