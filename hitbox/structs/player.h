@@ -23,27 +23,29 @@ struct Player
 	int action;					//0x168
 	int unknown5;				//0x16c
 	unsigned int nowframe;		//0x170: 正在执行帧数
-	char unknown6[0x23C];		//0x174
+	char unknown6[0x20];		//0x174
+	float exespeed;				//0x194
+	char unknown7[0x218];		//0x198
 	unsigned int hitflag;		//0x3B0
 	char fill3[0xC];			//0x3B4
 	unsigned int flag;			//0x3C0
-	char unknown7[0x2C];		//0x3C4
+	char unknown8[0x2C];		//0x3C4
 	unsigned int flag2;			//0x3F0
-	char unknown8[0x1C];		//0x3F4
+	char unknown9[0x1C];		//0x3F4
 	Base_Info* baseinfo;		//0x410
-	char unknown9[0x68];		//0x418
+	char unknownA[0x68];		//0x418
 	unsigned int propsflag;		//0x480
-	char unknownA[0x1A4];		//0x484
+	char unknownB[0x1A4];		//0x484
 	CCommand* cmd1;				//0x628
-	char unknownB[0x68];		//0x630
+	char unknownC[0x68];		//0x630
 	CCommand* cmd2;				//0x698
-	char unknownC[0x60];		//0x6A0
+	char unknownD[0x60];		//0x6A0
 	unsigned __int64 flag3;		//0x700
-	char unknownD[0xD4];		//0x708
+	char unknownE[0xD4];		//0x708
 	int correctvalue;			//0x7DC；修正次数
-	char unknownE[0x4C];		//0x7E0
+	char unknownF[0x4C];		//0x7E0
 	int leadframe;				//0x82C；领先帧数
-	char unknownF[0x28];		//0x830
+	char unknown10[0x28];		//0x830
 	int avoidhit;				//0x858；免打帧数
 	int avoidthrow;				//0x85C；免投帧数
 };

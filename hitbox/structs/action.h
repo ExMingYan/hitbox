@@ -21,10 +21,14 @@ enum class  ACT_Types : int
 
 enum class Action_Types : int
 {
-	Normal = 0x0,
-	Attack = 0x1,
-	Affect = 0x2,
-	Guard = 0x3
+	Normal = 0x0,								//普通
+	Attack = 0x1,								//攻击
+	Affect = 0x2,								//受击
+	Guard = 0x3,								//防御
+	Fell1 = 0x4,								//倒地
+	Fell2 = 0x5,								//倒地
+	Throw = 0x7,								//投技
+	Voted = 0x8									//被投
 };
 
 struct Action_Collections						//ACT指针集

@@ -39,7 +39,7 @@ bool draws::draw()
 	static ImColor attack_boxs_color{ 255, 0, 0 };
 	ctrl->box_color(u8"普通攻击框", &noratk_boxs_display, u8"普通攻击框颜色", &noratk_selector, &attack_boxs_color);
 	ImGui::SameLine();
-	ImGui::Checkbox(u8"显示每Hit发动帧数", &noratkf_selector);
+	ImGui::Checkbox(u8"显示每Hit发动/持续帧数", &noratkf_selector);
 	attack_colors.noratk = attack_boxs_color;
 	attack_colors.noratk_display = noratk_boxs_display;
 	display_choose.noratkf_display = noratkf_selector;
@@ -50,21 +50,17 @@ bool draws::draw()
 	static ImColor floatk_boxs_color{ 200,100,100 };
 	ctrl->box_color(u8"飞行道具攻击框", &floatk_boxs_display, u8"飞行道具攻击框颜色", &floatk_selector, &floatk_boxs_color);
 	ImGui::SameLine();
-	ImGui::Checkbox(u8"显示每Hit发动帧数 ", &floatkf_seletor);
+	ImGui::Checkbox(u8"显示每Hit发动/持续帧数 ", &floatkf_seletor);
 	attack_colors.floatk = floatk_boxs_color;
 	attack_colors.floatk_display = floatk_boxs_display;
 	display_choose.floatkf_display = floatkf_seletor;
 
 	static bool thratk_boxs_display = false;
 	static bool thratk_selector = false;
-	static bool thratkf_selector = false;
 	static ImColor thratk_boxs_color{ 127,255,127 };
 	ctrl->box_color(u8"投技框", &thratk_boxs_display, u8"投技框颜色", &thratk_selector, &thratk_boxs_color);
-	ImGui::SameLine();
-	ImGui::Checkbox(u8"显示每Hit发动帧数  ", &thratkf_selector);
 	attack_colors.thratk = thratk_boxs_color;
 	attack_colors.thratk_display = thratk_boxs_display;
-	display_choose.thratkf_display = thratkf_selector;
 
 	static bool cgatk_boxs_display = false;
 	static bool cgatk_selector = false;
@@ -75,14 +71,10 @@ bool draws::draw()
 
 	static bool cratk_boxs_display = false;
 	static bool cratk_selector = false;
-	static bool cratkf_selector = false;
 	static ImColor cratk_boxs_color = { 0,127,255 };
 	ctrl->box_color(u8"触发攻击框", &cratk_boxs_display, u8"触发攻击框颜色", &cratk_selector, &cratk_boxs_color);
-	ImGui::SameLine();
-	ImGui::Checkbox(u8"显示每Hit发动帧数   ", &cratkf_selector);
 	attack_colors.cratk = cratk_boxs_color;
 	attack_colors.cratk_display = cratk_boxs_display;
-	display_choose.cratkf_display = cratkf_selector;
 
 	static bool body_boxs_display = false;
 	static bool body_selector = false;
@@ -596,7 +588,7 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 			auto y = box.y * 10;
 			auto w = box.w * 10;
 			auto h = box.h * 10;
-			unsigned int index = 0, value;
+			unsigned int index = 0, index2 = 0, value, value2 = 0;
 			static bool choice;
 
 			if (box.frame != player->nowframe) {
@@ -625,12 +617,12 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 					break;
 				}
 				case Attack_Types::ThrowSkill: {
-					choice = dc.thratkf_display;
+					choice = false;
 					display &= cs.thratk_display;
 					break;
 				}
 				case Attack_Types::Crawl: {
-					choice = dc.cratkf_display;
+					choice = false;
 					display &= cs.cratk_display;
 					break;
 				}
@@ -650,13 +642,27 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 				}
 				index++;
 			}
-			value = actcs.attack[index].frame - pauseframe + 1;
+			while (index2 < actcs.capacity) {
+				if (atkcs[actcs.attack[index2].atk].types == atkcs[box.atk].types) {
+					if (choice) {
+						if (actcs.attack[index2].hit == box.hit) {
+							value2++;
+						}
+					}
+					else {
+						value2++;
+					}
+				}
+				index2++;
+			}
 			if (display) {
+				value = actcs.attack[index].frame - pauseframe + 1;
+				std::string str = std::to_string(value) + "(" + std::to_string(value2) + ")";
 				if (player->toward) {
-					displayvalue(player, px - x, py + y, w, h, value);
+					displayvalue(player, px - x, py + y, w, h, str);
 				}
 				else {
-					displayvalue(player, px + x, py + y, w, h, value);
+					displayvalue(player, px + x, py + y, w, h, str);
 				}
 				return true;
 			}
@@ -683,7 +689,7 @@ bool draws::affected_value(Player* player, Action_Collections actcs, affectcolor
 			auto y = box.y * 10;
 			auto w = box.w * 10;
 			auto h = box.h * 10;
-			unsigned int value, index = 0;
+			unsigned int value, value2 = 0, index = 0, index2 = 0;
 
 			if (box.isaddoffset <= 0) {
 				px += player->xoff * 10;
@@ -730,12 +736,19 @@ bool draws::affected_value(Player* player, Action_Collections actcs, affectcolor
 				return false;
 			}
 			}
+			while (index2 < actcs.capacity) {
+				if (actcs.affected[index2].types == box.types) {
+					value2++;
+				}
+				index2++;
+			}
 			if (display) {
+				std::string str = std::to_string(value) + "(" + std::to_string(value2) + ")";
 				if(player->toward) {
-					draws::displayvalue(player, px - x, py + y, w, h, value);
+					draws::displayvalue(player, px - x, py + y, w, h, str);
 				}
 				else {
-					draws::displayvalue(player, px + x, py + y, w, h, value);
+					draws::displayvalue(player, px + x, py + y, w, h, str);
 				}
 				return true;
 			}
@@ -744,7 +757,7 @@ bool draws::affected_value(Player* player, Action_Collections actcs, affectcolor
 	return false;
 }
 
-bool draws::displayvalue(Player* player, float x, float y, float w, float h, int value) {
+bool draws::displayvalue(Player* player, float x, float y, float w, float h, std::string values) {
 	FVector w1{};
 	w1.X = x;
 	w1.Z = y;
@@ -762,7 +775,6 @@ bool draws::displayvalue(Player* player, float x, float y, float w, float h, int
 	serivce->screen(w3, s3);
 
 	ImVec2 str_pos((s1.X + s3.X) / 2, (s1.Y + s3.Y) / 2);
-	std::string values = std::to_string(value);
 	const char* str = values.c_str();
 	ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, str, (const char*)0);
 	return true;
