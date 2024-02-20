@@ -11,7 +11,8 @@ struct Player
 	Actions* acts;				//0x38
 	char unknown2[0x28];		//0x40
 	Attacks* atks;				//0x68
-	char fill[0x30];			//0x70
+	char fill[0x28];			//0x70
+	Player* propsmaster;		//0x98
 	float x;					//0xa0
 	float y;					//0xa4
 	char unknown3[0x34];		//0xa8
@@ -33,19 +34,21 @@ struct Player
 	unsigned int flag2;			//0x3F0
 	char unknown9[0x1C];		//0x3F4
 	Base_Info* baseinfo;		//0x410
-	char unknownA[0x68];		//0x418
+	char unknownA[0x16];		//0x418
+	__int16 propsorder;			//0x42E
+	char unknownB[0x50];		//0x430
 	unsigned int propsflag;		//0x480
-	char unknownB[0x1A4];		//0x484
+	char unknownC[0x1A4];		//0x484
 	CCommand* cmd1;				//0x628
-	char unknownC[0x68];		//0x630
+	char unknownD[0x68];		//0x630
 	CCommand* cmd2;				//0x698
-	char unknownD[0x60];		//0x6A0
+	char unknownE[0x60];		//0x6A0
 	unsigned __int64 flag3;		//0x700
-	char unknownE[0xD4];		//0x708
+	char unknownF[0xD4];		//0x708
 	int correctvalue;			//0x7DC；修正次数
-	char unknownF[0x4C];		//0x7E0
+	char unknown10[0x4C];		//0x7E0
 	int leadframe;				//0x82C；领先帧数
-	char unknown10[0x28];		//0x830
+	char unknown11[0x28];		//0x830
 	int avoidhit;				//0x858；免打帧数
 	int avoidthrow;				//0x85C；免投帧数
 };

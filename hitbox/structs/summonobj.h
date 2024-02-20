@@ -6,7 +6,8 @@ struct Summon_Object
 	void* unknown;
 	float summonxoff;
 	float summonyoff;
-	int unknown2;
+	__int16 summonorder;
+	__int16 unknown2;
 	__int16 hitimes;
 	__int16 action;
 	unsigned int flag;
