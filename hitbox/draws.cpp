@@ -46,14 +46,14 @@ bool draws::draw()
 
 	static bool floatk_boxs_display = false;
 	static bool floatk_selector = false;
-	static bool floatkf_seletor = false;
+	static bool floatkf_selector = false;
 	static ImColor floatk_boxs_color{ 128,160,255 };
 	ctrl->box_color(u8"飞行道具攻击框", &floatk_boxs_display, u8"飞行道具攻击框颜色", &floatk_selector, &floatk_boxs_color);
 	ImGui::SameLine();
-	ImGui::Checkbox(u8"显示每Hit发动/持续帧数 ", &floatkf_seletor);
+	ImGui::Checkbox(u8"显示每Hit发动/持续帧数 ", &floatkf_selector);
 	attack_colors.floatk = floatk_boxs_color;
 	attack_colors.floatk_display = floatk_boxs_display;
-	display_choose.floatkf_display = floatkf_seletor;
+	display_choose.floatkf_display = floatkf_selector;
 
 	static bool thratk_boxs_display = false;
 	static bool thratk_selector = false;
@@ -110,18 +110,26 @@ bool draws::draw()
 	affected_colors.down_display = down_boxs_display;
 
 	static bool ofo_boxs_display = false;
-	static bool ofo_seleoctor = false;
+	static bool ofo_selector = false;
+	static bool ofof_selector = false;
 	static ImColor ofo_boxs_color{ 255, 127, 255 };
-	ctrl->box_color(u8"抵消飞行道具框", &ofo_boxs_display, u8"抵消飞行道具框颜色", &ofo_seleoctor, &ofo_boxs_color);
+	ctrl->box_color(u8"抵消飞行道具框", &ofo_boxs_display, u8"抵消飞行道具框颜色", &ofo_selector, &ofo_boxs_color);
+	ImGui::SameLine();
+	ImGui::Checkbox(u8"显示可抵消等级", &ofof_selector);
 	affected_colors.ofo = ofo_boxs_color;
 	affected_colors.ofo_display = ofo_boxs_display;
+	display_choose.ofof_display = ofof_selector;
 
 	static bool rfo_boxs_display = false;
 	static bool rfo_selector = false;
+	static bool rfof_selector = false;
 	static ImColor rfo_boxs_color{ 64, 127, 127 };
 	ctrl->box_color(u8"反弹飞行道具框", &rfo_boxs_display, u8"反弹飞行道具框颜色", &rfo_selector, &rfo_boxs_color);
+	ImGui::SameLine();
+	ImGui::Checkbox(u8"显示可反弹等级", &rfof_selector);
 	affected_colors.rfo = rfo_boxs_color;
 	affected_colors.rfo_display = rfo_boxs_display;
+	display_choose.rfof_display = rfof_selector;
 
 	static bool tyrant_boxs_display = false;
 	static bool tyrant_selector = false;
@@ -201,7 +209,7 @@ bool draws::draw()
 		}
 		case ACT_Types::AffectedBoxs: {
 			affected_boxs(p1, actcs, affected_colors, display_p1);
-			affected_value(p1, actcs, affected_colors, display_p1);
+			affected_value(p1, actcs, affected_colors, display_choose, display_p1);
 			break;
 		}
 		default: {
@@ -225,7 +233,7 @@ bool draws::draw()
 		}
 		case ACT_Types::AffectedBoxs: {
 			affected_boxs(p2, actcs, affected_colors, display_p2);
-			affected_value(p2, actcs, affected_colors, display_p2);
+			affected_value(p2, actcs, affected_colors, display_choose, display_p2);
 			break;
 		}
 		default: {
@@ -254,8 +262,8 @@ bool draws::draw()
 			case ACT_Types::AffectedBoxs: {
 				affected_boxs(props, actcs, affected_colors, display_p1);
 				affected_boxs(props, actcs, affected_colors, display_p2);
-				affected_value(props, actcs, affected_colors, display_p1);
-				affected_value(props, actcs, affected_colors, display_p2);
+				affected_value(props, actcs, affected_colors, display_choose, display_p1);
+				affected_value(props, actcs, affected_colors, display_choose, display_p2);
 				break;
 			}
 			default: {
@@ -285,7 +293,7 @@ bool draws::draw()
 				}
 			case ACT_Types::AffectedBoxs: {
 				affected_boxs(b1, actcs, affected_colors, display_p1);
-				affected_value(b1, actcs, affected_colors, display_p1);
+				affected_value(b1, actcs, affected_colors, display_choose, display_p1);
 				break;
 			}
 			default:
@@ -315,7 +323,7 @@ bool draws::draw()
 			}
 			case ACT_Types::AffectedBoxs: {
 				affected_boxs(b2, actcs, affected_colors, display_p2);
-				affected_value(b2, actcs, affected_colors, display_p1);
+				affected_value(b2, actcs, affected_colors, display_choose, display_p1);
 				break;
 			}
 			default:
@@ -658,26 +666,7 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 				std::string str;
 				value = actcs.attack[index].frame - pauseframe + 1;
 				if (player->propsmaster) {
-					Actions_Entry sentry = player->acts->entry[player->sumpropaction];
-					for (int j = 0; j < sentry.capacity && IsBadReadPtr(&sentry.actcs[j], sizeof(Actions_Entry)) == 0; j++) {
-						Action_Collections sactcs = sentry.actcs[j];
-						int index3 = 0;
-						switch (sactcs.types)
-						{
-						case ACT_Types::SummonObject: {
-							while (index3 < sactcs.capacity) {
-								if (sactcs.sumobj[index3].action == player->action && sactcs.sumobj[index3].summonorder == player->propsorder) {
-									value += sactcs.sumobj[index3].frame + 1;
-									break;
-								}
-								index3++;
-							}
-							break;
-						}
-						default:
-							break;
-						}
-					}
+					value += draws::calcsummon(player);
 				}
 				if(player->acts->entry[player->action].reset == -1){
 					str = std::to_string(value) + "(" + std::to_string(value2) + ")";
@@ -698,7 +687,7 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 	return false;
 }
 
-bool draws::affected_value(Player* player, Action_Collections actcs, affectcolors& cs, bool display) {
+bool draws::affected_value(Player* player, Action_Collections actcs, affectcolors& cs, displaychoose& dc, bool display) {
 	if(display){
 		unsigned int pauseframe = draws::calcbalckout(player);
 		for (int i = 0; i < actcs.capacity && IsBadReadPtr(&actcs.affected[i], sizeof(Action_Collections)) == 0; i++) {
@@ -727,16 +716,23 @@ bool draws::affected_value(Player* player, Action_Collections actcs, affectcolor
 				index++;
 			}
 			value = actcs.affected[index].frame - pauseframe + 1;
+			if (player->propsmaster) {
+				value += draws::calcsummon(player);
+			}
 
 			switch (box.types)
 			{
 			case Affected_Types::OFOB: {
-				value = actcs.affected[i].flag >> 9 & 7;
+				if(dc.ofof_display){
+					value = actcs.affected[i].flag >> 9 & 7;
+				}
 				display &= cs.ofo_display;
 				break;
 			}
 			case Affected_Types::RFOB: {
-				value = actcs.affected[i].flag >> 9 & 7;
+				if(dc.rfof_display){
+					value = actcs.affected[i].flag >> 9 & 7;
+				}
 				display &= cs.rfo_display;
 				break;
 			}
@@ -824,6 +820,29 @@ int draws::calcbalckout(Player* player) {
 					end = actcs.timepause[1].frame;
 					return end - start;
 				}
+			}
+			break;
+		}
+		default:
+			break;
+		}
+	}
+	return 0;
+}
+
+int draws::calcsummon(Player* player) {
+	Actions_Entry entry = player->acts->entry[player->sumpropaction];
+	for (int i = 0; i < entry.capacity && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
+		Action_Collections actcs = entry.actcs[i];
+		int index = 0;
+		switch (actcs.types)
+		{
+		case ACT_Types::SummonObject: {
+			while (index < actcs.capacity) {
+				if (actcs.sumobj[index].action == player->action && actcs.sumobj[index].summonorder == player->propsorder) {
+					return actcs.sumobj[index].frame + 1;
+				}
+				index++;
 			}
 			break;
 		}
