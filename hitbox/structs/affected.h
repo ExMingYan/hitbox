@@ -16,7 +16,7 @@ enum class  Affected_Types :int
 
 struct Affected_Boxs						//受击框结构；每帧占用0x2C字节
 {
-	unsigned int frame;						//偏移0x00；帧数
+	int frame;								//偏移0x00；帧数
 	unsigned int fill1;						//偏移0x04
 	Affected_Types types;					//偏移0x08；受击框类型
 	unsigned int flag;						//偏移0x0C；Flag在不同类型的受击框中对应的功能不一样

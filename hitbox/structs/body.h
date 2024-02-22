@@ -2,7 +2,7 @@
 
 struct Body_Boxs						//身位框结构；每帧占用0x2C字节
 {
-	unsigned int frame;					//偏移0x00；帧数
+	int frame;							//偏移0x00；帧数
 	unsigned int fill1;					//偏移0x04
 	unsigned int fill2;					//偏移0x08
 	unsigned int fill3;					//偏移0x0C

@@ -11,7 +11,7 @@ enum class Attack_Types : int			//攻击框类型
 
 struct Attack_Boxs						//攻击框；每帧占用0x2C字节
 {
-	unsigned int frame;					//偏移0x00
+	int frame;							//偏移0x00
 	unsigned int atk;					//偏移0x04；对应ATK编号
 	unsigned int hit;					//偏移0x08；所属Hit数
 	float x;							//偏移0x0C

@@ -47,7 +47,7 @@ bool draws::draw()
 	static bool floatk_boxs_display = false;
 	static bool floatk_selector = false;
 	static bool floatkf_seletor = false;
-	static ImColor floatk_boxs_color{ 200,100,100 };
+	static ImColor floatk_boxs_color{ 128,160,255 };
 	ctrl->box_color(u8"飞行道具攻击框", &floatk_boxs_display, u8"飞行道具攻击框颜色", &floatk_selector, &floatk_boxs_color);
 	ImGui::SameLine();
 	ImGui::Checkbox(u8"显示每Hit发动/持续帧数 ", &floatkf_seletor);
@@ -247,6 +247,8 @@ bool draws::draw()
 			case ACT_Types::AttackBoxs: {
 				attack_boxs(props, actcs, attack_colors, display_p1);
 				attack_boxs(props, actcs, attack_colors, display_p2);
+				attack_value(props, actcs, attack_colors, display_choose, display_p1);
+				attack_value(props, actcs, attack_colors, display_choose, display_p2);
 				break;
 			}
 			case ACT_Types::AffectedBoxs: {
@@ -366,7 +368,7 @@ bool draws::attack_boxs(Player* player, Action_Collections actcs, attackcolors& 
 		return false;
 	}
 
-	for (unsigned int i = 0; i < actcs.capacity; i++) {
+	for (int i = 0; i < actcs.capacity; i++) {
 		auto box = actcs.attack[i];
 		auto px = player->x * 10;
 		auto py = player->y * 10;
@@ -442,7 +444,7 @@ bool draws::body_boxs(Player* player, Action_Collections actcs, ImColor color, b
 		return false;
 	}
 
-	for (unsigned int i = 0; i < actcs.capacity; i++) {
+	for (int i = 0; i < actcs.capacity; i++) {
 		auto box = actcs.body[i];
 		auto px = player->x * 10;
 		auto py = player->y * 10;
@@ -479,7 +481,7 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 
 	ImColor color{ 255,255,0 };
 
-	for (unsigned int i = 0; i < actcs.capacity; i++) {
+	for (int i = 0; i < actcs.capacity; i++) {
 		auto box = actcs.affected[i];
 		auto px = player->x * 10;
 		auto py = player->y * 10;
@@ -576,11 +578,8 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 
 bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors& cs, displaychoose& dc, bool display) {
 	if (display) {
-		unsigned int pauseframe = draws::calcbalckout(player);
-		for (unsigned int i = 0; i < actcs.capacity; i++) {
-			if (IsBadReadPtr(&actcs.attack[i], sizeof(Action_Collections))) {
-				break;
-			}
+		int pauseframe = draws::calcbalckout(player);
+		for (int i = 0; i < actcs.capacity && IsBadReadPtr(&actcs.attack[i], sizeof(Action_Collections)) == 0; i++) {
 			auto box = actcs.attack[i];
 			auto px = (player->x + player->xoff) * 10;
 			auto py = (player->y + player->yoff) * 10;
@@ -588,7 +587,7 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 			auto y = box.y * 10;
 			auto w = box.w * 10;
 			auto h = box.h * 10;
-			unsigned int index = 0, index2 = 0, value, value2 = 0;
+			int index = 0, index2 = 0, value, value2 = 0;
 			static bool choice;
 
 			if (box.frame != player->nowframe) {
@@ -656,8 +655,36 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 				index2++;
 			}
 			if (display) {
+				std::string str;
 				value = actcs.attack[index].frame - pauseframe + 1;
-				std::string str = std::to_string(value) + "(" + std::to_string(value2) + ")";
+				if (player->propsmaster) {
+					Actions_Entry sentry = player->acts->entry[player->sumpropaction];
+					for (int j = 0; j < sentry.capacity && IsBadReadPtr(&sentry.actcs[j], sizeof(Actions_Entry)) == 0; j++) {
+						Action_Collections sactcs = sentry.actcs[j];
+						int index3 = 0;
+						switch (sactcs.types)
+						{
+						case ACT_Types::SummonObject: {
+							while (index3 < sactcs.capacity) {
+								if (sactcs.sumobj[index3].action == player->action && sactcs.sumobj[index3].summonorder == player->propsorder) {
+									value += sactcs.sumobj[index3].frame + 1;
+									break;
+								}
+								index3++;
+							}
+							break;
+						}
+						default:
+							break;
+						}
+					}
+				}
+				if(player->acts->entry[player->action].reset == -1){
+					str = std::to_string(value) + "(" + std::to_string(value2) + ")";
+				}
+				else {
+					str = std::to_string(value);
+				}
 				if (player->toward) {
 					displayvalue(player, px - x, py + y, w, h, str);
 				}
@@ -674,10 +701,7 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 bool draws::affected_value(Player* player, Action_Collections actcs, affectcolors& cs, bool display) {
 	if(display){
 		unsigned int pauseframe = draws::calcbalckout(player);
-		for (unsigned int i = 0; i < actcs.capacity; i++) {
-			if (IsBadReadPtr(&actcs.affected[i], sizeof(Action_Collections))) {
-				break;
-			}
+		for (int i = 0; i < actcs.capacity && IsBadReadPtr(&actcs.affected[i], sizeof(Action_Collections)) == 0; i++) {
 			auto box = actcs.affected[i];
 			if (box.frame != player->nowframe) {
 				continue;
@@ -689,7 +713,7 @@ bool draws::affected_value(Player* player, Action_Collections actcs, affectcolor
 			auto y = box.y * 10;
 			auto w = box.w * 10;
 			auto h = box.h * 10;
-			unsigned int value, value2 = 0, index = 0, index2 = 0;
+			int value, value2 = 0, index = 0, index2 = 0;
 
 			if (box.isaddoffset <= 0) {
 				px += player->xoff * 10;
@@ -758,9 +782,10 @@ bool draws::affected_value(Player* player, Action_Collections actcs, affectcolor
 }
 
 bool draws::displayvalue(Player* player, float x, float y, float w, float h, std::string values) {
+	const char* str = values.c_str();
 	FVector w1{};
-	w1.X = x;
-	w1.Z = y;
+	w1.X = x - (float)std::strlen(str);
+	w1.Z = y + 4.5f;
 	FVector2D s1{};
 	serivce->screen(w1, s1);
 	FVector w3{};
@@ -775,22 +800,18 @@ bool draws::displayvalue(Player* player, float x, float y, float w, float h, std
 	serivce->screen(w3, s3);
 
 	ImVec2 str_pos((s1.X + s3.X) / 2, (s1.Y + s3.Y) / 2);
-	const char* str = values.c_str();
 	ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, str, (const char*)0);
 	return true;
 }
 
-unsigned int draws::calcbalckout(Player* player) {
+int draws::calcbalckout(Player* player) {
 	Actions_Entry entry = player->acts->entry[player->action];
 	for (int i = 0; i < entry.capacity && IsBadReadPtr(&player->acts->entry[player->action].actcs[i], sizeof(Actions_Entry)) == 0; i++) {
-		if (IsBadReadPtr(&entry.actcs[i], sizeof(Action_Collections))) {
-			break;
-		}
 		Action_Collections actcs = entry.actcs[i];
 		switch (actcs.types)
 		{
 		case ACT_Types::TimePause: {
-			unsigned int start, end;
+			int start, end;
 			if (actcs.capacity == 1 && actcs.timepause[0].pauset == Pause_Set::PauseOppo) {
 				return actcs.timepause[0].pauseframe - 1;
 			}

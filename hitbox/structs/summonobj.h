@@ -2,7 +2,7 @@
 
 struct Summon_Object
 {
-	unsigned int frame;
+	int frame;
 	void* unknown;
 	float summonxoff;
 	float summonyoff;

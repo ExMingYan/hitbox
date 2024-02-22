@@ -23,7 +23,7 @@ struct Player
 	char unknown4[0x10];		//0x158
 	int action;					//0x168
 	int unknown5;				//0x16c
-	unsigned int nowframe;		//0x170: 正在执行帧数
+	int nowframe;				//0x170: 正在执行帧数
 	char unknown6[0x20];		//0x174
 	float exespeed;				//0x194
 	char unknown7[0x218];		//0x198
@@ -36,7 +36,8 @@ struct Player
 	Base_Info* baseinfo;		//0x410
 	char unknownA[0x16];		//0x418
 	__int16 propsorder;			//0x42E
-	char unknownB[0x50];		//0x430
+	char unknownB[0x4C];		//0x430
+	int sumpropaction;			//0x47C；生成飞行道具的动作代码
 	unsigned int propsflag;		//0x480
 	char unknownC[0x1A4];		//0x484
 	CCommand* cmd1;				//0x628

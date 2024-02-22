@@ -33,7 +33,7 @@ enum class Action_Types : int
 
 struct Action_Collections						//ACT指针集
 {
-	unsigned int capacity;						//0x0 总帧数；指针指向内容总大小 = TotalFrame * 0x2C
+	int capacity;						//0x0 总帧数；指针指向内容总大小 = TotalFrame * 0x2C
 	ACT_Types types;							//0x4 ACT类型；决定指针指向的内容
 	union
 	{
