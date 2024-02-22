@@ -802,13 +802,13 @@ bool draws::displayvalue(Player* player, float x, float y, float w, float h, std
 
 int draws::calcbalckout(Player* player) {
 	Actions_Entry entry = player->acts->entry[player->action];
-	for (int i = 0; i < entry.capacity && IsBadReadPtr(&player->acts->entry[player->action].actcs[i], sizeof(Actions_Entry)) == 0; i++) {
+	for (int i = 0; i < entry.capacity && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
 		Action_Collections actcs = entry.actcs[i];
 		switch (actcs.types)
 		{
 		case ACT_Types::TimePause: {
 			int start, end;
-			if (actcs.capacity == 1 && actcs.timepause[0].pauset == Pause_Set::PauseOppo) {
+			if (actcs.capacity == 1 && (actcs.timepause[0].pauset == Pause_Set::PauseOppo || actcs.timepause[0].pauset == Pause_Set::Pauself2)) {
 				return actcs.timepause[0].pauseframe - 1;
 			}
 			else if (actcs.capacity == 2 && (actcs.timepause[0].pauset == Pause_Set::PauseOppo || actcs.timepause[0].pauset == Pause_Set::Pauself2)) {

@@ -11,7 +11,7 @@ enum class Pause_Set
 };
 
 struct Time_Pause {
-	unsigned int frame;
+	int frame;
 	Pause_Set pauset;
 	int unknown;
 	unsigned int pauseframe;
