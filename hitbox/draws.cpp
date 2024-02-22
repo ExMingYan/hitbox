@@ -780,8 +780,8 @@ bool draws::affected_value(Player* player, Action_Collections actcs, affectcolor
 bool draws::displayvalue(Player* player, float x, float y, float w, float h, std::string values) {
 	const char* str = values.c_str();
 	FVector w1{};
-	w1.X = x - (float)std::strlen(str);
-	w1.Z = y + 4.5f;
+	w1.X = x;
+	w1.Z = y;
 	FVector2D s1{};
 	serivce->screen(w1, s1);
 	FVector w3{};
