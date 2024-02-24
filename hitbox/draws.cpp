@@ -763,7 +763,13 @@ bool draws::affected_value(Player* player, Action_Collections actcs, affectcolor
 				index2++;
 			}
 			if (display) {
-				std::string str = std::to_string(value) + "(" + std::to_string(value2) + ")";
+				std::string str;
+				if(player->acts->entry[player->action].reset == -1){
+					str = std::to_string(value) + "(" + std::to_string(value2) + ")";
+				}
+				else {
+					str = std::to_string(value);
+				}
 				if(player->toward) {
 					draws::displayvalue(player, px - x, py + y, w, h, str);
 				}
@@ -840,7 +846,7 @@ int draws::calcsummon(Player* player) {
 		case ACT_Types::SummonObject: {
 			while (index < actcs.capacity) {
 				if (actcs.sumobj[index].action == player->action && actcs.sumobj[index].summonorder == player->propsorder) {
-					return actcs.sumobj[index].frame + 1;
+					return actcs.sumobj[index].frame;
 				}
 				index++;
 			}
