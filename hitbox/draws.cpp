@@ -194,7 +194,7 @@ bool draws::draw()
 	}
 
 	Actions_Entry entry = p1->acts->entry[p1->action];
-	for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
+	for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(Action_Collections)) == 0; i++) {
 		Action_Collections 	actcs = entry.actcs[i];
 
 		switch (actcs.types) {
@@ -219,7 +219,7 @@ bool draws::draw()
 	}
 
 	entry = p2->acts->entry[p2->action];
-	for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
+	for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(Action_Collections)) == 0; i++) {
 		Action_Collections 	actcs = entry.actcs[i];
 		switch (actcs.types) {
 		case ACT_Types::AttackBoxs: {
@@ -282,7 +282,7 @@ bool draws::draw()
 			break;
 		}
 		entry = b1->acts->entry[b1->action];
-		for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
+		for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(Action_Collections)) == 0; i++) {
 			Action_Collections actcs = entry.actcs[i];
 			switch (actcs.types)
 			{
@@ -312,7 +312,7 @@ bool draws::draw()
 			break;
 		}
 		entry = b2->acts->entry[b2->action];
-		for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
+		for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(Action_Collections)) == 0; i++) {
 			Action_Collections actcs = entry.actcs[i];
 			switch (actcs.types)
 			{
@@ -586,7 +586,6 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 
 bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors& cs, displaychoose& dc, bool display) {
 	if (display) {
-		int pauseframe = draws::calcbalckout(player);
 		for (int i = 0; i < actcs.capacity && IsBadReadPtr(&actcs.attack[i], sizeof(Action_Collections)) == 0; i++) {
 			auto box = actcs.attack[i];
 			auto px = (player->x + player->xoff) * 10;
@@ -664,7 +663,7 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 			}
 			if (display) {
 				std::string str;
-				value = actcs.attack[index].frame - pauseframe + 1;
+				value = actcs.attack[index].frame + 1;
 				if (player->propsmaster) {
 					value += draws::calcsummon(player);
 				}
@@ -689,7 +688,6 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 
 bool draws::affected_value(Player* player, Action_Collections actcs, affectcolors& cs, displaychoose& dc, bool display) {
 	if(display){
-		unsigned int pauseframe = draws::calcbalckout(player);
 		for (int i = 0; i < actcs.capacity && IsBadReadPtr(&actcs.affected[i], sizeof(Action_Collections)) == 0; i++) {
 			auto box = actcs.affected[i];
 			if (box.frame != player->nowframe) {
@@ -715,7 +713,7 @@ bool draws::affected_value(Player* player, Action_Collections actcs, affectcolor
 				}
 				index++;
 			}
-			value = actcs.affected[index].frame - pauseframe + 1;
+			value = actcs.affected[index].frame + 1;
 			if (player->propsmaster) {
 				value += draws::calcsummon(player);
 			}
@@ -804,36 +802,6 @@ bool draws::displayvalue(Player* player, float x, float y, float w, float h, std
 	ImVec2 str_pos((s1.X + s3.X) / 2, (s1.Y + s3.Y) / 2);
 	ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, str, (const char*)0);
 	return true;
-}
-
-int draws::calcbalckout(Player* player) {
-	Actions_Entry entry = player->acts->entry[player->action];
-	for (int i = 0; i < entry.capacity && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
-		Action_Collections actcs = entry.actcs[i];
-		switch (actcs.types)
-		{
-		case ACT_Types::TimePause: {
-			int start, end;
-			if (actcs.capacity == 1 && (actcs.timepause[0].pauset == Pause_Set::PauseOppo || actcs.timepause[0].pauset == Pause_Set::Pauself2)) {
-				return actcs.timepause[0].pauseframe - 1;
-			}
-			else if (actcs.capacity == 2 && (actcs.timepause[0].pauset == Pause_Set::PauseOppo || actcs.timepause[0].pauset == Pause_Set::Pauself2)) {
-				if (actcs.timepause[0].pauseframe) {
-					return actcs.timepause[0].pauseframe - 1;
-				}
-				else{
-					start = actcs.timepause[0].frame;
-					end = actcs.timepause[1].frame;
-					return end - start;
-				}
-			}
-			break;
-		}
-		default:
-			break;
-		}
-	}
-	return 0;
 }
 
 int draws::calcsummon(Player* player) {
