@@ -67,6 +67,8 @@ private:
 	bool attack_value(Player* player, Action_Collections actcs, attackcolors& cs, displaychoose& dc, bool display);
 	bool affected_value(Player* player, Action_Collections actcs, affectcolors& cs, displaychoose& dc, bool display);
 	bool displayvalue(Player* player, float x, float y, float w, float h, std::string values);
+	int calcbalckout(Player* player);
+	int calcsummon(Player* player);
 
 public:
 	draws();
