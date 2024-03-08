@@ -512,7 +512,7 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 				display = false;
 			};
 			color = cs.normal;
-			display = display && cs.normal_display;
+			display &= cs.normal_display;
 			break;
 		}
 		case Affected_Types::CastBox: {
@@ -520,12 +520,12 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 				display = false;
 			};
 			color = cs.cast;
-			display = display && cs.cast_display;
+			display &= cs.cast_display;
 			break;
 		}
 		case Affected_Types::GuardBox: {
 			color = cs.gurad;
-			display = display && cs.gurad_display;
+			display &= cs.gurad_display;
 			break;
 		}
 		case Affected_Types::DownHitBox: {
@@ -533,37 +533,37 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 				display = false;
 			};
 			color = cs.down;
-			display = display && cs.down_display;
+			display &= cs.down_display;
 			break;
 		}
 		case Affected_Types::OFOB: {
 			color = cs.ofo;
-			display = display && cs.ofo_display;
+			display &= cs.ofo_display;
 			break;
 		}
 		case Affected_Types::RFOB: {
 			color = cs.rfo;
-			display = cs.rfo_display;
+			display &= cs.rfo_display;
 			break;
 		}
 		case Affected_Types::TyrantsBox: {
 			color = cs.tyants;
-			display = display && cs.tyants_display;
+			display &= cs.tyants_display;
 			break;
 		}
 		case Affected_Types::GuardPointBox: {
 			color = cs.guradex;
-			display = display && cs.guradex_display;
+			display &= cs.guradex_display;
 			break;
 		}
 		case Affected_Types::FlyObPointBox: {
 			color = cs.flyobex;
-			display = display && cs.flyobex_display;
+			display &= cs.flyobex_display;
 			break;
 		}
 		case Affected_Types::ThrowPointBox: {
 			color = cs.throwex;
-			display = display && cs.throwex_display;
+			display &= cs.throwex_display;
 			break;
 		}
 		default: {
