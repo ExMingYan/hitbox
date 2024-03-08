@@ -512,7 +512,7 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 				display = false;
 			};
 			color = cs.normal;
-			display = display && cs.normal_display;
+			display &= cs.normal_display;
 			break;
 		}
 		case Affected_Types::CastBox: {
@@ -520,12 +520,15 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 				display = false;
 			};
 			color = cs.cast;
-			display = display && cs.cast_display;
+			display &= cs.cast_display;
 			break;
 		}
 		case Affected_Types::GuardBox: {
+			if (player->avoidhit) {
+				display = false;
+			}
 			color = cs.gurad;
-			display = display && cs.gurad_display;
+			display &= cs.gurad_display;
 			break;
 		}
 		case Affected_Types::DownHitBox: {
@@ -533,37 +536,49 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 				display = false;
 			};
 			color = cs.down;
-			display = display && cs.down_display;
+			display &= cs.down_display;
 			break;
 		}
 		case Affected_Types::OFOB: {
 			color = cs.ofo;
-			display = display && cs.ofo_display;
+			display &= cs.ofo_display;
 			break;
 		}
 		case Affected_Types::RFOB: {
 			color = cs.rfo;
-			display = cs.rfo_display;
+			display &= cs.rfo_display;
 			break;
 		}
 		case Affected_Types::TyrantsBox: {
+			if (player->avoidhit) {
+				display = false;
+			}
 			color = cs.tyants;
-			display = display && cs.tyants_display;
+			display &= cs.tyants_display;
 			break;
 		}
 		case Affected_Types::GuardPointBox: {
+			if (player->avoidhit) {
+				display = false;
+			}
 			color = cs.guradex;
-			display = display && cs.guradex_display;
+			display &= cs.guradex_display;
 			break;
 		}
 		case Affected_Types::FlyObPointBox: {
+			if (player->avoidhit) {
+				display = false;
+			}
 			color = cs.flyobex;
-			display = display && cs.flyobex_display;
+			display &= cs.flyobex_display;
 			break;
 		}
 		case Affected_Types::ThrowPointBox: {
+			if (player->avoidthrow) {
+				display = false;
+			}
 			color = cs.throwex;
-			display = display && cs.throwex_display;
+			display &= cs.throwex_display;
 			break;
 		}
 		default: {
@@ -635,23 +650,10 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 				default:
 					return false;
 			}
-			while (index <= i) {
+			while (index < actcs.capacity) {
 				if (atkcs[actcs.attack[index].atk].types == atkcs[box.atk].types) {
 					if (choice) {
-						if(actcs.attack[index].hit == box.hit){
-							break;
-						}
-					}
-					else{
-						break;
-					}
-				}
-				index++;
-			}
-			while (index2 < actcs.capacity) {
-				if (atkcs[actcs.attack[index2].atk].types == atkcs[box.atk].types) {
-					if (choice) {
-						if (actcs.attack[index2].hit == box.hit) {
+						if (actcs.attack[index].hit == box.hit) {
 							value2++;
 						}
 					}
@@ -659,15 +661,26 @@ bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors&
 						value2++;
 					}
 				}
-				index2++;
+				index++;
 			}
 			if (display) {
 				std::string str;
-				value = actcs.attack[index].frame + 1;
-				if (player->propsmaster) {
-					value += draws::calcsummon(player);
+				value = player->occframe;
+				if (choice) {
+					while (index2 < i){
+						if (atkcs[actcs.attack[index2].atk].types == atkcs[box.atk].types) {
+							if (actcs.attack[index2].hit == 0) {
+								break;
+							}
+						}
+						index2++;
+					}
+					value += box.frame - actcs.attack[index2].frame;
 				}
-				if(player->acts->entry[player->action].reset == -1){
+				if (player->propsmaster) {
+					value += player->propsmaster->occframe;
+				}
+				if (player->acts->entry[player->action].reset == -1) {
 					str = std::to_string(value) + "(" + std::to_string(value2) + ")";
 				}
 				else {
@@ -706,7 +719,6 @@ bool draws::affected_value(Player* player, Action_Collections actcs, affectcolor
 				px += player->xoff * 10;
 				py += player->yoff * 10;
 			}
-
 			while (index <= i) {
 				if (box.types == actcs.affected[index].types) {
 					break;
@@ -715,11 +727,10 @@ bool draws::affected_value(Player* player, Action_Collections actcs, affectcolor
 			}
 			value = actcs.affected[index].frame + 1;
 			if (player->propsmaster) {
-				value += draws::calcsummon(player);
+				value += player->propsmaster->occframe;
 			}
 
-			switch (box.types)
-			{
+			switch (box.types) {
 			case Affected_Types::OFOB: {
 				if(dc.ofof_display){
 					value = actcs.affected[i].flag >> 9 & 7;
@@ -802,27 +813,4 @@ bool draws::displayvalue(Player* player, float x, float y, float w, float h, std
 	ImVec2 str_pos((s1.X + s3.X) / 2, (s1.Y + s3.Y) / 2);
 	ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, str, (const char*)0);
 	return true;
-}
-
-int draws::calcsummon(Player* player) {
-	Actions_Entry entry = player->acts->entry[player->sumpropaction];
-	for (int i = 0; i < entry.capacity && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
-		Action_Collections actcs = entry.actcs[i];
-		int index = 0;
-		switch (actcs.types)
-		{
-		case ACT_Types::SummonObject: {
-			while (index < actcs.capacity) {
-				if (actcs.sumobj[index].action == player->action && actcs.sumobj[index].summonorder == player->propsorder) {
-					return actcs.sumobj[index].frame;
-				}
-				index++;
-			}
-			break;
-		}
-		default:
-			break;
-		}
-	}
-	return 0;
 }

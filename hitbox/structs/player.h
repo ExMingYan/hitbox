@@ -49,7 +49,9 @@ struct Player
 	int correctvalue;			//0x7DC；修正次数
 	char unknown10[0x4C];		//0x7E0
 	int leadframe;				//0x82C；领先帧数
-	char unknown11[0x28];		//0x830
+	int unknown11;				//0x830
+	int occframe;				//0x834；发生帧数
+	char unknown12[0x20];		//0x838
 	int avoidhit;				//0x858；免打帧数
 	int avoidthrow;				//0x85C；免投帧数
 };
