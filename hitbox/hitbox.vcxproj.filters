@@ -194,13 +194,16 @@
     <ClInclude Include="structs\summonobj.h">
       <Filter>structs</Filter>
     </ClInclude>
-    <ClInclude Include="structs\timepause.h">
-      <Filter>structs</Filter>
-    </ClInclude>
     <ClInclude Include="structs\command.h">
       <Filter>structs</Filter>
     </ClInclude>
     <ClInclude Include="structs\base.h">
+      <Filter>structs</Filter>
+    </ClInclude>
+    <ClInclude Include="structs\record.h">
+      <Filter>structs</Filter>
+    </ClInclude>
+    <ClInclude Include="structs\cancel.h">
       <Filter>structs</Filter>
     </ClInclude>
   </ItemGroup>

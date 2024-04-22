@@ -1,11 +1,11 @@
 ﻿#pragma once
+#include "body.h"
 #include "affected.h"
 #include "attack.h"
-#include "body.h"
+#include "cancel.h"
 #pragma pack(push,4)
 #include "setflag.h"
 #include "summonobj.h"
-#include "timepause.h"
 #pragma pack(pop)
 
 enum class  ACT_Types : int
@@ -33,16 +33,16 @@ enum class Action_Types : int
 
 struct Action_Collections						//ACT指针集
 {
-	int capacity;						//0x0 总帧数；指针指向内容总大小 = TotalFrame * 0x2C
+	int capacity;								//0x0 总帧数；指针指向内容总大小 = TotalFrame * 0x2C
 	ACT_Types types;							//0x4 ACT类型；决定指针指向的内容
 	union
 	{
-		Attack_Boxs* attack;
 		Body_Boxs* body;
 		Affected_Boxs* affected;
+		Attack_Boxs* attack;
+		CancelTable* cancel;
 		BSet_Flag* bsetflag;
 		CSet_Flag* csetflag;
-		Time_Pause* timepause;
 		Summon_Object* sumobj;
 	};
 };

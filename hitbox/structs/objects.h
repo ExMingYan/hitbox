@@ -15,6 +15,10 @@ struct Objects
 	Player* b2;							//0x58
 	char unknown5[0x665F0];				//0x60
 	Flight_Props_Header* props_list;	//0x66650
-	char unknown6[0x4fe8];				//0x66658
+	char unknown6[0x124];				//0x66658
+	unsigned int PausePlayer;			//0x6677C；被时停方，bit2为1P，bit3为2P
+	unsigned __int64 unknown7;			//0x66780
+	signed int respauseframe;			//0x66788；剩余时停帧数
+	char unknown8[0x4EB4];				//0x6678C
 	unsigned int ready;					//0x6B640
 };

@@ -200,7 +200,6 @@ bool draws::draw()
 		switch (actcs.types) {
 		case ACT_Types::AttackBoxs: {
 			attack_boxs(p1, actcs, attack_colors, display_p1);
-			attack_value(p1, actcs, attack_colors, display_choose, display_p1);
 			break;
 		}
 		case ACT_Types::BodyBoxs: {
@@ -209,7 +208,6 @@ bool draws::draw()
 		}
 		case ACT_Types::AffectedBoxs: {
 			affected_boxs(p1, actcs, affected_colors, display_p1);
-			affected_value(p1, actcs, affected_colors, display_choose, display_p1);
 			break;
 		}
 		default: {
@@ -224,7 +222,6 @@ bool draws::draw()
 		switch (actcs.types) {
 		case ACT_Types::AttackBoxs: {
 			attack_boxs(p2, actcs, attack_colors, display_p2);
-			attack_value(p2, actcs, attack_colors, display_choose, display_p2);
 			break;
 		}
 		case ACT_Types::BodyBoxs: {
@@ -233,7 +230,6 @@ bool draws::draw()
 		}
 		case ACT_Types::AffectedBoxs: {
 			affected_boxs(p2, actcs, affected_colors, display_p2);
-			affected_value(p2, actcs, affected_colors, display_choose, display_p2);
 			break;
 		}
 		default: {
@@ -255,15 +251,11 @@ bool draws::draw()
 			case ACT_Types::AttackBoxs: {
 				attack_boxs(props, actcs, attack_colors, display_p1);
 				attack_boxs(props, actcs, attack_colors, display_p2);
-				attack_value(props, actcs, attack_colors, display_choose, display_p1);
-				attack_value(props, actcs, attack_colors, display_choose, display_p2);
 				break;
 			}
 			case ACT_Types::AffectedBoxs: {
 				affected_boxs(props, actcs, affected_colors, display_p1);
 				affected_boxs(props, actcs, affected_colors, display_p2);
-				affected_value(props, actcs, affected_colors, display_choose, display_p1);
-				affected_value(props, actcs, affected_colors, display_choose, display_p2);
 				break;
 			}
 			default: {
@@ -288,12 +280,10 @@ bool draws::draw()
 			{
 			case ACT_Types::AttackBoxs: {
 				attack_boxs(b1, actcs, attack_colors, display_p1);
-				attack_value(b1, actcs, attack_colors, display_choose, display_p1);
 				break;
 				}
 			case ACT_Types::AffectedBoxs: {
 				affected_boxs(b1, actcs, affected_colors, display_p1);
-				affected_value(b1, actcs, affected_colors, display_choose, display_p1);
 				break;
 			}
 			default:
@@ -318,12 +308,10 @@ bool draws::draw()
 			{
 			case ACT_Types::AttackBoxs: {
 				attack_boxs(b2, actcs, attack_colors, display_p1);
-				attack_value(b2, actcs, attack_colors, display_choose, display_p1);
 				break;
 			}
 			case ACT_Types::AffectedBoxs: {
 				affected_boxs(b2, actcs, affected_colors, display_p2);
-				affected_value(b2, actcs, affected_colors, display_choose, display_p1);
 				break;
 			}
 			default:
@@ -524,9 +512,6 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 			break;
 		}
 		case Affected_Types::GuardBox: {
-			if (player->avoidhit) {
-				display = false;
-			}
 			color = cs.gurad;
 			display &= cs.gurad_display;
 			break;
@@ -550,33 +535,21 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 			break;
 		}
 		case Affected_Types::TyrantsBox: {
-			if (player->avoidhit) {
-				display = false;
-			}
 			color = cs.tyants;
 			display &= cs.tyants_display;
 			break;
 		}
 		case Affected_Types::GuardPointBox: {
-			if (player->avoidhit) {
-				display = false;
-			}
 			color = cs.guradex;
 			display &= cs.guradex_display;
 			break;
 		}
 		case Affected_Types::FlyObPointBox: {
-			if (player->avoidhit) {
-				display = false;
-			}
 			color = cs.flyobex;
 			display &= cs.flyobex_display;
 			break;
 		}
 		case Affected_Types::ThrowPointBox: {
-			if (player->avoidthrow) {
-				display = false;
-			}
 			color = cs.throwex;
 			display &= cs.throwex_display;
 			break;
@@ -597,272 +570,4 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 		}
 	}
 	return true;
-}
-
-bool draws::attack_value(Player* player, Action_Collections actcs, attackcolors& cs, displaychoose& dc, bool display) {
-	if (display) {
-		for (int i = 0; i < actcs.capacity && IsBadReadPtr(&actcs.attack[i], sizeof(Action_Collections)) == 0; i++) {
-			auto box = actcs.attack[i];
-			auto px = (player->x + player->xoff) * 10;
-			auto py = (player->y + player->yoff) * 10;
-			auto x = box.x * 10;
-			auto y = box.y * 10;
-			auto w = box.w * 10;
-			auto h = box.h * 10;
-			int index = 0, index2 = 0, value, value2 = 0;
-			static bool choice;
-
-			if (box.frame != player->nowframe) {
-				continue;
-			}
-			if ((box.flag & 1 && (player->flag2 & 6) == 0) || (box.flag & 2 && (player->flag2 & 4) == 0) || (box.flag & 4 && (player->flag2 & 2) == 0)) {
-				continue;
-			}
-			if ((box.flag & 8) && (player->flag2 & 6) != 0 || (box.flag & 0x10 && (player->flag & 2) == 0) || (box.flag & 0x20 && (player->flag & 4) == 0)) {
-				continue;
-			}
-			if ((box.flag & 0x40 && (player->flag & 8) == 0) || (box.flag & 0x80 && (player->flag & 0x10) == 0) || (box.flag & 0x100 && (player->flag3 >> 0x3E & 1) == 0)) {
-				continue;
-			}
-
-			ATK_Collections* atkcs = player->atks->atkcs;
-			switch (atkcs[box.atk].types) {
-				case Attack_Types::NormalAttack: {
-					choice = dc.noratkf_display;
-					display &= cs.noratk_display;
-					break;
-				}
-				case Attack_Types::FlyingObject: {
-					choice = dc.floatkf_display;
-					display &= cs.floatk_display;
-					break;
-				}
-				case Attack_Types::ThrowSkill: {
-					choice = false;
-					display &= cs.thratk_display;
-					break;
-				}
-				case Attack_Types::Crawl: {
-					choice = false;
-					display &= cs.cratk_display;
-					break;
-				}
-				default:
-					return false;
-			}
-			while (index < actcs.capacity) {
-				if (atkcs[actcs.attack[index].atk].types == atkcs[box.atk].types) {
-					if (choice) {
-						if (actcs.attack[index].hit == box.hit) {
-							value2++;
-						}
-					}
-					else {
-						value2++;
-					}
-				}
-				index++;
-			}
-			if (display) {
-				std::string str;
-				value = player->occframe;
-				if (choice) {
-					while (index2 < i){
-						if (atkcs[actcs.attack[index2].atk].types == atkcs[box.atk].types) {
-							if (actcs.attack[index2].hit == 0) {
-								break;
-							}
-						}
-						index2++;
-					}
-					value += box.frame - actcs.attack[index2].frame;
-				}
-				if (player->propsmaster) {
-					value += player->propsmaster->occframe;
-				}
-				if (player->acts->entry[player->action].reset == -1) {
-					str = std::to_string(value) + "(" + std::to_string(value2) + ")";
-				}
-				else {
-					str = std::to_string(value);
-				}
-				if (player->toward) {
-					displayvalue(player, px - x, py + y, w, h, str);
-				}
-				else {
-					displayvalue(player, px + x, py + y, w, h, str);
-				}
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-bool draws::affected_value(Player* player, Action_Collections actcs, affectcolors& cs, displaychoose& dc, bool display) {
-	if(display){
-		for (int i = 0; i < actcs.capacity && IsBadReadPtr(&actcs.affected[i], sizeof(Action_Collections)) == 0; i++) {
-			auto box = actcs.affected[i];
-			if (box.frame != player->nowframe) {
-				continue;
-			}
-
-			auto px = player->x * 10;
-			auto py = player->y * 10;
-			auto x = box.x * 10;
-			auto y = box.y * 10;
-			auto w = box.w * 10;
-			auto h = box.h * 10;
-			int value, value2 = 0, index = 0, index2 = 0;
-
-			if (box.isaddoffset <= 0) {
-				px += player->xoff * 10;
-				py += player->yoff * 10;
-			}
-			while (index <= i) {
-				if (box.types == actcs.affected[index].types) {
-					break;
-				}
-				index++;
-			}
-			value = actcs.affected[index].frame + 1;
-			if (player->propsmaster) {
-				value += player->propsmaster->occframe;
-			}
-
-			switch (box.types) {
-			case Affected_Types::OFOB: {
-				if(dc.ofof_display){
-					value = actcs.affected[i].flag >> 9 & 7;
-				}
-				display &= cs.ofo_display;
-				break;
-			}
-			case Affected_Types::RFOB: {
-				if(dc.rfof_display){
-					value = actcs.affected[i].flag >> 9 & 7;
-				}
-				display &= cs.rfo_display;
-				break;
-			}
-			case Affected_Types::TyrantsBox: {
-				display &= cs.tyants_display;
-				break;
-			}
-			case Affected_Types::GuardPointBox: {
-				display &= cs.guradex_display;
-				break;
-			}
-			case Affected_Types::FlyObPointBox: {
-				display &= cs.flyobex_display;
-				break;
-			}
-			case Affected_Types::ThrowPointBox: {
-				display &= cs.throwex_display;
-				break;
-			}
-			default: {
-				return false;
-			}
-			}
-			while (index2 < actcs.capacity) {
-				if (actcs.affected[index2].types == box.types) {
-					value2++;
-				}
-				index2++;
-			}
-			if (display) {
-				std::string str;
-				if(player->acts->entry[player->action].reset == -1){
-					str = std::to_string(value) + "(" + std::to_string(value2) + ")";
-				}
-				else {
-					str = std::to_string(value);
-				}
-				if(player->toward) {
-					draws::displayvalue(player, px - x, py + y, w, h, str);
-				}
-				else {
-					draws::displayvalue(player, px + x, py + y, w, h, str);
-				}
-				return true;
-			}
-		}
-	}
-	return false;
-}
-
-bool draws::displayvalue(Player* player, float x, float y, float w, float h, std::string values) {
-	const char* str = values.c_str();
-	FVector w1{};
-	w1.X = x;
-	w1.Z = y;
-	FVector2D s1{};
-	serivce->screen(w1, s1);
-	FVector w3{};
-	if (player->toward) {
-		w3.X = x - w;
-	}
-	else {
-		w3.X = x + w;
-	}
-	w3.Z = y - h;
-	FVector2D s3{};
-	serivce->screen(w3, s3);
-
-	ImVec2 str_pos((s1.X + s3.X) / 2, (s1.Y + s3.Y) / 2);
-	ImGui::GetForegroundDrawList()->AddText(str_pos, IM_COL32_BLACK, str, (const char*)0);
-	return true;
-
-}int draws::calcbalckout(Player* player) {
-	Actions_Entry entry = player->acts->entry[player->action];
-	for (int i = 0; i < entry.capacity && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
-		Action_Collections actcs = entry.actcs[i];
-		switch (actcs.types)
-		{
-		case ACT_Types::TimePause: {
-			int start, end;
-			if (actcs.capacity == 1 && (actcs.timepause[0].pauset == Pause_Set::PauseOppo || actcs.timepause[0].pauset == Pause_Set::Pauself2)) {
-				return actcs.timepause[0].pauseframe - 1;
-			}
-			else if (actcs.capacity == 2 && (actcs.timepause[0].pauset == Pause_Set::PauseOppo || actcs.timepause[0].pauset == Pause_Set::Pauself2)) {
-				if (actcs.timepause[0].pauseframe) {
-					return actcs.timepause[0].pauseframe - 1;
-				}
-				else {
-					start = actcs.timepause[0].frame;
-					end = actcs.timepause[1].frame;
-					return end - start;
-				}
-			}
-			break;
-		}
-		default:
-			break;
-		}
-	}
-	return 0;
-}
-
-int draws::calcsummon(Player* player) {
-	Actions_Entry entry = player->acts->entry[player->sumpropaction];
-	for (int i = 0; i < entry.capacity && IsBadReadPtr(&entry.actcs[i], sizeof(Actions_Entry)) == 0; i++) {
-		Action_Collections actcs = entry.actcs[i];
-		int index = 0;
-		switch (actcs.types)
-		{
-		case ACT_Types::SummonObject: {
-			while (index < actcs.capacity) {
-				if (actcs.sumobj[index].action == player->action && actcs.sumobj[index].summonorder == player->propsorder) {
-					return actcs.sumobj[index].frame;
-				}
-				index++;
-			}
-			break;
-		}
-		default:
-			break;
-		}
-	}
-	return 0;
 }

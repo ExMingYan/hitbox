@@ -6,6 +6,7 @@
 #include "services.h"
 #include "singleton.hpp"
 #include "structs/objects.h"
+#include "structs/record.h"
 
 struct displaychoose
 {
@@ -64,11 +65,6 @@ private:
 	bool attack_boxs(Player* player, Action_Collections actcs, attackcolors& cs, bool display);
 	bool body_boxs(Player* player, Action_Collections actcs, ImColor color, bool display);
 	bool affected_boxs(Player* player, Action_Collections actcs, affectcolors& cs, bool display);
-	bool attack_value(Player* player, Action_Collections actcs, attackcolors& cs, displaychoose& dc, bool display);
-	bool affected_value(Player* player, Action_Collections actcs, affectcolors& cs, displaychoose& dc, bool display);
-	bool displayvalue(Player* player, float x, float y, float w, float h, std::string values);
-	int calcbalckout(Player* player);
-	int calcsummon(Player* player);
 
 public:
 	draws();
