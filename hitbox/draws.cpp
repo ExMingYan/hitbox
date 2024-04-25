@@ -21,7 +21,6 @@ bool draws::draw()
 {
 	static attackcolors attack_colors{};
 	static affectcolors affected_colors{};
-	static displaychoose display_choose{};
 	static bool display_p1 = false;
 	static bool display_p2 = false;
 	ImGui::Checkbox("p1", &display_p1);
@@ -38,22 +37,16 @@ bool draws::draw()
 	static bool noratkf_selector = false;
 	static ImColor attack_boxs_color{ 255, 0, 0 };
 	ctrl->box_color(u8"普通攻击框", &noratk_boxs_display, u8"普通攻击框颜色", &noratk_selector, &attack_boxs_color);
-	ImGui::SameLine();
-	ImGui::Checkbox(u8"显示每Hit发动/持续帧数", &noratkf_selector);
 	attack_colors.noratk = attack_boxs_color;
 	attack_colors.noratk_display = noratk_boxs_display;
-	display_choose.noratkf_display = noratkf_selector;
 
 	static bool floatk_boxs_display = false;
 	static bool floatk_selector = false;
 	static bool floatkf_selector = false;
 	static ImColor floatk_boxs_color{ 128,160,255 };
 	ctrl->box_color(u8"飞行道具攻击框", &floatk_boxs_display, u8"飞行道具攻击框颜色", &floatk_selector, &floatk_boxs_color);
-	ImGui::SameLine();
-	ImGui::Checkbox(u8"显示每Hit发动/持续帧数 ", &floatkf_selector);
 	attack_colors.floatk = floatk_boxs_color;
 	attack_colors.floatk_display = floatk_boxs_display;
-	display_choose.floatkf_display = floatkf_selector;
 
 	static bool thratk_boxs_display = false;
 	static bool thratk_selector = false;
@@ -114,22 +107,16 @@ bool draws::draw()
 	static bool ofof_selector = false;
 	static ImColor ofo_boxs_color{ 255, 127, 255 };
 	ctrl->box_color(u8"抵消飞行道具框", &ofo_boxs_display, u8"抵消飞行道具框颜色", &ofo_selector, &ofo_boxs_color);
-	ImGui::SameLine();
-	ImGui::Checkbox(u8"显示可抵消等级", &ofof_selector);
 	affected_colors.ofo = ofo_boxs_color;
 	affected_colors.ofo_display = ofo_boxs_display;
-	display_choose.ofof_display = ofof_selector;
 
 	static bool rfo_boxs_display = false;
 	static bool rfo_selector = false;
 	static bool rfof_selector = false;
 	static ImColor rfo_boxs_color{ 64, 127, 127 };
 	ctrl->box_color(u8"反弹飞行道具框", &rfo_boxs_display, u8"反弹飞行道具框颜色", &rfo_selector, &rfo_boxs_color);
-	ImGui::SameLine();
-	ImGui::Checkbox(u8"显示可反弹等级", &rfof_selector);
 	affected_colors.rfo = rfo_boxs_color;
 	affected_colors.rfo_display = rfo_boxs_display;
-	display_choose.rfof_display = rfof_selector;
 
 	static bool tyrant_boxs_display = false;
 	static bool tyrant_selector = false;

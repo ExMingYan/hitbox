@@ -8,14 +8,6 @@
 #include "structs/objects.h"
 #include "structs/record.h"
 
-struct displaychoose
-{
-	bool noratkf_display;
-	bool floatkf_display;
-	bool ofof_display;
-	bool rfof_display;
-};
-
 struct attackcolors {
 	ImColor noratk;
 	ImColor floatk;
