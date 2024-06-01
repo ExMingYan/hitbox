@@ -200,9 +200,6 @@
     <ClInclude Include="structs\base.h">
       <Filter>structs</Filter>
     </ClInclude>
-    <ClInclude Include="structs\record.h">
-      <Filter>structs</Filter>
-    </ClInclude>
     <ClInclude Include="structs\cancel.h">
       <Filter>structs</Filter>
     </ClInclude>

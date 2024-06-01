@@ -6,7 +6,6 @@
 #include "services.h"
 #include "singleton.hpp"
 #include "structs/objects.h"
-#include "structs/record.h"
 
 struct attackcolors {
 	ImColor noratk;
