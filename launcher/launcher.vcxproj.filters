@@ -35,8 +35,5 @@
     <ClInclude Include="singletion.hpp">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="hitbox.hpp">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
 </Project>
