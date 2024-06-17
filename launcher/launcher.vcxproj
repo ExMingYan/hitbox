@@ -143,6 +143,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="hitbox.hpp" />
     <ClInclude Include="loader.h" />
     <ClInclude Include="MemLoadDll.h" />
     <ClInclude Include="singletion.hpp" />
