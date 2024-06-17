@@ -88,12 +88,12 @@ bool draws::draw()
 	affected_colors.cast = cast_boxs_color;
 	affected_colors.cast_display = cast_boxs_display;
 
-	static bool gurad_boxs_display = false;
+	static bool guard_boxs_display = false;
 	static bool gurad_selector = false;
-	static ImColor gurad_boxs_color{ 0, 255, 0 };
-	ctrl->box_color(u8"防御框", &gurad_boxs_display, u8"防御框颜色", &cast_selector, &cast_boxs_color);
-	affected_colors.gurad = gurad_boxs_color;
-	affected_colors.gurad_display = gurad_boxs_display;
+	static ImColor guard_boxs_color{ 0, 255, 0 };
+	ctrl->box_color(u8"防御框", &guard_boxs_display, u8"防御框颜色", &gurad_selector, &guard_boxs_color);
+	affected_colors.gurad = guard_boxs_color;
+	affected_colors.gurad_display = guard_boxs_display;
 
 	static bool down_boxs_display = false;
 	static bool down_selector = false;
