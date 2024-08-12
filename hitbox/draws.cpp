@@ -83,7 +83,7 @@ bool draws::draw()
 
 	static bool cast_boxs_display = false;
 	static bool cast_selector = false;
-	static ImColor cast_boxs_color{ 127, 255, 255 };
+	static ImColor cast_boxs_color{ 234, 0, 255 };
 	ctrl->box_color(u8"被投框", &cast_boxs_display, u8"被投框颜色", &cast_selector, &cast_boxs_color);
 	affected_colors.cast = cast_boxs_color;
 	affected_colors.cast_display = cast_boxs_display;
@@ -461,7 +461,7 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 	if (actcs.affected == nullptr) {
 		return false;
 	}
-
+	Actions_Entry entry = player->acts->entry[player->action];
 	ImColor color{ 255,255,0 };
 
 	for (int i = 0; i < actcs.capacity; i++) {
@@ -483,7 +483,7 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 
 		switch (box.types) {
 		case Affected_Types::NormalHitBox: {
-			if (player->avoidhit) {
+			if (player->avoidhit || (player->OnAirCanBeHitFrame == 0 && player->y > 0 && entry.types == Action_Types::Affect)) {
 				display = false;
 			};
 			color = cs.normal;
@@ -504,7 +504,7 @@ bool draws::affected_boxs(Player* player, Action_Collections actcs, affectcolors
 			break;
 		}
 		case Affected_Types::DownHitBox: {
-			if (player->avoidhit) {
+			if (player->avoidhit || (player->OnGroundCanBeHitFrame == 0 && (entry.types == Action_Types::Fell1 || entry.types == Action_Types::Fell2))) {
 				display = false;
 			};
 			color = cs.down;

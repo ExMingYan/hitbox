@@ -51,7 +51,9 @@ struct Player
 	int leadframe;				//0x82C；领先帧数
 	int unknown11;				//0x830
 	int occframe;				//0x834；发生帧数
-	char unknown12[0x20];		//0x838
+	int OnAirCanBeHitFrame;		//0x838；浮空可受击帧数
+	int OnGroundCanBeHitFrame;	//0x83C；地面可受击帧数
+	char unknown12[0x18];		//0x840
 	int avoidhit;				//0x858；免打帧数
 	int avoidthrow;				//0x85C；免投帧数
 };
