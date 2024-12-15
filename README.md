@@ -1,22 +1,16 @@
-## hitbox
+# hitbox
 
 拳皇15判定框显示
 
-![](./image2.png)
+![](./image1.png)
 
-***
-
-### 使用
+## 使用
 
 1. 在[release页 (github.com)](https://github.com/ExMingYan/hitbox/releases/tag/5.1)启动游戏中下载launcher.exe
 2. 启动游戏
 3. 启动launcher.exe
 
-***
-
-
-
-### 判定框
+## 判定框
 
 - 攻击框
 - 身体框
@@ -32,11 +26,7 @@
 - 反弹飞行道具框
 - 投技当身框（推进打击）
 
-***
-
-
-
-### 更新
+## 更新
 
 **2.0**
 
@@ -63,34 +53,16 @@
 - 新的注入方式
 - 修复seh异常
 
-***
+## 编译
 
+- Virtual Studio 2022
 
+## 关于报毒
 
-### 编译
+- 软件本身有注入行为，所以会被各家杀软件拦截
 
-Virtual Studio 2022
+![image3](./image2.png)
 
-*****
+## 感谢
 
-
-
-### 关于报毒
-
-软件本身有注入行为，所以为被会各家杀软件拦截
-
-![image3](./image3.png)
-
-
-
-
-
-*****
-
-
-
-### 感谢
-
-感谢[小废林的个人空间-小废林个人主页-哔哩哔哩视频 (bilibili.com)](https://space.bilibili.com/2203159)的赞助
-
-感谢[江璃落子鹓的个人空间-江璃落子鹓个人主页-哔哩哔哩视频 (bilibili.com)](https://space.bilibili.com/346699931)提供判定框数据
+- 感谢[Redundantcy的个人空间-Redundantcy个人主页-哔哩哔哩视频 (bilibili.com)](https://space.bilibili.com/107436250)提供程序支持
