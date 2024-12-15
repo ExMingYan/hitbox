@@ -10,7 +10,7 @@ struct description {
 	bool activity;
 	bool open;
 	ImColor color;
-	action_types action;
+	act_types action;
 	warpper types;
 };
 

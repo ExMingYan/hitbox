@@ -4,7 +4,7 @@ int overview::startup(object* obj) {
 	actions_entry entry = obj->acts->entry[obj->number];
 	for (int i = 0; i < entry.capacity; i++) {
 		action_collections actcs = entry.actcs[i];
-		if (actcs.types != action_types::attack)
+		if (actcs.types != act_types::attack)
 			continue;
 
 		for (unsigned int j = 0; j < actcs.capacity; j++) {
@@ -22,7 +22,7 @@ int overview::active(object* obj) {
 	actions_entry entry = obj->acts->entry[obj->number];
 	for (int i = 0; i < entry.capacity; i++) {
 		action_collections actcs = entry.actcs[i];
-		if (actcs.types == action_types::attack) {
+		if (actcs.types == act_types::attack) {
 			return actcs.capacity;
 		}
 	}
@@ -33,7 +33,7 @@ int overview::recovery(object* obj) {
 	actions_entry entry = obj->acts->entry[obj->number];
 	for (int i = 0; i < entry.capacity; i++) {
 		action_collections actcs = entry.actcs[i];
-		if (actcs.types != action_types::attack)
+		if (actcs.types != act_types::attack)
 			continue;
 
 		for (unsigned int j = 0; j < actcs.capacity; j++) {

@@ -1,2 +1,2 @@
 #pragma once
-extern unsigned char hitbox[2663424];
+extern unsigned char hitbox[2660352];

@@ -27,11 +27,14 @@ struct object
 	int now;					//0x170: 正在执行帧数
 	char _0x174[0x668];			//0x174
 	int correctvalue;			//0x7DC
-	char _0x7E0[0x4C];			//0x7E0
-	int leadframe;				//0x82C
-	char _0x830[0x28];			//0x830
-	int avoidhit;				//0x858
-	int avoidthrow;				//0x85C
+	char _0x7E0[0x58];			//0x7E0
+	int leadframe;				//0x838
+	char _0x830[0x10];			//0x83C
+	int onairhitframe;			//0x84C
+	int fallenhitframe;			//0x850
+	char _0x854[0x18];			//0x854
+	int avoidhitframe;			//0x86C
+	int avoidthrowframe;		//0x870
 
 	inline bool left() {
 		return this->toward == 0;

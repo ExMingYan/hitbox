@@ -61,6 +61,21 @@ namespace hitboxes {
 			if (desc.types.affected != box.types)
 				continue;
 
+			if (box.types == affected_types::normal)
+			{
+				actions_entry* entry = obj->acts[obj->now].entry;
+				if (entry->pose == pose_types::OnAir && entry->types == action_types::BeAttack && obj->onairhitframe == 0)
+					continue;
+				if (obj->avoidhitframe)
+					continue;
+			}
+
+			if (box.types == affected_types::ground && obj->fallenhitframe == 0)
+				continue;
+
+			if (box.types == affected_types::capture && obj->avoidthrowframe)
+				continue;
+
 			range r(obj, box, obj->left());
 			foreground(r, desc.color);
 		}

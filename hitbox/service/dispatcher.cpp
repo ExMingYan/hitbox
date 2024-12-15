@@ -2,9 +2,9 @@
 
 namespace hitboxes {
 	context contexts[] = {
-		{action_types::body, new body},
-		{action_types::affected, new affected},
-		{action_types::attack, new attack},
+		{act_types::body, new body},
+		{act_types::affected, new affected},
+		{act_types::attack, new attack},
 	};
 
 	bool dispatcher::dispatch() {

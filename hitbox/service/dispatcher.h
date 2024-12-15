@@ -8,7 +8,7 @@
 
 namespace hitboxes {
 	struct context {
-		action_types types;
+		act_types types;
 		box* instance;
 	};
 

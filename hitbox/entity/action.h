@@ -3,7 +3,30 @@
 #include "attack.h"
 #include "affected.h"
 
+enum class pose_types : int
+{
+	Stand = 0x0,
+	Crouch = 0x1,
+	OnAir = 0x2,
+	FaceUpFall = 0x3,
+	FaceDownFall = 0x4,
+	FlyObject = 0x6,
+};
+
 enum class action_types : int
+{
+	Normal,
+	Attack,
+	BeAttack,
+	Defense,
+	Fallen1,
+	Fallen2,
+	Kneel,
+	Throw,
+	BeThrown,
+};
+
+enum class act_types : int
 {
 	body = 0x3,									//身位框；0x3
 	affected = 0x4,								//受击框；0x4
@@ -13,7 +36,7 @@ enum class action_types : int
 struct action_collections						//ACT指针集
 {
 	unsigned int capacity;						//0x0 总帧数；指针指向内容总大小 = TotalFrame * 0x2C
-	action_types types;							//0x4 ACT类型；决定指针指向的内容
+	act_types types;							//0x4 ACT类型；决定指针指向的内容
 	union
 	{
 		attack_boxs* attack;
@@ -25,7 +48,8 @@ static_assert(sizeof(action_collections) == 0x10, "Size check");
 
 struct actions_entry							//动作实体类
 {
-	void* _0x0;									//0x0
+	pose_types pose;							//0x0；姿势
+	action_types types;							//0x4；动作类型
 	int max;									//0x08；动作最大帧数
 	int reset;									//0x0C；动作重置帧数
 	void* _0x10;								//0x10
