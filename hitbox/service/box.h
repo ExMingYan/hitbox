@@ -13,23 +13,28 @@ namespace hitboxes {
 
 	public:
 		bool foreground(range& r, ImColor color);
+		bool propforeground(proprange& r, ImColor color);
 
-		virtual bool resolve(object* obj, action_collections actcs, description desc) = 0;
+		virtual bool resolve(object* obj, actions_entry entry, action_collections actcs, description desc) = 0;
+		virtual bool propresolve(projectile* prop, actions_entry entry, action_collections actcs, description desc) = 0;
 	};
 
 	class attack :public box {
 	public:
-		bool resolve(object* obj, action_collections actcs, description desc) override;
+		bool resolve(object* obj, actions_entry entry, action_collections actcs, description desc) override;
+		bool propresolve(projectile* prop, actions_entry entry, action_collections actcs, description desc) override;
 	};
 
 	class body : public box {
 	public:
-		bool resolve(object* obj, action_collections actcs, description desc) override;
+		bool resolve(object* obj, actions_entry entry, action_collections actcs, description desc) override;
+		bool propresolve(projectile* prop, actions_entry entry, action_collections actcs, description desc) override;
 	};
 
 	class affected : public box {
 	public:
-		bool resolve(object* obj, action_collections actcs, description desc) override;
+		bool resolve(object* obj, actions_entry entry, action_collections actcs, description desc) override;
+		bool propresolve(projectile* prop, actions_entry entry, action_collections actcs, description desc) override;
 	};
 };
 

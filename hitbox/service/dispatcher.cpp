@@ -35,7 +35,7 @@ namespace hitboxes {
 					hitboxes::box* b = contexts[index].instance;
 					b->alpha = configurs::alpha;
 					b->thickness = configurs::thickness;
-					b->resolve(p1, actcs, desc);
+					b->resolve(p1, entry, actcs, desc);
 				}
 			}
 
@@ -53,7 +53,7 @@ namespace hitboxes {
 					hitboxes::box* b = contexts[index].instance;
 					b->alpha = configurs::alpha;
 					b->thickness = configurs::thickness;
-					b->resolve(p2, actcs, desc);
+					b->resolve(p2, entry, actcs, desc);
 				}
 			}
 
@@ -62,8 +62,10 @@ namespace hitboxes {
 
 			auto list = objs->props_list->list;
 			for (; list != nullptr; list = list->next) {
-				auto props = list->props;
-				auto props_entry = props->acts->entry[props->number];
+				projectile* props = list->props;
+				actions_entry props_entry = props->acts->entry[props->number];
+				if (props->isInvalidate)
+					continue;
 				for (int i = 0; i < props_entry.capacity; i++) {
 					action_collections actcs = props_entry.actcs[i];
 					if (actcs.types != desc.action)
@@ -77,14 +79,14 @@ namespace hitboxes {
 						hitboxes::box* b = contexts[index].instance;
 						b->alpha = configurs::alpha;
 						b->thickness = configurs::thickness;
-						b->resolve((object*)props, actcs, desc);
+						b->propresolve(props, props_entry, actcs, desc);
 					}
 
 					if (configurs::dp2) {
 						hitboxes::box* b = contexts[index].instance;
 						b->alpha = configurs::alpha;
 						b->thickness = configurs::thickness;
-						b->resolve((object*)props, actcs, desc);
+						b->propresolve(props, props_entry, actcs, desc);
 					}
 				}
 			}

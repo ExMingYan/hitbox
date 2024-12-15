@@ -1,6 +1,7 @@
 #pragma once
 #include "action.h"
 
+_declspec(align(8))
 struct projectile
 {
 	char _0x0[0x38];			//0x0
@@ -19,6 +20,16 @@ struct projectile
 	int number;					//0x168
 	int _0x16c;					//0x16c
 	int now;					//0x170: 正在执行帧数
+	char _0x174[0x300];			//0x174
+	int RemainingAttacks;		//0x474；剩余攻击次数
+	void* _0x478;				//0x478
+	__int8 _0x480;				//0x480
+	bool isInvalidate;			//0x481；是否无效
+	__int16 _0x482;				//0x482
+
+	inline bool left() {
+		return this->toward == 0;
+	}
 };
 
 struct projectile_list
@@ -32,4 +43,16 @@ struct projectile_header
 {
 	char hold[0x30];
 	projectile_list* list;	//0x30
+};
+
+struct proprange {
+	float left;
+	float top;
+	float right;
+	float bottom;
+
+	proprange();
+	proprange(projectile* obj, attack_boxs box, bool left);
+	proprange(projectile* obj, body_boxs box, bool left);
+	proprange(projectile* obj, affected_boxs box, bool left);
 };

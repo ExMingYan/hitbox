@@ -1,4 +1,5 @@
 #include "object.h"
+#include "props.h"
 
 warpper::warpper() {}
 
@@ -82,6 +83,69 @@ range::range(object* obj, affected_boxs box, bool l) {
 		else {
 			this->left = obj->x * 10 - box.x * 10 + obj->xoff * 10;
 			this->top = obj->y * 10 + box.y * 10 + obj->yoff * 10;
+			this->right = left - box.w * 10;
+			this->bottom = top - box.h * 10;
+		}
+	}
+	else {
+		if (l) {
+			this->left = obj->x * 10 + box.x * 10;
+			this->top = obj->y * 10 + box.y * 10;
+			this->right = left + box.w * 10;
+			this->bottom = top - box.h * 10;
+		}
+		else {
+			this->left = obj->x * 10 - box.x * 10;
+			this->top = obj->y * 10 + box.y * 10;
+			this->right = left - box.w * 10;
+			this->bottom = top - box.h * 10;
+		}
+	}
+}
+
+proprange::proprange() {}
+
+proprange::proprange(projectile* obj, attack_boxs box, bool l) {
+	if (l) {
+		this->left = obj->x * 10 + box.x * 10;
+		this->top = obj->y * 10 + box.y * 10;
+		this->right = left + box.w * 10;
+		this->bottom = top - box.h * 10;
+	}
+	else {
+		this->left = obj->x * 10 - box.x * 10;
+		this->top = obj->y * 10 + box.y * 10;
+		this->right = left - box.w * 10;
+		this->bottom = top - box.h * 10;
+	}
+}
+
+proprange::proprange(projectile* obj, body_boxs box, bool l) {
+	if (l) {
+		this->left = obj->x * 10 + box.x * 10;
+		this->top = obj->y * 10 + box.y * 10;
+		this->right = left + box.w * 10;
+		this->bottom = top - box.h * 10;
+	}
+	else {
+		this->left = obj->x * 10 - box.x * 10;
+		this->top = obj->y * 10 + box.y * 10;
+		this->right = left - box.w * 10;
+		this->bottom = top - box.h * 10;
+	}
+}
+
+proprange::proprange(projectile* obj, affected_boxs box, bool l) {
+	if (box.path >= 0) {
+		if (l) {
+			this->left = obj->x * 10 + box.x * 10;
+			this->top = obj->y * 10 + box.y * 10;
+			this->right = left + box.w * 10;
+			this->bottom = top - box.h * 10;
+		}
+		else {
+			this->left = obj->x * 10 - box.x * 10;
+			this->top = obj->y * 10 + box.y * 10;
 			this->right = left - box.w * 10;
 			this->bottom = top - box.h * 10;
 		}
