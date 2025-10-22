@@ -72,14 +72,14 @@ namespace hitboxes {
 					if (index < 0 or index > 3)
 						continue;
 
-					if (configurs::dp1) {
+					if (configurs::dp1 && props->owner == p1) {
 						hitboxes::box* b = contexts[index].instance;
 						b->alpha = configurs::alpha;
 						b->thickness = configurs::thickness;
 						b->propresolve(props, props_entry, actcs, desc);
 					}
 
-					if (configurs::dp2) {
+					if (configurs::dp2 && props->owner == p2) {
 						hitboxes::box* b = contexts[index].instance;
 						b->alpha = configurs::alpha;
 						b->thickness = configurs::thickness;

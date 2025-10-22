@@ -104,7 +104,7 @@ namespace hitboxes {
 		return true;
 	}
 
-	bool  attack::propresolve(projectile* obj, actions_entry entry, action_collections actcs, description desc) {
+	bool attack::propresolve(projectile* obj, actions_entry entry, action_collections actcs, description desc) {
 		for (unsigned int i = 0; i < actcs.capacity; i++) {
 			attack_boxs box = actcs.attack[i];
 			if (box.frame != obj->now)

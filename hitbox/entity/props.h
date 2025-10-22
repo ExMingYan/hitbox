@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include "action.h"
+#include "object.h"
 
 _declspec(align(8))
 struct projectile
@@ -8,7 +9,9 @@ struct projectile
 	actions* acts;				//0x38
 	char _0x40[0x28];			//0x40
 	attacks* atcs;				//0x68
-	char _0x68[0x30];			//0x70
+	char _0x68[0x20];			//0x70
+	object* enemy;				//0x90
+	object* owner;				//0x98
 	float x;					//0xa0
 	float y;					//0xa4
 	char unknown3[0xac];		//0xa8

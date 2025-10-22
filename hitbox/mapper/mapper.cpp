@@ -35,7 +35,11 @@ bool mapper::checks() {
 	if (p2 == nullptr)
 		return false;
 
-	return  true;
+	auto isready = objs->ready;
+	if (isready < 2)
+		return false;
+
+	return true;
 }
 
 //bool mapper::screen(box_helper& r)
