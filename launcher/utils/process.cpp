@@ -1,4 +1,4 @@
-#include "process.h"
+﻿#include "process.h"
 
 namespace utils {
 	bool process::initialize(std::uint32_t pid, const wchar_t* name) {

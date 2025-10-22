@@ -1,4 +1,4 @@
-#include "mapper.h"
+﻿#include "mapper.h"
 
 bool mapper::initliaze()
 {

@@ -1,4 +1,4 @@
-#ifndef LOGGER_HPP
+ï»¿#ifndef LOGGER_HPP
 #define LOGGER_HPP
 
 #include <iostream>
@@ -21,7 +21,7 @@ public:
 		return;
 	}
 
-	// Ö§³Ö¸ñÊ½»¯×Ö·û´®µÄÈÕÖ¾¼ÇÂ¼º¯Êı
+	// æ”¯æŒæ ¼å¼åŒ–å­—ç¬¦ä¸²çš„æ—¥å¿—è®°å½•å‡½æ•°
 	template<typename... args>
 	static void information(const char* func, int line, const char* message, args&&... params) {
 		char buffer[512]{};

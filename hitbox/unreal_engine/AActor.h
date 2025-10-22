@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "UObject.h"
 #include "SceneComponent.h"
 struct AActor : public UObject

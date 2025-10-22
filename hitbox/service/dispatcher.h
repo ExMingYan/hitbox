@@ -1,4 +1,4 @@
-#ifndef DICPATCH_H
+﻿#ifndef DICPATCH_H
 #define DICPATCH_H
 
 #include "box.h"

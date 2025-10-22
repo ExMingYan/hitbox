@@ -1,4 +1,4 @@
-#ifndef DOMINATOR_H
+﻿#ifndef DOMINATOR_H
 #define DOMINATOR_H
 
 #include "../mapper/mapper.h"

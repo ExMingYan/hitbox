@@ -1,4 +1,4 @@
-#include "box.h"
+﻿#include "box.h"
 
 namespace hitboxes {
 	bool box::foreground(range& r, ImColor color)

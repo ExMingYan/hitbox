@@ -1,4 +1,4 @@
-#ifndef DESCRIPTION_H
+﻿#ifndef DESCRIPTION_H
 #define DESCRIPTION_H
 
 #include "../imgui/imgui.h"

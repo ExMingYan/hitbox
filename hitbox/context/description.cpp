@@ -1,18 +1,18 @@
-#include "description.h"
+ï»¿#include "description.h"
 
 description descriptions[] = {
-	{1,		u8"¹¥»÷¿ò",			false, false, { 200, 100, 100 },	act_types::attack,	attack_types::normal,			},
-	{2,		u8"Í¶¼¼¿ò",			false, false, { 127, 191, 191 },	act_types::attack,	attack_types::grasp,			},
-	{3,		u8"·ÉĞĞµÀ¾ß",		false, false, { 127, 255, 127 },	act_types::attack,	attack_types::projectile,		},
-	{4,		u8"·ÀÓù¿ò",			false, false, { 0, 255, 0 },		act_types::affected, affected_types::guard,			},
-	{5,		u8"°ÔÌå¿ò",			false, false, { 64, 127, 127 },		act_types::affected, affected_types::invulnerability,},
-	{6,		u8"µ±Éí¿ò",			false, false, { 0, 0, 255 },		act_types::affected, affected_types::parries,		},
-	{7,		u8"¶ÔÍ¶µ±Éí¿ò",		false, false, { 139, 0, 255 },		act_types::affected, affected_types::parriesex,		},
-	{8,		u8"ÉíÎ»¿ò",			false, false, { 255, 165, 0  },		act_types::body,		body_types::none,				},
-	{9,		u8"ÊÜ»÷¿ò",			false, false, { 255, 255, 0 },		act_types::affected, affected_types::normal,			},
-	{10,	u8"±»Í¶¿ò",			false, false, { 127, 255, 255 },	act_types::affected, affected_types::capture,		},
-	{11,	u8"×·¼Ó¿ò",			false, false, { 0, 255, 0 },		act_types::affected, affected_types::ground,			},
-	{12,	u8"Òı·¢·ÀÓù¿ò",		false, false, { 127, 255, 127 },	act_types::attack,	attack_types::guard,			},
-	{13,	u8"·´µ¯·ÉĞĞµÀ¾ß¿ò",	false, false, { 255, 127, 255 },	act_types::affected, affected_types::reflects,		},
-	{14,	u8"µÖÏû·ÉĞĞµÀ¾ß¿ò",	false, false, { 128, 128, 255 },	act_types::affected, affected_types::negative,		},
+	{1,		u8"æ”»å‡»æ¡†",			false, false, { 200, 100, 100 },	act_types::attack,	attack_types::normal,			},
+	{2,		u8"æŠ•æŠ€æ¡†",			false, false, { 127, 191, 191 },	act_types::attack,	attack_types::grasp,			},
+	{3,		u8"é£è¡Œé“å…·",		false, false, { 127, 255, 127 },	act_types::attack,	attack_types::projectile,		},
+	{4,		u8"é˜²å¾¡æ¡†",			false, false, { 0, 255, 0 },		act_types::affected, affected_types::guard,			},
+	{5,		u8"éœ¸ä½“æ¡†",			false, false, { 64, 127, 127 },		act_types::affected, affected_types::invulnerability,},
+	{6,		u8"å½“èº«æ¡†",			false, false, { 0, 0, 255 },		act_types::affected, affected_types::parries,		},
+	{7,		u8"å¯¹æŠ•å½“èº«æ¡†",		false, false, { 139, 0, 255 },		act_types::affected, affected_types::parriesex,		},
+	{8,		u8"èº«ä½æ¡†",			false, false, { 255, 165, 0  },		act_types::body,		body_types::none,				},
+	{9,		u8"å—å‡»æ¡†",			false, false, { 255, 255, 0 },		act_types::affected, affected_types::normal,			},
+	{10,	u8"è¢«æŠ•æ¡†",			false, false, { 127, 255, 255 },	act_types::affected, affected_types::capture,		},
+	{11,	u8"è¿½åŠ æ¡†",			false, false, { 0, 255, 0 },		act_types::affected, affected_types::ground,			},
+	{12,	u8"å¼•å‘é˜²å¾¡æ¡†",		false, false, { 127, 255, 127 },	act_types::attack,	attack_types::guard,			},
+	{13,	u8"åå¼¹é£è¡Œé“å…·æ¡†",	false, false, { 255, 127, 255 },	act_types::affected, affected_types::reflects,		},
+	{14,	u8"æŠµæ¶ˆé£è¡Œé“å…·æ¡†",	false, false, { 128, 128, 255 },	act_types::affected, affected_types::negative,		},
 };

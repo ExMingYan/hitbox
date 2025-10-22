@@ -1,4 +1,4 @@
-#ifndef _MEMLOAD_SHELLCODE_H
+﻿#ifndef _MEMLOAD_SHELLCODE_H
 #define _MEMLOAD_SHELLCODE_H
 
 unsigned char MemLoadShellcode_x86[] = {

@@ -1,4 +1,4 @@
-// File: 'D:\KsaTools\ImGuiPacker\Alibaba-PuHuiTi-Heavy.otf' (1656164 bytes)
+﻿// File: 'D:\KsaTools\ImGuiPacker\Alibaba-PuHuiTi-Heavy.otf' (1656164 bytes)
 // Exported using binary_to_compressed_c.cpp
 	//font = io.Fonts->AddFontFromMemoryTTF(aliFont(), 1656164, 25.0f, &f_cfg, io.Fonts->GetGlyphRangesChineseFull());
 static const unsigned int alifont_size = 1656164;

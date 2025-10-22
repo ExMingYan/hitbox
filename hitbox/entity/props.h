@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "action.h"
 
 _declspec(align(8))
@@ -12,19 +12,19 @@ struct projectile
 	float x;					//0xa0
 	float y;					//0xa4
 	char unknown3[0xac];		//0xa8
-	int toward;					//0x154£ºÃæÏò
+	int toward;					//0x154ï¼šé¢å‘
 	int _0x158;					//0x158
 	int _0x15c;					//0x15c
 	int _0x160;					//0x160
 	int _0x164;					//0x164
 	int number;					//0x168
 	int _0x16c;					//0x16c
-	int now;					//0x170: ÕıÔÚÖ´ĞĞÖ¡Êı
+	int now;					//0x170: æ­£åœ¨æ‰§è¡Œå¸§æ•°
 	char _0x174[0x300];			//0x174
-	int RemainingAttacks;		//0x474£»Ê£Óà¹¥»÷´ÎÊı
+	int RemainingAttacks;		//0x474ï¼›å‰©ä½™æ”»å‡»æ¬¡æ•°
 	void* _0x478;				//0x478
 	__int8 _0x480;				//0x480
-	bool isInvalidate;			//0x481£»ÊÇ·ñÎŞĞ§
+	bool isInvalidate;			//0x481ï¼›æ˜¯å¦æ— æ•ˆ
 	__int16 _0x482;				//0x482
 
 	inline bool left() {

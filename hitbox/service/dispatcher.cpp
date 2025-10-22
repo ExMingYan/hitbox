@@ -1,4 +1,4 @@
-#include "dispatcher.h"
+﻿#include "dispatcher.h"
 
 namespace hitboxes {
 	context contexts[] = {
@@ -56,9 +56,6 @@ namespace hitboxes {
 					b->resolve(p2, entry, actcs, desc);
 				}
 			}
-
-			if (desc.types != attack_types::projectile)
-				continue;
 
 			auto list = objs->props_list->list;
 			for (; list != nullptr; list = list->next) {

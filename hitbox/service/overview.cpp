@@ -1,4 +1,4 @@
-#include "overview.h"
+﻿#include "overview.h"
 
 int overview::startup(object* obj) {
 	actions_entry entry = obj->acts->entry[obj->number];

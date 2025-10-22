@@ -1,4 +1,4 @@
-#include "object.h"
+﻿#include "object.h"
 #include "props.h"
 
 warpper::warpper() {}

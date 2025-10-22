@@ -1,4 +1,4 @@
-#ifndef SEARCHER_H
+﻿#ifndef SEARCHER_H
 #define SEARCHER_H
 
 #include <windows.h>

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include "body.h"
 #include "attack.h"
 #include "affected.h"
@@ -28,15 +28,15 @@ enum class action_types : int
 
 enum class act_types : int
 {
-	body = 0x3,									//ÉíÎ»¿ò£»0x3
-	affected = 0x4,								//ÊÜ»÷¿ò£»0x4
-	attack = 0x5,								//¹¥»÷¿ò£»0x5
+	body = 0x3,									//èº«ä½æ¡†ï¼›0x3
+	affected = 0x4,								//å—å‡»æ¡†ï¼›0x4
+	attack = 0x5,								//æ”»å‡»æ¡†ï¼›0x5
 };
 
-struct action_collections						//ACTÖ¸Õë¼¯
+struct action_collections						//ACTæŒ‡é’ˆé›†
 {
-	unsigned int capacity;						//0x0 ×ÜÖ¡Êı£»Ö¸ÕëÖ¸ÏòÄÚÈİ×Ü´óĞ¡ = TotalFrame * 0x2C
-	act_types types;							//0x4 ACTÀàĞÍ£»¾ö¶¨Ö¸ÕëÖ¸ÏòµÄÄÚÈİ
+	unsigned int capacity;						//0x0 æ€»å¸§æ•°ï¼›æŒ‡é’ˆæŒ‡å‘å†…å®¹æ€»å¤§å° = TotalFrame * 0x2C
+	act_types types;							//0x4 ACTç±»å‹ï¼›å†³å®šæŒ‡é’ˆæŒ‡å‘çš„å†…å®¹
 	union
 	{
 		attack_boxs* attack;
@@ -46,21 +46,21 @@ struct action_collections						//ACTÖ¸Õë¼¯
 };
 static_assert(sizeof(action_collections) == 0x10, "Size check");
 
-struct actions_entry							//¶¯×÷ÊµÌåÀà
+struct actions_entry							//åŠ¨ä½œå®ä½“ç±»
 {
-	pose_types pose;							//0x0£»×ËÊÆ
-	action_types types;							//0x4£»¶¯×÷ÀàĞÍ
-	int max;									//0x08£»¶¯×÷×î´óÖ¡Êı
-	int reset;									//0x0C£»¶¯×÷ÖØÖÃÖ¡Êı
+	pose_types pose;							//0x0ï¼›å§¿åŠ¿
+	action_types types;							//0x4ï¼›åŠ¨ä½œç±»å‹
+	int max;									//0x08ï¼›åŠ¨ä½œæœ€å¤§å¸§æ•°
+	int reset;									//0x0Cï¼›åŠ¨ä½œé‡ç½®å¸§æ•°
 	void* _0x10;								//0x10
 	void* _0x18;								//0x18
 	int unknown4;								//0x20
-	int capacity;								//0x24£»ACTÖ¸Õë¼¯ÄÚÖ¸ÕëÊı
-	action_collections* actcs;					//0x28£»ACTÖ¸Õë¼¯
+	int capacity;								//0x24ï¼›ACTæŒ‡é’ˆé›†å†…æŒ‡é’ˆæ•°
+	action_collections* actcs;					//0x28ï¼›ACTæŒ‡é’ˆé›†
 };
 static_assert(sizeof(actions_entry) == 0x30, "Size check");
 
-struct actions									//¶¯×÷¼¯
+struct actions									//åŠ¨ä½œé›†
 {
 	char _0x0[0x20];							//0x0
 	actions_entry* entry;						//0x20

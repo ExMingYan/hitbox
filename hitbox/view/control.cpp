@@ -1,4 +1,4 @@
-#include "control.h"
+﻿#include "control.h"
 
 namespace control {
 	bool slider(const char* label, bool* v) {

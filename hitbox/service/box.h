@@ -1,4 +1,4 @@
-#ifndef HITBOXES_H
+﻿#ifndef HITBOXES_H
 #define HITBOXES_H
 
 #include "../view/control.h"

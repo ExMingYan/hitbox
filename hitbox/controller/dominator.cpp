@@ -1,4 +1,4 @@
-#include "dominator.h"
+ï»¿#include "dominator.h"
 
 bool dominator::window()
 {
@@ -8,7 +8,7 @@ bool dominator::window()
 
 		control::trigger("p2", &configurs::dp2);
 
-		imgui::Text(u8"Í¸Ã÷¶È");
+		imgui::Text(u8"é€æ˜åº¦");
 		imgui::SameLine();
 		imgui::SetCursorPosX(imgui::GetWindowWidth() - 50);
 		imgui::SetNextItemWidth(40);
@@ -16,7 +16,7 @@ bool dominator::window()
 		imgui::InputFloat(u8"", &configurs::alpha, 0.0f, 0.0f, "%.2f");
 		imgui::PopID();
 
-		imgui::Text(u8"´ÖÏ¸");
+		imgui::Text(u8"ç²—ç»†");
 		imgui::SameLine();
 		imgui::SetCursorPosX(imgui::GetWindowWidth() - 50);
 		imgui::SetNextItemWidth(40);

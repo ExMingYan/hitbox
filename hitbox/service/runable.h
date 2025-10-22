@@ -1,4 +1,4 @@
-#ifndef RUNABLE_H
+﻿#ifndef RUNABLE_H
 #define RUNABLE_H
 
 #include "../utils/singleton.hpp"

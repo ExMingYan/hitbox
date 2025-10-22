@@ -1,4 +1,4 @@
-#include "renderer.h"
+﻿#include "renderer.h"
 
 bool renderer::render() {
 	hitboxes::dispatcher dispatch;

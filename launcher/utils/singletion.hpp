@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 template <class _Ty> class singleton
 {

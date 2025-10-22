@@ -1,4 +1,4 @@
-#include "entry.h"
+ï»¿#include "entry.h"
 #include "../mapper/mapper.h"
 
 #include "../service/runable.h"
@@ -63,8 +63,8 @@ HRESULT initialize(IDXGISwapChain* This, UINT SyncInterval, UINT Flags) {
 	configurs::icon_brands = io.Fonts->AddFontFromMemoryTTF(FontAwesome6Brands, sizeof(FontAwesome6Brands), 30.0f, &icons_config, icons_ranges);
 
 	ImGuiStyle& style = imgui::GetStyle();
-	style.Colors[ImGuiCol_WindowBg] = ImColor(36, 40, 49, 255).Value;//±³¾°É«
-	style.FrameRounding = 4.0f;//Ô²½Ç
+	style.Colors[ImGuiCol_WindowBg] = ImColor(36, 40, 49, 255).Value;//èƒŒæ™¯è‰²
+	style.FrameRounding = 4.0f;//åœ†è§’
 
 	ImGui::StyleColorsDark();
 	ImGui_ImplWin32_Init(configurs::unrealwindow);

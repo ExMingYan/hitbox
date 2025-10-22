@@ -1,26 +1,26 @@
-#pragma once
+ï»¿#pragma once
 
-enum class attack_types : int			//¹¥»÷¿òÀàĞÍ
+enum class attack_types : int			//æ”»å‡»æ¡†ç±»å‹
 {
-	normal = 0x0,					//ÆÕÍ¨¹¥»÷
-	projectile = 0x1,				//·ÉĞĞµÀ¾ß
-	grasp = 0x2,					//Í¶¼¼
-	force = 0x3,					//Ç¿ÖÆÃüÖĞ
-	guard = 0x5,					//Òı·¢·ÀÓù
+	normal = 0x0,					//æ™®é€šæ”»å‡»
+	projectile = 0x1,				//é£è¡Œé“å…·
+	grasp = 0x2,					//æŠ•æŠ€
+	force = 0x3,					//å¼ºåˆ¶å‘½ä¸­
+	guard = 0x5,					//å¼•å‘é˜²å¾¡
 
 	none = 0x9999
 };
 
-struct attack_boxs						//¹¥»÷¿ò£»Ã¿Ö¡Õ¼ÓÃ0x2C×Ö½Ú
+struct attack_boxs						//æ”»å‡»æ¡†ï¼›æ¯å¸§å ç”¨0x2Cå­—èŠ‚
 {
 	unsigned int frame;					//0x00
-	unsigned int number;				//0x04£»¶ÔÓ¦ATK±àºÅ
-	unsigned int hit;					//0x08£»ËùÊôHitÊı
+	unsigned int number;				//0x04ï¼›å¯¹åº”ATKç¼–å·
+	unsigned int hit;					//0x08ï¼›æ‰€å±Hitæ•°
 	float x;							//0x0C
 	float y;							//0x10
 	float w;							//0x14
 	float h;							//0x18
-	unsigned int flag;					//0x1C£»bit 8ÔÚÖØÈ­/ÖØ½ÅµÄ¹¥»÷¿òÖĞ±íÊ¾ÕâÒ»Ö¡ÎªCÍ¶/DÍ¶µÄÅĞ¶¨¿ò
+	unsigned int flag;					//0x1Cï¼›bit 8åœ¨é‡æ‹³/é‡è„šçš„æ”»å‡»æ¡†ä¸­è¡¨ç¤ºè¿™ä¸€å¸§ä¸ºCæŠ•/DæŠ•çš„åˆ¤å®šæ¡†
 	char unknown[0xc];
 };
 static_assert(sizeof(attack_boxs) == 0x2C, "Size check");
@@ -28,12 +28,12 @@ static_assert(sizeof(attack_boxs) == 0x2C, "Size check");
 struct attack_collections
 {
 	attack_types types;
-	int level;				//ÕĞÊ½µÈ¼¶
-	int damage;				//ÉËº¦
-	int minimum;			//×îµÍÉËº¦
-	int penetrate;			//´©Í¸ÉËº¦
-	int stun;				//ÔÎÖµ
-	int loss;				//ÆÆ·À
+	int level;				//æ‹›å¼ç­‰çº§
+	int damage;				//ä¼¤å®³
+	int minimum;			//æœ€ä½ä¼¤å®³
+	int penetrate;			//ç©¿é€ä¼¤å®³
+	int stun;				//æ™•å€¼
+	int loss;				//ç ´é˜²
 	int selfaddpower;		//
 	int oppoaddpower;
 	char fill[0x1A4];

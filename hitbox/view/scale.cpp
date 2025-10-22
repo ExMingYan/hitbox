@@ -1,4 +1,4 @@
-#include "scale.h"
+﻿#include "scale.h"
 
 namespace view {
 	void scale::show() {

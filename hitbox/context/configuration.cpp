@@ -1,4 +1,4 @@
-#include "configuration.h"
+﻿#include "configuration.h"
 
 namespace configurs {
 	HWND unrealwindow = nullptr;

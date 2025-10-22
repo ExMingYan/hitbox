@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include <stdint.h>
 #include "action.h"
 
@@ -19,14 +19,14 @@ struct object
 	float xoff;					//0xDC
 	float yoff;					//0xE0
 	char _0xE4[0x70];			//0xE4
-	int toward;					//0x154£ºÃæÏò
+	int toward;					//0x154ï¼šé¢å‘
 	int _0x158;					//0x158
 	int _0x15c;					//0x15c
 	int _0x160;					//0x160
 	int _0x164;					//0x164
 	int number;					//0x168
 	int _0x16c;					//0x16c
-	int now;					//0x170: ÕıÔÚÖ´ĞĞÖ¡Êı
+	int now;					//0x170: æ­£åœ¨æ‰§è¡Œå¸§æ•°
 	char _0x174[0x668];			//0x174
 	int correctvalue;			//0x7DC
 	char _0x7E0[0x58];			//0x7E0

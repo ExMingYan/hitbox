@@ -1,4 +1,4 @@
-#include "searcher.h"
+﻿#include "searcher.h"
 
 unsigned char searcher::hex(unsigned char* ch) {
 	unsigned char temps[2] = { 0 };

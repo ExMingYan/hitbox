@@ -1,4 +1,4 @@
-#ifndef GRAPHICS_H
+﻿#ifndef GRAPHICS_H
 #define GRAPHICS_H
 
 #include <d3d11.h>

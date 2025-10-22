@@ -1,4 +1,4 @@
-#include "decoration.h"
+Ôªø#include "decoration.h"
 
 namespace view {
 	bool compoment::ins(const char* tag, std::function<void()> element) {
@@ -45,20 +45,20 @@ namespace view {
 	void decoration::show(const char* name, ImVec2 size) {
 		imgui::Begin(name, nullptr, ImGuiWindowFlags_NoScrollWithMouse | ImGuiWindowFlags_NoBackground | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_HorizontalScrollbar | ImGuiWindowFlags_NoBringToFrontOnFocus);
 
-		//¥∞ø⁄¥Û–°
+		//Á™óÂè£Â§ßÂ∞è
 		imgui::SetWindowSize(size);
 
 		auto draw = imgui::GetWindowDrawList();
 		auto pos = imgui::GetWindowPos();
 		auto wndsize = imgui::GetWindowSize();
 
-		//±≥æ∞
+		//ËÉåÊôØ
 		draw->AddRectFilled(pos, { pos.x + wndsize.x, pos.y + wndsize.y }, IM_COL32(36, 40, 49, 255), 2);
 
-		//≤‡±ﬂ¿∏
+		//‰æßËæπÊ†è
 		draw->AddRectFilled(pos, { pos.x + barsize, pos.y + wndsize.y }, IM_COL32(56, 62, 74, 255));
 
-		//≤Àµ•¿∏
+		//ËèúÂçïÊ†è
 		draw->AddRectFilled({ pos.x + barsize, pos.y }, { pos.x + wndsize.x, pos.y + barsize * 0.5f }, IM_COL32(56, 62, 74, 255));
 
 		//logo
@@ -69,7 +69,7 @@ namespace view {
 		imgui::PopFont();
 		imgui::EndChild();
 
-		//µº∫Ω¿∏
+		//ÂØºËà™Ê†è
 
 		imgui::BeginGroup();
 		imgui::PushFont(icons);
@@ -91,7 +91,7 @@ namespace view {
 
 		compoment nav = components[navs].second;
 
-		//∑÷“≥
+		//ÂàÜÈ°µ
 		imgui::SetCursorPos({ barsize, 0 });
 		imgui::BeginChild("##PAGINATION", { wndsize.x + barsize, barsize * 0.5f });
 		imgui::BeginGroup();
@@ -111,7 +111,7 @@ namespace view {
 		imgui::EndGroup();
 		imgui::EndChild();
 
-		//“≥√Ê
+		//È°µÈù¢
 		imgui::SetCursorPos({ barsize + 5, barsize * 0.5f + 5 });
 		imgui::BeginChild("##PAGE", { wndsize.x - barsize - 15, wndsize.y - barsize * 0.5f - 10 }, false, ImGuiWindowFlags_Background);
 		imgui::SetCursorPos({ 10,10 });

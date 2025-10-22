@@ -1,4 +1,4 @@
-#ifndef MAPPER_H
+﻿#ifndef MAPPER_H
 #define MAPPER_H
 
 #include "../utils/searcher.h"

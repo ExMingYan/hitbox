@@ -1,4 +1,4 @@
-#ifndef CONTROL_H
+﻿#ifndef CONTROL_H
 #define CONTROL_H
 
 #include "../imgui/imgui.h"

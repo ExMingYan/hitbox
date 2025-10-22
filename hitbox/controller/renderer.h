@@ -1,4 +1,4 @@
-#ifndef RENDER_H
+﻿#ifndef RENDER_H
 #define RENDER_H
 
 #include "../service/dispatcher.h"

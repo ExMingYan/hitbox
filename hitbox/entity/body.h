@@ -1,12 +1,12 @@
-#pragma once
+ï»¿#pragma once
 
 enum class body_types {
 	none = 0x9999
 };
 
-struct body_boxs						//ÉíÎ»¿ò½á¹¹£»Ã¿Ö¡Õ¼ÓÃ0x2C×Ö½Ú
+struct body_boxs						//èº«ä½æ¡†ç»“æ„ï¼›æ¯å¸§å ç”¨0x2Cå­—èŠ‚
 {
-	unsigned int frame;					//0x00£»Ö¡Êı
+	unsigned int frame;					//0x00ï¼›å¸§æ•°
 	unsigned int _0x04;					//0x04
 	unsigned int _0x08;					//0x08
 	unsigned int _0x0C;					//0x0C

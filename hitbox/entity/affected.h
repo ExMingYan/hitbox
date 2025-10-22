@@ -1,26 +1,26 @@
-#pragma once
+ï»¿#pragma once
 
 enum class affected_types :int
 {
-	normal = 0x1,							//ÊÜ»÷¿ò
-	capture = 0x2,							//±»Í¶¿ò
-	guard = 0x3,							//·ÀÓù¿ò
-	ground = 0x4,							//µØÃæÊÜ»÷¿ò
-	negative = 0x5,							//µÖÏû·ÉĞĞµÀ¾ß¿ò
-	reflects = 0x6,							//·´µ¯·ÉĞĞµÀ¾ß¿ò
-	invulnerability = 0x7,					//°ÔÌå¿ò
-	parries = 0x8,							//µ±Éí¿ò
-	nothing = 0x9,							//·ÉĞĞµÀ¾ßµ±Éí¿ò
-	parriesex = 0xA,						//Í¶¼¼µ±Éí¿ò
+	normal = 0x1,							//å—å‡»æ¡†
+	capture = 0x2,							//è¢«æŠ•æ¡†
+	guard = 0x3,							//é˜²å¾¡æ¡†
+	ground = 0x4,							//åœ°é¢å—å‡»æ¡†
+	negative = 0x5,							//æŠµæ¶ˆé£è¡Œé“å…·æ¡†
+	reflects = 0x6,							//åå¼¹é£è¡Œé“å…·æ¡†
+	invulnerability = 0x7,					//éœ¸ä½“æ¡†
+	parries = 0x8,							//å½“èº«æ¡†
+	nothing = 0x9,							//é£è¡Œé“å…·å½“èº«æ¡†
+	parriesex = 0xA,						//æŠ•æŠ€å½“èº«æ¡†
 	none = 0x9999
 };
 
-struct affected_boxs						//ÊÜ»÷¿ò½á¹¹£»Ã¿Ö¡Õ¼ÓÃ0x2C×Ö½Ú
+struct affected_boxs						//å—å‡»æ¡†ç»“æ„ï¼›æ¯å¸§å ç”¨0x2Cå­—èŠ‚
 {
-	unsigned int frame;						//0x00£»Ö¡Êı
+	unsigned int frame;						//0x00ï¼›å¸§æ•°
 	unsigned int _0x04;						//0x04
-	affected_types types;					//0x08£»ÊÜ»÷¿òÀàĞÍ
-	unsigned int flag;						//0x0C£»FlagÔÚ²»Í¬ÀàĞÍµÄÊÜ»÷¿òÖĞ¶ÔÓ¦µÄ¹¦ÄÜ²»Ò»Ñù
+	affected_types types;					//0x08ï¼›å—å‡»æ¡†ç±»å‹
+	unsigned int flag;						//0x0Cï¼›Flagåœ¨ä¸åŒç±»å‹çš„å—å‡»æ¡†ä¸­å¯¹åº”çš„åŠŸèƒ½ä¸ä¸€æ ·
 	unsigned int _0x10;						//0x10
 	unsigned int path;						//0x14
 	unsigned int _0x18;						//0x18
