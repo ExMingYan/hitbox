@@ -1,4 +1,4 @@
-#include <iostream>
+ï»¿#include <iostream>
 #include <memory>
 #include <fstream>
 #include <filesystem>
@@ -9,7 +9,7 @@ int main(int arg, char** argv) {
 		return -1;
 	}
 
-	//¶Á
+	//è¯»
 	std::filesystem::path file_path(argv[1]);
 	if (!std::filesystem::exists(file_path)) {
 		std::cerr << "file not exists\n";
@@ -30,30 +30,18 @@ int main(int arg, char** argv) {
 		return -4;
 	}
 
-	//Ð´
+	//å†™
 	std::filesystem::path directory(argv[2]);
 	std::filesystem::path header = directory / file_path.replace_extension(".h").filename();
-	std::filesystem::path source = directory / file_path.replace_extension(".cpp").filename();
 
-	//Í·ÎÄ¼þ
+	//å¤´æ–‡ä»¶
 	std::ofstream ofs(header, std::ios::binary);
 	if (!ofs.is_open()) {
 		std::cerr << "create .h failed\n";
 		return -5;
 	}
-	ofs << "#pragma once\n";
-	ofs << "extern unsigned char " << file_path.stem().string() << "[" << filesize << "];" << std::endl;
-	ofs.close();
-
-	//Ô´ÎÄ¼þ
-	ofs.open(source, std::ios::binary);
-	if (!ofs.is_open()) {
-		std::cerr << "create .cpp failed\n";
-		return -6;
-	}
-
-	ofs << "#include \"" << header.filename().string() << "\"" << std::endl;
-	ofs << "unsigned char " << file_path.stem().string() << "[" << filesize << "] = {" << std::endl;
+	ofs << "#pragma once\r\n";
+	ofs << "unsigned char " << file_path.stem().string() << "[" << filesize << "] = {" << "\r\n";
 	ofs << "\t";
 	for (int i = 0; i < filesize; i++) {
 		ofs << "0x" << std::setw(2) << std::setfill('0') << std::hex << static_cast<int>(filebuffer[i]) << ", ";
@@ -62,6 +50,6 @@ int main(int arg, char** argv) {
 		}
 	}
 	ofs << "\r\n};";
-	std::cout << "build " << header.filename().string() << " and " << source.filename().string() << " success\n";
+	std::cout << "build " << header.filename().string() << " success\n";
 	return 0;
 }

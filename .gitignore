@@ -1,8 +1,5 @@
-/.vs
-/x64
-/builder/x64
-/hitbox/x64
-/launcher/x64
-/launcher/hitbox.cpp
+.vs/
+.vscode/
+.xmake/
+x64/
 /launcher/hitbox.h
-

@@ -8,7 +8,6 @@
     <ClCompile Include="utils\process.cpp">
       <Filter>utils</Filter>
     </ClCompile>
-    <ClCompile Include="hitbox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="utils">

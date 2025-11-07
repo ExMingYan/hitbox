@@ -85,7 +85,6 @@
     </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="hitbox.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="utils\loader.cpp" />
     <ClCompile Include="utils\process.cpp" />
