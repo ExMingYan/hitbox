@@ -13,6 +13,9 @@
     <Filter Include="utils">
       <UniqueIdentifier>{c1b9fe6c-cf69-426b-ab37-8bd793e15c18}</UniqueIdentifier>
     </Filter>
+    <Filter Include="resources">
+      <UniqueIdentifier>{46adcfa3-b840-4243-b54a-3e2f59e96033}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="utils\loader.h">
@@ -28,5 +31,26 @@
       <Filter>utils</Filter>
     </ClInclude>
     <ClInclude Include="hitbox.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources\mainfest.rc">
+      <Filter>resources</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="resources\resources.rc">
+      <Filter>resources</Filter>
+    </ResourceCompile>
+    <ResourceCompile Include="resources\version.rc">
+      <Filter>resources</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\KOFXV.mainfest">
+      <Filter>resources</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\KOFXVhitbox.ico">
+      <Filter>resources</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -1,0 +1,30 @@
+#include <windows.h>
+VS_VERSION_INFO VERSIONINFO
+
+FILEVERSION 2,4,2,0
+PRODUCTVERSION 2,4,2,0
+FILEFLAGSMASK 0x3fL
+FILEFLAGS 0x0L
+FILEOS 0x40004L
+FILETYPE 0x1L
+FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "080404b0"
+        BEGIN
+            VALUE "CompanyName", "ExMingYan"
+            VALUE "FileDescription", "KOFXV v2.42 hitbox display"
+            VALUE "FileVersion", "2.4.2.0"
+            VALUE "InternalName", "KOFXVhitbox"
+            VALUE "LegalCopyright", "Copyright (c) 2025 by ExMingYan"
+            VALUE "OriginalFilename", "KOFXVhitbox"
+            VALUE "ProductName", "KOFXVhitbox"
+            VALUE "ProductVersion", "2.4.2.0"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x804, 1200
+    END
+END

@@ -47,6 +47,10 @@
     <LinkIncremental>
     </LinkIncremental>
     <PreBuildEventUseInBuild>true</PreBuildEventUseInBuild>
+    <GenerateManifest>false</GenerateManifest>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <GenerateManifest>false</GenerateManifest>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -97,6 +101,17 @@
     <ClInclude Include="utils\MemLoadDll.h" />
     <ClInclude Include="utils\process.h" />
     <ClInclude Include="utils\singletion.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="resources\mainfest.rc" />
+    <ResourceCompile Include="resources\resources.rc" />
+    <ResourceCompile Include="resources\version.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="resources\KOFXV.mainfest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\KOFXVhitbox.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
