@@ -2,13 +2,13 @@
 #define DICPATCH_H
 
 #include "box.h"
-#include "../mapper/mapper.h"
-#include "../context/description.h"
-#include "../context/configuration.h"
+#include "mapper/mapper.h"
+#include "context/description.h"
+#include "context/configuration.h"
 
 namespace hitboxes {
 	struct context {
-		act_types types;
+		ActionLineID types;
 		box* instance;
 	};
 

@@ -5,8 +5,8 @@
 #include <vector>
 #include <windows.h>
 
-#include "../imgui/imgui.h"
-#include "../utils/singleton.hpp"
+#include "imgui/imgui.h"
+#include "utils/singleton.hpp"
 
 #define WHITE IM_COL32(255, 255, 255, 255)
 #define BLACK IM_COL32(0, 0, 0, 255)

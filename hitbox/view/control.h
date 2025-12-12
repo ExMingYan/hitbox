@@ -1,8 +1,8 @@
 ﻿#ifndef CONTROL_H
 #define CONTROL_H
 
-#include "../imgui/imgui.h"
-#include "../imgui/imgui_internal.h"
+#include "imgui/imgui.h"
+#include "imgui/imgui_internal.h"
 namespace imgui = ImGui;
 
 namespace control {
@@ -27,6 +27,7 @@ namespace control {
 	}
 
 	bool slider(const char* label, bool* v);
+	bool textfloatinput(const char* label, float* value);
 	bool trigger(const char* label, bool* v);
 	bool navigation(const char* label, bool selected);
 	bool pagination(const char* label, bool selected);

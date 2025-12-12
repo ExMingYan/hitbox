@@ -44,26 +44,12 @@ struct object
 };
 
 struct warpper {
-	attack_types attack;
-	affected_types affected;
-	body_types body;
+	AttackTypes attack;
+	CollisionTypes collision;
 
 	warpper();
-	warpper(attack_types types);
-	warpper(affected_types types);
-	warpper(body_types types);
+	warpper(AttackTypes types);
+	warpper(CollisionTypes types);
 	bool operator== (warpper b);
 	bool operator!= (warpper b);
-};
-
-struct range {
-	float left;
-	float top;
-	float right;
-	float bottom;
-
-	range();
-	range(object* obj, attack_boxs box, bool left);
-	range(object* obj, body_boxs box, bool left);
-	range(object* obj, affected_boxs box, bool left);
 };

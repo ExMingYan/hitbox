@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-enum class attack_types : int			//攻击框类型
+enum class AttackTypes : int			//攻击框类型
 {
 	normal = 0x0,					//普通攻击
 	projectile = 0x1,				//飞行道具
@@ -11,23 +11,9 @@ enum class attack_types : int			//攻击框类型
 	none = 0x9999
 };
 
-struct attack_boxs						//攻击框；每帧占用0x2C字节
-{
-	unsigned int frame;					//0x00
-	unsigned int number;				//0x04；对应ATK编号
-	unsigned int hit;					//0x08；所属Hit数
-	float x;							//0x0C
-	float y;							//0x10
-	float w;							//0x14
-	float h;							//0x18
-	unsigned int flag;					//0x1C；bit 8在重拳/重脚的攻击框中表示这一帧为C投/D投的判定框
-	char unknown[0xc];
-};
-static_assert(sizeof(attack_boxs) == 0x2C, "Size check");
-
 struct attack_collections
 {
-	attack_types types;
+	AttackTypes types;
 	int level;				//招式等级
 	int damage;				//伤害
 	int minimum;			//最低伤害

@@ -1,4 +1,6 @@
 ﻿#include "control.h"
+#include "controller/dominator.h"
+#include "utils/inirw.h"
 
 namespace control {
 	bool slider(const char* label, bool* v) {
@@ -33,6 +35,21 @@ namespace control {
 		draw_list->AddCircleFilled(ImVec2(*v ? (p.x + width - radius) : (p.x + radius), p.y + radius), radius - 1.5f, IM_COL32(255, 255, 255, 255));
 
 		return clicked;
+	}
+
+	bool textfloatinput(const char* label, float* value)
+	{
+		imgui::Text(label);
+		imgui::SameLine();
+		imgui::SetCursorPosX(imgui::GetWindowWidth() - 50);
+		imgui::SetNextItemWidth(40);
+		imgui::PushID(label);
+		if (imgui::InputFloat(u8"", value, 0.0f, 0.0f, "%.2f"))
+		{
+			ini_write_float(std::string(label), *value);
+		}
+		imgui::PopID();
+		return true;
 	}
 
 	bool trigger(const char* label, bool* v) {
@@ -131,7 +148,15 @@ namespace control {
 		if (*open) {
 			imgui::Begin("color", open, ImGuiWindowFlags_NoResize);
 			imgui::SetWindowSize({ 320, 240 });
-			imgui::ColorPicker3("picker", (float*)color);
+			if (imgui::ColorPicker3("picker", (float*)color)) {
+				Rgb rgb = {
+					static_cast<std::uint8_t>(std::round(color->Value.x * 255.0f)),
+					static_cast<std::uint8_t>(std::round(color->Value.y * 255.0f)),
+					static_cast<std::uint8_t>(std::round(color->Value.z * 255.0f))
+				};
+				ini_write_color(rgb, title);
+				reloadcolors = true;
+			}
 			imgui::End();
 		}
 		imgui::SameLine();

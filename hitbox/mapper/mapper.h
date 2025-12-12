@@ -1,10 +1,10 @@
 ﻿#ifndef MAPPER_H
 #define MAPPER_H
 
-#include "../utils/searcher.h"
-#include "../utils/singleton.hpp"
-#include "../entity/objects.h"
-#include "../unreal_engine/World.h"
+#include "utils/searcher.h"
+#include "utils/singleton.hpp"
+#include "entity/objects.h"
+#include "unreal_engine/World.h"
 
 namespace signatures {
 	constexpr auto uworld = "48******488B***488BC7488B***48***5EC3";

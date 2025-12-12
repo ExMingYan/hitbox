@@ -1,34 +1,29 @@
 ﻿#include "dominator.h"
 
+bool reloadcolors = true;
+
 bool dominator::window()
 {
 	view::compoment hb;
 	hb.ins("settings", [&] {
 		control::trigger("p1", &configurs::dp1);
-
 		control::trigger("p2", &configurs::dp2);
 
-		imgui::Text(u8"透明度");
-		imgui::SameLine();
-		imgui::SetCursorPosX(imgui::GetWindowWidth() - 50);
-		imgui::SetNextItemWidth(40);
-		imgui::PushID(100);
-		imgui::InputFloat(u8"", &configurs::alpha, 0.0f, 0.0f, "%.2f");
-		imgui::PopID();
+		configurs::GetConfigs();
 
-		imgui::Text(u8"粗细");
-		imgui::SameLine();
-		imgui::SetCursorPosX(imgui::GetWindowWidth() - 50);
-		imgui::SetNextItemWidth(40);
-		imgui::PushID(101);
-		imgui::InputFloat(u8"", &configurs::thickness, 0.0f, 0.0f, "%.2f");
-		imgui::PopID();
+		control::textfloatinput(configurs::alphaname, &configurs::alpha);
+		control::textfloatinput(configurs::thicknessname, &configurs::thickness);
 		});
 
 	hb.ins("hitboxes", [&] {
-		for (int i = 0; i < (sizeof(descriptions) / sizeof(description)); i++) {
+		if (reloadcolors)
+		{
+			reload_description_colors();
+			reloadcolors = false;
+		}
+		for (int i = 0; i < descriptions.size(); i++) {
 			description* desc = &descriptions[i];
-			control::label(desc->btn, desc->title, &desc->open, &desc->activity, &desc->color);
+			control::label(i + 1, desc->title, &desc->open, &desc->activity, &desc->color);
 		}
 		});
 

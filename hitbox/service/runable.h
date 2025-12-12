@@ -1,9 +1,9 @@
 ﻿#ifndef RUNABLE_H
 #define RUNABLE_H
 
-#include "../utils/singleton.hpp"
-#include "../entity/objects.h"
-#include "../unreal_engine/World.h"
+#include "utils/singleton.hpp"
+#include "entity/objects.h"
+#include "unreal_engine/World.h"
 
 class runable : public singleton<runable>
 {

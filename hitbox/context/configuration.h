@@ -4,11 +4,10 @@
 #include <iostream>
 #include <windows.h>
 
-#include "../imgui/imgui.h"
+#include "imgui/imgui.h"
 
 namespace configurs {
 	extern HWND unrealwindow;
-	extern ImFont* font_mshy;
 	extern ImFont* font_ali;
 	extern ImFont* icon_awesmoe;
 	extern ImFont* icon_brands;
@@ -16,6 +15,9 @@ namespace configurs {
 	extern bool dp2;
 	extern float alpha;
 	extern float thickness;
+	extern const char* alphaname;
+	extern const char* thicknessname;
+	void GetConfigs();
 }
 
 #endif // CONFIGURATION_H

@@ -1,19 +1,20 @@
 ﻿#ifndef DESCRIPTION_H
 #define DESCRIPTION_H
 
-#include "../imgui/imgui.h"
-#include "../entity/object.h"
+#include <vector>
+#include "imgui/imgui.h"
+#include "entity/object.h"
 
 struct description {
-	int btn;
 	const char* title;
 	bool activity;
 	bool open;
 	ImColor color;
-	act_types action;
+	ActionLineID action;
 	warpper types;
 };
 
-extern description descriptions[14];
+extern std::vector<description> descriptions;
+void reload_description_colors();
 
 #endif

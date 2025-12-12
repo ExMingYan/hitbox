@@ -14,7 +14,12 @@ struct projectile
 	object* owner;				//0x98
 	float x;					//0xa0
 	float y;					//0xa4
-	char unknown3[0xac];		//0xa8
+	float z;					//0xa8
+	char _0xAC[0x30];			//0xaC
+	float xoff;					//0xDC
+	float yoff;					//0xE0
+	float zoff;					//0xE4
+	char _0xE8[0x6C];			//0xE8
 	int toward;					//0x154：面向
 	int _0x158;					//0x158
 	int _0x15c;					//0x15c
@@ -38,7 +43,7 @@ struct projectile
 struct projectile_list
 {
 	projectile_list* next;	//0x0
-	void* hold;					//0x8
+	void* hold;				//0x8
 	projectile* props;		//0x10
 };
 
@@ -48,14 +53,12 @@ struct projectile_header
 	projectile_list* list;	//0x30
 };
 
-struct proprange {
+struct range {
 	float left;
 	float top;
 	float right;
 	float bottom;
 
-	proprange();
-	proprange(projectile* obj, attack_boxs box, bool left);
-	proprange(projectile* obj, body_boxs box, bool left);
-	proprange(projectile* obj, affected_boxs box, bool left);
+	range(object* obj, HitRect rect);
+	range(projectile* obj, HitRect rect);
 };

@@ -1,21 +1,21 @@
 ﻿#include "entry.h"
-#include "../mapper/mapper.h"
+#include "mapper/mapper.h"
 
-#include "../service/runable.h"
+#include "service/runable.h"
 
-#include "../context/configuration.h"
+#include "context/configuration.h"
 
-#include "../controller/renderer.h"
-#include "../controller/dominator.h"
+#include "controller/renderer.h"
+#include "controller/dominator.h"
 
-#include "../utils/graphics.h"
-#include "../utils/logger.hpp"
+#include "utils/graphics.h"
+#include "utils/logger.hpp"
 
-#include "../font/alifont.hpp"
-#include "../font/FontAewsome6.h"
-#include "../font/IconsFontAwesome6.inl"
-#include "../font/FontAwesome6Brands.h"
-#include "../font/IconsFontAwesome6Brands.inl"
+#include "font/alifont.hpp"
+#include "font/FontAewsome6.h"
+#include "font/IconsFontAwesome6.inl"
+#include "font/FontAwesome6Brands.h"
+#include "font/IconsFontAwesome6Brands.inl"
 
 ID3D11Device* g_pd3dDevice = nullptr;
 ID3D11DeviceContext* g_pd3dDeviceContext = nullptr;

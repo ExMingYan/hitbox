@@ -2,9 +2,9 @@
 
 namespace hitboxes {
 	context contexts[] = {
-		{act_types::body, new body},
-		{act_types::affected, new affected},
-		{act_types::attack, new attack},
+		{ActionLineID::Body, new body},
+		{ActionLineID::Hit, new hit},
+		{ActionLineID::Attack, new attack},
 	};
 
 	bool dispatcher::dispatch() {
@@ -24,11 +24,11 @@ namespace hitboxes {
 			if (configurs::dp1) {
 				actions_entry entry = p1->acts->entry[p1->number];
 				for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(actions_entry)) == 0; i++) {
-					action_collections actcs = entry.actcs[i];
-					if (actcs.types != desc.action)
+					ActionLine actcs = entry.actcs[i];
+					if (actcs.ActionLineID != desc.action)
 						continue;
 
-					int index = (int)actcs.types - 3;
+					int index = (int)actcs.ActionLineID - 3;
 					if (index < 0 or index > 3)
 						continue;
 
@@ -42,11 +42,11 @@ namespace hitboxes {
 			if (configurs::dp2) {
 				actions_entry entry = p2->acts->entry[p2->number];
 				for (int i = 0; i < entry.capacity && entry.actcs != nullptr && IsBadReadPtr(&entry.actcs[i], sizeof(actions_entry)) == 0; i++) {
-					action_collections actcs = entry.actcs[i];
-					if (actcs.types != desc.action)
+					ActionLine actcs = entry.actcs[i];
+					if (actcs.ActionLineID != desc.action)
 						continue;
 
-					int index = (int)actcs.types - 3;
+					int index = (int)actcs.ActionLineID - 3;
 					if (index < 0 or index > 3)
 						continue;
 
@@ -64,11 +64,11 @@ namespace hitboxes {
 				if (props->isInvalidate)
 					continue;
 				for (int i = 0; i < props_entry.capacity; i++) {
-					action_collections actcs = props_entry.actcs[i];
-					if (actcs.types != desc.action)
+					ActionLine actcs = props_entry.actcs[i];
+					if (actcs.ActionLineID != desc.action)
 						continue;
 
-					int index = (int)actcs.types - 3;
+					int index = (int)actcs.ActionLineID - 3;
 					if (index < 0 or index > 3)
 						continue;
 
