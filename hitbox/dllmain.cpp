@@ -2,6 +2,10 @@
 #include <thread>
 #include "entry/entry.h"
 
+#ifdef _DEBUG
+#include "symbol/loader.h"
+#endif // _DEBUG
+
 #ifndef _WIN64
 #error errors requires x64 environment
 #endif
@@ -35,10 +39,26 @@ BOOL APIENTRY DllMain(HMODULE hModule,
 )
 {
 	switch (ul_reason_for_call) {
+#ifndef _DEBUG
 	case DLL_THREAD_ATTACH:
 	case DLL_THREAD_DETACH:
 	case DLL_PROCESS_DETACH:
 		return true;
+#else
+	case DLL_THREAD_ATTACH:
+	{
+		SymbolLoader loader;
+		loader.LoadSymbols(hModule);
+		return TRUE;
+	}
+	case DLL_PROCESS_DETACH:
+	{
+		SymCleanup(GetCurrentProcess());
+		return TRUE;
+	}
+	case DLL_THREAD_DETACH:
+		return TRUE;
+#endif // !_DEBUG
 	}
 
 	try {

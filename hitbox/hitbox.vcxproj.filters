@@ -34,6 +34,9 @@
     <Filter Include="context">
       <UniqueIdentifier>{6067180e-e210-48f4-a65f-e04d9009cba9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="symbol">
+      <UniqueIdentifier>{f298733a-2990-4434-adc9-df39b499d630}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="imgui\imgui.cpp">
@@ -108,6 +111,9 @@
     </ClCompile>
     <ClCompile Include="utils\inirw.cpp">
       <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="symbol\loader.cpp">
+      <Filter>symbol</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -245,6 +251,9 @@
     </ClInclude>
     <ClInclude Include="utils\inirw.h">
       <Filter>utils</Filter>
+    </ClInclude>
+    <ClInclude Include="symbol\loader.h">
+      <Filter>symbol</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

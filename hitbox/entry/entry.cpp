@@ -81,7 +81,7 @@ HRESULT handler(IDXGISwapChain* This, UINT SyncInterval, UINT Flags) {
 
 	static bool open = true;
 	static bool pressed = false;
-	short state = GetAsyncKeyState(VK_F1) & 0x8000;
+	short state = GetAsyncKeyState(VK_F3) & 0x8000;
 	if (state and !pressed) open = !open;
 	pressed = state;
 
@@ -140,6 +140,7 @@ LRESULT WINAPI WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
 
 bool entry(HMODULE hmodule)
 {
+	loggers::initialize();
 	mapper* mapping = mapper::instance();
 	if (mapping->initliaze() == false) {
 		throw std::exception("mappers initialize failed");
@@ -166,7 +167,6 @@ bool entry(HMODULE hmodule)
 		return false;
 	}
 
-	loggers::initialize();
 	graphic->attach(initialize, &present, options::present);
 	graphic->attach(change, &resize, options::resize);
 	return true;

@@ -13,6 +13,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "launcher", "launcher\launch
 		{1F7EE078-9A69-47DA-88E1-D50DA1582773} = {1F7EE078-9A69-47DA-88E1-D50DA1582773}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DLLInjector", "DLLInjector\DLLInjector.vcxproj", "{E3C7E3DB-497D-4F4C-B0C6-B9252855BDA3}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1F7EE078-9A69-47DA-88E1-D50DA1582773} = {1F7EE078-9A69-47DA-88E1-D50DA1582773}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +36,10 @@ Global
 		{721365AC-E6B8-478B-AA95-982A010419E7}.Debug|x64.Build.0 = Debug|x64
 		{721365AC-E6B8-478B-AA95-982A010419E7}.Release|x64.ActiveCfg = Release|x64
 		{721365AC-E6B8-478B-AA95-982A010419E7}.Release|x64.Build.0 = Release|x64
+		{E3C7E3DB-497D-4F4C-B0C6-B9252855BDA3}.Debug|x64.ActiveCfg = Debug|x64
+		{E3C7E3DB-497D-4F4C-B0C6-B9252855BDA3}.Debug|x64.Build.0 = Debug|x64
+		{E3C7E3DB-497D-4F4C-B0C6-B9252855BDA3}.Release|x64.ActiveCfg = Release|x64
+		{E3C7E3DB-497D-4F4C-B0C6-B9252855BDA3}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

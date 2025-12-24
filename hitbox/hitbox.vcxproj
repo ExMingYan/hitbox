@@ -111,6 +111,7 @@
     <ClCompile Include="service\runable.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="symbol\loader.cpp" />
     <ClCompile Include="utils\graphics.cpp" />
     <ClCompile Include="utils\inirw.cpp" />
     <ClCompile Include="utils\searcher.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="service\runable.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="symbol\loader.h" />
     <ClInclude Include="unreal_engine\AActor.h" />
     <ClInclude Include="unreal_engine\Array.h" />
     <ClInclude Include="unreal_engine\GameInstance.h" />

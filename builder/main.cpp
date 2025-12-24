@@ -2,6 +2,9 @@
 #include <memory>
 #include <fstream>
 #include <filesystem>
+#include <sstream>
+#include <iomanip>
+#include <vector>
 
 int main(int arg, char** argv) {
 	if (arg < 3) {
@@ -9,7 +12,8 @@ int main(int arg, char** argv) {
 		return -1;
 	}
 
-	//读
+	std::ios_base::sync_with_stdio(false);
+
 	std::filesystem::path file_path(argv[1]);
 	if (!std::filesystem::exists(file_path)) {
 		std::cerr << "file not exists\n";
@@ -23,33 +27,42 @@ int main(int arg, char** argv) {
 	}
 
 	auto filesize = std::filesystem::file_size(file_path);
-	std::unique_ptr<unsigned char[]> filebuffer(new unsigned char[filesize]);
-	ifs.read((char*)filebuffer.get(), filesize);
+	std::vector<unsigned char> filebuffer(filesize);
+	ifs.read(reinterpret_cast<char*>(filebuffer.data()), filesize);
 	if (ifs.fail()) {
 		std::cerr << "file read failed\n";
 		return -4;
 	}
+	ifs.close();
 
-	//写
 	std::filesystem::path directory(argv[2]);
 	std::filesystem::path header = directory / file_path.replace_extension(".h").filename();
 
-	//头文件
 	std::ofstream ofs(header, std::ios::binary);
 	if (!ofs.is_open()) {
 		std::cerr << "create .h failed\n";
 		return -5;
 	}
-	ofs << "#pragma once\r\n";
-	ofs << "unsigned char " << file_path.stem().string() << "[" << filesize << "] = {" << "\r\n";
-	ofs << "\t";
-	for (int i = 0; i < filesize; i++) {
-		ofs << "0x" << std::setw(2) << std::setfill('0') << std::hex << static_cast<int>(filebuffer[i]) << ", ";
+
+	std::stringstream ss;
+	ss << "#pragma once\r\n";
+	ss << "unsigned char " << file_path.stem().string() << "[" << filesize << "] = {" << "\r\n";
+	ss << "\t";
+
+	const char hex_chars[] = "0123456789abcdef";
+	for (size_t i = 0; i < filesize; ++i) {
+		unsigned char byte = filebuffer[i];
+		ss << "0x" << hex_chars[byte >> 4] << hex_chars[byte & 0x0F] << ", ";
 		if ((i + 1) % 20 == 0) {
-			ofs << "\r\n\t";
+			ss << "\r\n\t";
 		}
 	}
-	ofs << "\r\n};";
+
+	ss << "\r\n};\r\n";
+	ss << "unsigned int " << file_path.stem().string() << "_len = " << std::dec << filesize << ";\r\n";
+	ofs << ss.str();
+	ofs.close();
+
 	std::cout << "build " << header.filename().string() << " success\n";
 	return 0;
 }
